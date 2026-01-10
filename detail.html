@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="건프라 상세 정보 - Gunpla product details">
+    <title>제품 상세 | 건프라 가이드</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles-base.css">
+    <link rel="stylesheet" href="css/styles-components.css">
+</head>
+
+<body class="detail-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon">◆</span>
+                    <span class="logo-text">GUNPLA<span class="logo-highlight">GUIDE</span></span>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" data-page="home">
+                    <span data-i18n="nav.home">홈</span>
+                </a>
+                <a href="#" class="nav-item" data-page="favorites" id="favoritesNav">
+                    <span data-i18n="nav.favorites">즐겨찾기</span>
+                    <span class="badge" id="favoritesBadge">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="compare" id="compareNav">
+                    <span data-i18n="nav.compare">비교함</span>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
+                    <span class="lang-ko">KO</span>
+                    <span class="lang-divider">/</span>
+                    <span class="lang-en">EN</span>
+                </button>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <nav class="mobile-nav">
+                <a href="index.html" class="mobile-nav-item" data-i18n="nav.home">홈</a>
+                <a href="#" class="mobile-nav-item" data-page="favorites" data-i18n="nav.favorites">즐겨찾기</a>
+                <a href="#" class="mobile-nav-item" data-page="compare" data-i18n="nav.compare">비교함</a>
+            </nav>
+            <button class="mobile-lang-toggle" id="mobileLangToggle">
+                <span>한국어 / English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" id="breadcrumb">
+            <a href="index.html" data-i18n="nav.home">홈</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-grade" id="breadcrumbGrade">HG</span>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current" id="breadcrumbCurrent">제품명</span>
+        </nav>
+
+        <!-- Product Detail Container -->
+        <div class="detail-container">
+            <!-- Product Gallery -->
+            <section class="detail-gallery">
+                <div class="gallery-main">
+                    <img src="" alt="" id="mainImage">
+                    <button class="gallery-nav prev" id="galleryPrev" aria-label="Previous">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="gallery-nav next" id="galleryNext" aria-label="Next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div class="gallery-thumbnails" id="galleryThumbnails">
+                    <!-- Thumbnails will be dynamically inserted -->
+                </div>
+            </section>
+
+            <!-- Product Info -->
+            <section class="detail-info">
+                <!-- Header Info -->
+                <div class="detail-header">
+                    <div class="detail-badges" id="detailBadges">
+                        <!-- Badges like grade, P-Bandai, etc -->
+                    </div>
+                    <h1 class="detail-name" id="detailName">제품명</h1>
+                    <p class="detail-series" id="detailSeries">시리즈</p>
+                    <p class="detail-model" id="detailModel">형식번호: RX-78-2</p>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="detail-actions">
+                    <button class="action-btn-large favorite-btn" id="detailFavoriteBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span data-i18n="product.addToFavorites">즐겨찾기 추가</span>
+                    </button>
+                    <button class="action-btn-large compare-btn" id="detailCompareBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        <span data-i18n="product.addToCompare">비교함에 추가</span>
+                    </button>
+                </div>
+
+                <!-- Price & Release -->
+                <div class="detail-meta">
+                    <div class="meta-item">
+                        <span class="meta-label" data-i18n="product.price">가격</span>
+                        <span class="meta-value price" id="detailPrice">¥1,100</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label" data-i18n="product.releaseDate">발매일</span>
+                        <span class="meta-value" id="detailReleaseDate">2015년 7월</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label" data-i18n="product.height">높이</span>
+                        <span class="meta-value" id="detailHeight">약 13cm</span>
+                    </div>
+                </div>
+
+                <!-- Recommendation Score -->
+                <div class="detail-recommendation" id="detailRecommendation">
+                    <div class="recommendation-score">
+                        <span class="score-label" data-i18n="recommendation.matchScore">매칭 점수</span>
+                        <div class="score-circle">
+                            <span class="score-value" id="matchScoreValue">95</span>
+                            <span class="score-percent">%</span>
+                        </div>
+                    </div>
+                    <div class="recommendation-reason">
+                        <h4 data-i18n="recommendation.whyRecommended">이 제품이 추천된 이유</h4>
+                        <p id="recommendationReason">추천 이유가 여기에 표시됩니다.</p>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="detail-tabs">
+                    <button class="tab-btn active" data-tab="specs" data-i18n="product.specs">스펙</button>
+                    <button class="tab-btn" data-tab="pros-cons" data-i18n="product.pros">장단점</button>
+                    <button class="tab-btn" data-tab="variants" data-i18n="product.variants">바리에이션</button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="tab-contents">
+                    <!-- Specs Tab -->
+                    <div class="tab-content active" id="specsTab">
+                        <div class="specs-grid" id="specsGrid">
+                            <!-- Specs will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <!-- Pros/Cons Tab -->
+                    <div class="tab-content" id="prosConsTab">
+                        <div class="pros-cons-container">
+                            <div class="pros-section">
+                                <h4 class="section-title pros" data-i18n="product.pros">장점</h4>
+                                <ul class="pros-list" id="prosList">
+                                    <!-- Pros will be dynamically inserted -->
+                                </ul>
+                            </div>
+                            <div class="cons-section">
+                                <h4 class="section-title cons" data-i18n="product.cons">단점</h4>
+                                <ul class="cons-list" id="consList">
+                                    <!-- Cons will be dynamically inserted -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Variants Tab -->
+                    <div class="tab-content" id="variantsTab">
+                        <div class="variants-section">
+                            <h4 class="section-subtitle">같은 기체의 다른 버전</h4>
+                            <div class="variants-grid" id="variantsGrid">
+                                <!-- Variants will be dynamically inserted -->
+                            </div>
+                        </div>
+                        <div class="related-grades-section">
+                            <h4 class="section-subtitle">다른 등급으로 보기</h4>
+                            <div class="related-grades" id="relatedGrades">
+                                <!-- Related grades will be dynamically inserted -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weapons & Accessories -->
+                <div class="detail-weapons">
+                    <h3 class="section-title">무장 & 부속품</h3>
+                    <div class="weapons-list" id="weaponsList">
+                        <!-- Weapons will be dynamically inserted -->
+                    </div>
+                </div>
+
+                <!-- Recommended For -->
+                <div class="detail-recommended-for">
+                    <h3 class="section-title" data-i18n="recommendation.perfectFor">이런 분께 추천</h3>
+                    <ul class="recommended-for-list" id="recommendedForList">
+                        <!-- Recommendations will be dynamically inserted -->
+                    </ul>
+                </div>
+
+                <!-- Building Tips -->
+                <div class="detail-tips" id="detailTips">
+                    <h3 class="section-title">조립 팁</h3>
+                    <ul class="tips-list" id="tipsList">
+                        <!-- Tips will be dynamically inserted -->
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Related Products -->
+        <section class="related-products">
+            <h2 class="section-heading" data-i18n="product.relatedProducts">관련 제품</h2>
+            <div class="related-products-grid" id="relatedProductsGrid">
+                <!-- Related products will be dynamically inserted -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">GUNPLA<span class="logo-highlight">GUIDE</span></span>
+            </div>
+            <p class="footer-disclaimer" data-i18n="footer.disclaimer">
+                본 사이트는 팬 제작 비공식 사이트입니다.
+            </p>
+            <p class="footer-copyright" data-i18n="footer.copyright">
+                © 2026 건프라 가이드. 건프라는 반다이 남코의 등록상표입니다.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Variant Card Template -->
+    <template id="variantCardTemplate">
+        <a href="" class="variant-card" data-id="">
+            <img src="" alt="" class="variant-image">
+            <div class="variant-info">
+                <span class="variant-type"></span>
+                <span class="variant-name"></span>
+            </div>
+        </a>
+    </template>
+
+    <!-- Related Grade Template -->
+    <template id="relatedGradeTemplate">
+        <a href="" class="related-grade-item" data-id="">
+            <span class="grade-badge"></span>
+            <span class="grade-name"></span>
+        </a>
+    </template>
+
+    <!-- Spec Item Template -->
+    <template id="specItemTemplate">
+        <div class="spec-item">
+            <span class="spec-label"></span>
+            <span class="spec-value"></span>
+        </div>
+    </template>
+
+    <!-- Related Product Card Template -->
+    <template id="relatedProductCardTemplate">
+        <a href="" class="related-product-card" data-id="">
+            <div class="related-product-image">
+                <img src="" alt="">
+            </div>
+            <div class="related-product-info">
+                <span class="related-product-grade"></span>
+                <span class="related-product-name"></span>
+                <span class="related-product-price"></span>
+            </div>
+        </a>
+    </template>
+
+    <!-- Scripts -->
+    <script src="js/i18n.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/recommendation.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize detail page
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            if (productId && window.GunplaApp) {
+                window.GunplaApp.loadProductDetail(productId);
+            }
+        });
+    </script>
+</body>
+
+</html>

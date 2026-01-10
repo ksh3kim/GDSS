@@ -1,0 +1,1936 @@
+{
+    "meta": {
+        "version": "1.0.0",
+        "totalCount": 50,
+        "lastUpdated": "2026-01-10"
+    },
+    "products": [
+        {
+            "id": "hg-rx-78-2-revive",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "HG",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": true,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/196",
+            "price": 1100,
+            "tags": [
+                "beginner",
+                "iconic",
+                "high_mobility"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 138,
+                "runnerCount": 7,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "rg-rx-78-2",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2010,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/1",
+            "price": 2750,
+            "tags": [
+                "detailed",
+                "iconic",
+                "full_frame"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 250,
+                "runnerCount": 12,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "mg-rx-78-2-ver3",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담 Ver.3.0",
+                "en": "RX-78-2 Gundam Ver.3.0"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "first_gundam",
+            "releaseYear": 2013,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/86",
+            "price": 4400,
+            "tags": [
+                "masterpiece",
+                "iconic",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 380,
+                "runnerCount": 15,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "pg-rx-78-2",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "PG",
+            "scale": "1/60",
+            "series": "first_gundam",
+            "releaseYear": 1998,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/308",
+            "price": 13200,
+            "tags": [
+                "ultimate",
+                "iconic",
+                "display"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 750,
+                "runnerCount": 30,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "pgu-rx-78-2",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "PGU",
+            "scale": "1/60",
+            "series": "first_gundam",
+            "releaseYear": 2020,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/434",
+            "price": 38500,
+            "tags": [
+                "ultimate",
+                "iconic",
+                "led"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 900,
+                "runnerCount": 40,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "none",
+                "clearParts": "many",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "display",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "eg-rx-78-2",
+            "baseProductId": "rx-78-2",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "EG",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2020,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/435",
+            "price": 770,
+            "tags": [
+                "entry",
+                "beginner",
+                "quick"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "none",
+                "partCount": 58,
+                "runnerCount": 4,
+                "runnerColors": "4+",
+                "weaponCount": "few",
+                "sealDependency": "required",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "medium",
+                "sizeFeeling": "small",
+                "recommendedUser": [
+                    "beginner"
+                ]
+            }
+        },
+        {
+            "id": "hg-unicorn-destroy",
+            "baseProductId": "unicorn-gundam",
+            "name": {
+                "ko": "유니콘 건담 디스트로이 모드",
+                "en": "Unicorn Gundam Destroy Mode"
+            },
+            "grade": "HGUC",
+            "scale": "1/144",
+            "series": "unicorn",
+            "releaseYear": 2009,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/51",
+            "price": 2200,
+            "tags": [
+                "psycho_frame",
+                "popular",
+                "display"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "partial",
+                "partCount": 180,
+                "runnerCount": 10,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "many",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-unicorn-unicorn",
+            "baseProductId": "unicorn-gundam",
+            "name": {
+                "ko": "유니콘 건담 유니콘 모드",
+                "en": "Unicorn Gundam Unicorn Mode"
+            },
+            "grade": "HGUC",
+            "scale": "1/144",
+            "series": "unicorn",
+            "releaseYear": 2009,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/50",
+            "price": 2200,
+            "tags": [
+                "psycho_frame",
+                "clean",
+                "display"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "partial",
+                "partCount": 165,
+                "runnerCount": 9,
+                "runnerColors": "2-3",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "rg-unicorn",
+            "baseProductId": "unicorn-gundam",
+            "name": {
+                "ko": "유니콘 건담",
+                "en": "Unicorn Gundam"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "unicorn",
+            "releaseYear": 2017,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/25",
+            "price": 4400,
+            "tags": [
+                "transformation",
+                "psycho_frame",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 385,
+                "runnerCount": 18,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "many",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "posing",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "mg-unicorn-verka",
+            "baseProductId": "unicorn-gundam",
+            "name": {
+                "ko": "유니콘 건담 Ver.Ka",
+                "en": "Unicorn Gundam Ver.Ka"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "unicorn",
+            "releaseYear": 2007,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": true,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/115",
+            "price": 6600,
+            "tags": [
+                "transformation",
+                "verka",
+                "masterpiece"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 580,
+                "runnerCount": 22,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "many",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "hg-freedom-revive",
+            "baseProductId": "freedom-gundam",
+            "name": {
+                "ko": "프리덤 건담",
+                "en": "Freedom Gundam"
+            },
+            "grade": "HGCE",
+            "scale": "1/144",
+            "series": "seed",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": true,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/200",
+            "price": 1650,
+            "tags": [
+                "popular",
+                "wing",
+                "beginner"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 155,
+                "runnerCount": 8,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "rg-freedom",
+            "baseProductId": "freedom-gundam",
+            "name": {
+                "ko": "프리덤 건담",
+                "en": "Freedom Gundam"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "seed",
+            "releaseYear": 2012,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/5",
+            "price": 2750,
+            "tags": [
+                "popular",
+                "wing",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 295,
+                "runnerCount": 14,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "posing",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "mg-freedom-ver2",
+            "baseProductId": "freedom-gundam",
+            "name": {
+                "ko": "프리덤 건담 Ver.2.0",
+                "en": "Freedom Gundam Ver.2.0"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "seed",
+            "releaseYear": 2016,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/145",
+            "price": 5500,
+            "tags": [
+                "masterpiece",
+                "wing",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 420,
+                "runnerCount": 18,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "hg-strike-freedom",
+            "baseProductId": "strike-freedom",
+            "name": {
+                "ko": "스트라이크 프리덤 건담",
+                "en": "Strike Freedom Gundam"
+            },
+            "grade": "HGCE",
+            "scale": "1/144",
+            "series": "seed_destiny",
+            "releaseYear": 2016,
+            "releaseLine": "standard",
+            "isRevive": true,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/225",
+            "price": 2200,
+            "tags": [
+                "popular",
+                "gold",
+                "wing"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 210,
+                "runnerCount": 12,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": true,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "display",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "rg-strike-freedom",
+            "baseProductId": "strike-freedom",
+            "name": {
+                "ko": "스트라이크 프리덤 건담",
+                "en": "Strike Freedom Gundam"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "seed_destiny",
+            "releaseYear": 2016,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/14",
+            "price": 3300,
+            "tags": [
+                "popular",
+                "gold",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 380,
+                "runnerCount": 18,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": true,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-exia",
+            "baseProductId": "exia",
+            "name": {
+                "ko": "건담 엑시아",
+                "en": "Gundam Exia"
+            },
+            "grade": "HG",
+            "scale": "1/144",
+            "series": "00",
+            "releaseYear": 2007,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/175",
+            "price": 1320,
+            "tags": [
+                "melee",
+                "seven_swords",
+                "popular"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "none",
+                "partCount": 120,
+                "runnerCount": 6,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "medium",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "rg-exia",
+            "baseProductId": "exia",
+            "name": {
+                "ko": "건담 엑시아",
+                "en": "Gundam Exia"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "00",
+            "releaseYear": 2013,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/15",
+            "price": 2750,
+            "tags": [
+                "melee",
+                "detailed",
+                "gn_drive"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 285,
+                "runnerCount": 14,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "posing",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "mg-exia",
+            "baseProductId": "exia",
+            "name": {
+                "ko": "건담 엑시아",
+                "en": "Gundam Exia"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "00",
+            "releaseYear": 2009,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/109",
+            "price": 4950,
+            "tags": [
+                "masterpiece",
+                "led_compatible",
+                "gn_drive"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 410,
+                "runnerCount": 17,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "hg-00-raiser",
+            "baseProductId": "00-raiser",
+            "name": {
+                "ko": "더블오 라이저",
+                "en": "00 Raiser"
+            },
+            "grade": "HG",
+            "scale": "1/144",
+            "series": "00",
+            "releaseYear": 2008,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/180",
+            "price": 2200,
+            "tags": [
+                "combination",
+                "twin_drive",
+                "popular"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "none",
+                "partCount": 200,
+                "runnerCount": 10,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "medium",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "rg-00-raiser",
+            "baseProductId": "00-raiser",
+            "name": {
+                "ko": "더블오 라이저",
+                "en": "00 Raiser"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "00",
+            "releaseYear": 2019,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/30",
+            "price": 4400,
+            "tags": [
+                "combination",
+                "twin_drive",
+                "detailed"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 425,
+                "runnerCount": 20,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "detail",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "hg-barbatos",
+            "baseProductId": "barbatos",
+            "name": {
+                "ko": "건담 바르바토스",
+                "en": "Gundam Barbatos"
+            },
+            "grade": "HGIBO",
+            "scale": "1/144",
+            "series": "ibo",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/240",
+            "price": 1100,
+            "tags": [
+                "frame",
+                "melee",
+                "beginner"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 140,
+                "runnerCount": 7,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "hg-barbatos-lupus-rex",
+            "baseProductId": "barbatos-lupus-rex",
+            "name": {
+                "ko": "건담 바르바토스 루프스 렉스",
+                "en": "Gundam Barbatos Lupus Rex"
+            },
+            "grade": "HGIBO",
+            "scale": "1/144",
+            "series": "ibo",
+            "releaseYear": 2017,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/250",
+            "price": 1320,
+            "tags": [
+                "frame",
+                "melee",
+                "final_form"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 165,
+                "runnerCount": 8,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "fm-barbatos-lupus-rex",
+            "baseProductId": "barbatos-lupus-rex",
+            "name": {
+                "ko": "건담 바르바토스 루프스 렉스",
+                "en": "Gundam Barbatos Lupus Rex"
+            },
+            "grade": "FM",
+            "scale": "1/100",
+            "series": "ibo",
+            "releaseYear": 2017,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/375",
+            "price": 4400,
+            "tags": [
+                "frame",
+                "melee",
+                "large"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 320,
+                "runnerCount": 14,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "posing",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "hg-aerial",
+            "baseProductId": "aerial",
+            "name": {
+                "ko": "건담 에어리얼",
+                "en": "Gundam Aerial"
+            },
+            "grade": "HGTWFM",
+            "scale": "1/144",
+            "series": "wfm",
+            "releaseYear": 2022,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/480",
+            "price": 1650,
+            "tags": [
+                "new_series",
+                "gund_format",
+                "popular"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 165,
+                "runnerCount": 9,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-aerial-rebuild",
+            "baseProductId": "aerial-rebuild",
+            "name": {
+                "ko": "건담 에어리얼 개수형",
+                "en": "Gundam Aerial Rebuild"
+            },
+            "grade": "HGTWFM",
+            "scale": "1/144",
+            "series": "wfm",
+            "releaseYear": 2023,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/495",
+            "price": 1760,
+            "tags": [
+                "new_series",
+                "gund_format",
+                "upgraded"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 185,
+                "runnerCount": 10,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-calibarn",
+            "baseProductId": "calibarn",
+            "name": {
+                "ko": "건담 캘리반",
+                "en": "Gundam Calibarn"
+            },
+            "grade": "HGTWFM",
+            "scale": "1/144",
+            "series": "wfm",
+            "releaseYear": 2023,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/510",
+            "price": 2200,
+            "tags": [
+                "new_series",
+                "gund_format",
+                "final"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 200,
+                "runnerCount": 11,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "display",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "hg-wing-zero-ew",
+            "baseProductId": "wing-zero",
+            "name": {
+                "ko": "윙 건담 제로 EW",
+                "en": "Wing Gundam Zero EW"
+            },
+            "grade": "HGAC",
+            "scale": "1/144",
+            "series": "ew",
+            "releaseYear": 2014,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/185",
+            "price": 1650,
+            "tags": [
+                "angel_wing",
+                "iconic",
+                "display"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 175,
+                "runnerCount": 9,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "rg-wing-zero-ew",
+            "baseProductId": "wing-zero",
+            "name": {
+                "ko": "윙 건담 제로 EW",
+                "en": "Wing Gundam Zero EW"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "ew",
+            "releaseYear": 2014,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/17",
+            "price": 3300,
+            "tags": [
+                "angel_wing",
+                "detailed",
+                "transformation"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 345,
+                "runnerCount": 16,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "display",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "mg-wing-zero-ew-verka",
+            "baseProductId": "wing-zero",
+            "name": {
+                "ko": "윙 건담 제로 EW Ver.Ka",
+                "en": "Wing Gundam Zero EW Ver.Ka"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "ew",
+            "releaseYear": 2004,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": true,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/92",
+            "price": 5500,
+            "tags": [
+                "angel_wing",
+                "verka",
+                "masterpiece"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 450,
+                "runnerCount": 19,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-nu-gundam",
+            "baseProductId": "nu-gundam",
+            "name": {
+                "ko": "뉴 건담",
+                "en": "Nu Gundam"
+            },
+            "grade": "HGUC",
+            "scale": "1/144",
+            "series": "cca",
+            "releaseYear": 2008,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/55",
+            "price": 2750,
+            "tags": [
+                "fin_funnel",
+                "iconic",
+                "amuro"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "partial",
+                "partCount": 200,
+                "runnerCount": 11,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "rg-nu-gundam",
+            "baseProductId": "nu-gundam",
+            "name": {
+                "ko": "뉴 건담",
+                "en": "Nu Gundam"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "cca",
+            "releaseYear": 2019,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/32",
+            "price": 4950,
+            "tags": [
+                "fin_funnel",
+                "detailed",
+                "popular"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 450,
+                "runnerCount": 21,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "detail",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "mg-nu-gundam-verka",
+            "baseProductId": "nu-gundam",
+            "name": {
+                "ko": "뉴 건담 Ver.Ka",
+                "en": "Nu Gundam Ver.Ka"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "cca",
+            "releaseYear": 2012,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": true,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/88",
+            "price": 8800,
+            "tags": [
+                "fin_funnel",
+                "verka",
+                "masterpiece"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 680,
+                "runnerCount": 28,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "rg-sazabi",
+            "baseProductId": "sazabi",
+            "name": {
+                "ko": "사자비",
+                "en": "Sazabi"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "cca",
+            "releaseYear": 2018,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/29",
+            "price": 4950,
+            "tags": [
+                "funnel",
+                "char",
+                "massive"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 550,
+                "runnerCount": 24,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "detail",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "mg-sazabi-verka",
+            "baseProductId": "sazabi",
+            "name": {
+                "ko": "사자비 Ver.Ka",
+                "en": "Sazabi Ver.Ka"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "cca",
+            "releaseYear": 2013,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": true,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/89",
+            "price": 11000,
+            "tags": [
+                "funnel",
+                "verka",
+                "massive"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 780,
+                "runnerCount": 32,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "hg-sinanju",
+            "baseProductId": "sinanju",
+            "name": {
+                "ko": "시난주",
+                "en": "Sinanju"
+            },
+            "grade": "HGUC",
+            "scale": "1/144",
+            "series": "unicorn",
+            "releaseYear": 2010,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/65",
+            "price": 2750,
+            "tags": [
+                "neo_zeon",
+                "full_frontal",
+                "sleek"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 220,
+                "runnerCount": 12,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "required",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "medium",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "display",
+                    "painter"
+                ]
+            }
+        },
+        {
+            "id": "rg-sinanju",
+            "baseProductId": "sinanju",
+            "name": {
+                "ko": "시난주",
+                "en": "Sinanju"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "unicorn",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/22",
+            "price": 4400,
+            "tags": [
+                "neo_zeon",
+                "detailed",
+                "challenging"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 410,
+                "runnerCount": 19,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "painter"
+                ]
+            }
+        },
+        {
+            "id": "mg-sinanju-verka",
+            "baseProductId": "sinanju",
+            "name": {
+                "ko": "시난주 Ver.Ka",
+                "en": "Sinanju Ver.Ka"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "unicorn",
+            "releaseYear": 2012,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": true,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/120",
+            "price": 8800,
+            "tags": [
+                "neo_zeon",
+                "verka",
+                "masterpiece"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 620,
+                "runnerCount": 25,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "hg-zaku-ii",
+            "baseProductId": "zaku-ii",
+            "name": {
+                "ko": "자쿠 II",
+                "en": "Zaku II"
+            },
+            "grade": "HGUC",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": true,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/197",
+            "price": 1320,
+            "tags": [
+                "mass_production",
+                "iconic",
+                "zeon"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 140,
+                "runnerCount": 7,
+                "runnerColors": "2-3",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "rg-zaku-ii",
+            "baseProductId": "zaku-ii",
+            "name": {
+                "ko": "자쿠 II",
+                "en": "Zaku II"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2011,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/3",
+            "price": 2750,
+            "tags": [
+                "mass_production",
+                "detailed",
+                "zeon"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 265,
+                "runnerCount": 13,
+                "runnerColors": "2-3",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "mg-zaku-ii-ver2",
+            "baseProductId": "zaku-ii",
+            "name": {
+                "ko": "자쿠 II Ver.2.0",
+                "en": "Zaku II Ver.2.0"
+            },
+            "grade": "MG",
+            "scale": "1/100",
+            "series": "first_gundam",
+            "releaseYear": 2007,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/78",
+            "price": 3850,
+            "tags": [
+                "mass_production",
+                "masterpiece",
+                "zeon"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 380,
+                "runnerCount": 16,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "posing"
+                ]
+            }
+        },
+        {
+            "id": "rg-char-zaku",
+            "baseProductId": "char-zaku",
+            "name": {
+                "ko": "샤아 전용 자쿠 II",
+                "en": "Char's Zaku II"
+            },
+            "grade": "RG",
+            "scale": "1/144",
+            "series": "first_gundam",
+            "releaseYear": 2011,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/2",
+            "price": 2750,
+            "tags": [
+                "char",
+                "iconic",
+                "red_comet"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 5,
+                "frameType": "full",
+                "partCount": 265,
+                "runnerCount": 13,
+                "runnerColors": "2-3",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "detail",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "sd-rx-78-2",
+            "baseProductId": "rx-78-2-sd",
+            "name": {
+                "ko": "RX-78-2 건담",
+                "en": "RX-78-2 Gundam"
+            },
+            "grade": "SDCS",
+            "scale": "non_scale",
+            "series": "first_gundam",
+            "releaseYear": 2018,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/350",
+            "price": 770,
+            "tags": [
+                "sd",
+                "cute",
+                "beginner"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 3,
+                "frameType": "partial",
+                "partCount": 75,
+                "runnerCount": 5,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "partial",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "small",
+                "recommendedUser": [
+                    "beginner"
+                ]
+            }
+        },
+        {
+            "id": "sdex-strike",
+            "baseProductId": "strike-sd",
+            "name": {
+                "ko": "스트라이크 건담",
+                "en": "Strike Gundam"
+            },
+            "grade": "SDEX",
+            "scale": "non_scale",
+            "series": "seed",
+            "releaseYear": 2015,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/355",
+            "price": 660,
+            "tags": [
+                "sd",
+                "beginner",
+                "striker_pack"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 2,
+                "frameType": "none",
+                "partCount": 50,
+                "runnerCount": 3,
+                "runnerColors": "4+",
+                "weaponCount": "standard",
+                "sealDependency": "required",
+                "clearParts": "none",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "low",
+                "sizeFeeling": "small",
+                "recommendedUser": [
+                    "beginner"
+                ]
+            }
+        },
+        {
+            "id": "mgex-unicorn",
+            "baseProductId": "unicorn-gundam-ex",
+            "name": {
+                "ko": "유니콘 건담",
+                "en": "Unicorn Gundam"
+            },
+            "grade": "MGEX",
+            "scale": "1/100",
+            "series": "unicorn",
+            "releaseYear": 2020,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/440",
+            "price": 27500,
+            "tags": [
+                "led",
+                "transformation",
+                "ultimate"
+            ],
+            "filterData": {
+                "difficulty": "advanced",
+                "mobility": 4,
+                "frameType": "full",
+                "partCount": 700,
+                "runnerCount": 30,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "none",
+                "clearParts": "many",
+                "coatingParts": false,
+                "transformation": true,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "collector",
+                    "display",
+                    "detail"
+                ]
+            }
+        },
+        {
+            "id": "hg-rising-freedom",
+            "baseProductId": "rising-freedom",
+            "name": {
+                "ko": "라이징 프리덤 건담",
+                "en": "Rising Freedom Gundam"
+            },
+            "grade": "HGCE",
+            "scale": "1/144",
+            "series": "seed_freedom",
+            "releaseYear": 2024,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/520",
+            "price": 2200,
+            "tags": [
+                "new",
+                "movie",
+                "popular"
+            ],
+            "filterData": {
+                "difficulty": "beginner",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 185,
+                "runnerCount": 10,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "normal",
+                "recommendedUser": [
+                    "beginner",
+                    "display"
+                ]
+            }
+        },
+        {
+            "id": "hg-mighty-strike-freedom",
+            "baseProductId": "mighty-strike-freedom",
+            "name": {
+                "ko": "마이티 스트라이크 프리덤 건담",
+                "en": "Mighty Strike Freedom Gundam"
+            },
+            "grade": "HGCE",
+            "scale": "1/144",
+            "series": "seed_freedom",
+            "releaseYear": 2024,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/525",
+            "price": 3520,
+            "tags": [
+                "new",
+                "movie",
+                "massive"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 280,
+                "runnerCount": 15,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": true,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "display",
+                    "collector"
+                ]
+            }
+        },
+        {
+            "id": "hg-destiny-spec2",
+            "baseProductId": "destiny-spec2",
+            "name": {
+                "ko": "데스티니 건담 스펙 II",
+                "en": "Destiny Gundam Spec II"
+            },
+            "grade": "HGCE",
+            "scale": "1/144",
+            "series": "seed_freedom",
+            "releaseYear": 2024,
+            "releaseLine": "standard",
+            "isRevive": false,
+            "isVerKa": false,
+            "thumbnail": "https://gunpla.fyi/images/boxarts/530",
+            "price": 2420,
+            "tags": [
+                "new",
+                "movie",
+                "wing"
+            ],
+            "filterData": {
+                "difficulty": "intermediate",
+                "mobility": 4,
+                "frameType": "partial",
+                "partCount": 220,
+                "runnerCount": 12,
+                "runnerColors": "4+",
+                "weaponCount": "many",
+                "sealDependency": "partial",
+                "clearParts": "some",
+                "coatingParts": false,
+                "transformation": false,
+                "colorSeparation": "high",
+                "sizeFeeling": "large",
+                "recommendedUser": [
+                    "display",
+                    "posing"
+                ]
+            }
+        }
+    ]
+}

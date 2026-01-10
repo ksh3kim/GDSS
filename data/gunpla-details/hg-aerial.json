@@ -1,0 +1,145 @@
+{
+    "id": "hg-aerial",
+    "baseProductId": "aerial",
+    "name": {
+        "ko": "건담 에어리얼",
+        "en": "Gundam Aerial"
+    },
+    "modelNumber": "XVX-016",
+    "series": "wfm",
+    "pilot": {
+        "ko": "슬레타 머큐리",
+        "en": "Suletta Mercury"
+    },
+    "manufacturer": {
+        "ko": "신세이 개발공사",
+        "en": "Shinsei Development"
+    },
+    "grade": "HGTWFM",
+    "scale": "1/144",
+    "releaseYear": 2022,
+    "releaseMonth": 10,
+    "releaseLine": "standard",
+    "isRevive": false,
+    "isVerKa": false,
+    "price": 1650,
+    "height": "13cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/480",
+        "gallery": []
+    },
+    "fullSpecs": {
+        "partCount": 165,
+        "runnerCount": 9,
+        "runnerColors": 5,
+        "frameType": "partial",
+        "spareParts": "few",
+        "sealDependency": "partial",
+        "clearParts": "some",
+        "coatingParts": false,
+        "eyeExpression": "split",
+        "paintSuitability": "unnecessary",
+        "difficulty": "beginner",
+        "mobility": 4,
+        "colorSeparation": "high",
+        "decalType": [
+            "sticker",
+            "marking"
+        ],
+        "weaponCount": "standard",
+        "transformation": false,
+        "combination": false,
+        "sizeFeeling": "normal",
+        "recommendedUser": [
+            "beginner",
+            "display"
+        ]
+    },
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 사벨",
+            "실드 (비트 스테이브 탑재)"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Saber",
+            "Shield (with Bit Staves)"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "최신 HG 기술로 뛰어난 색분할",
+            "분할 사출로 눈 표현이 우수",
+            "클린한 화이트 디자인",
+            "비트 스테이브 파츠로 다양한 연출 가능"
+        ],
+        "en": [
+            "Excellent color separation with latest HG technology",
+            "Superior eye expression with color separation",
+            "Clean white design",
+            "Various displays possible with Bit Stave parts"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "비트 스테이브 연출에 별도 스탠드 필요",
+            "무장이 단순한 편"
+        ],
+        "en": [
+            "Separate stand needed for Bit Stave display",
+            "Relatively simple armament"
+        ]
+    },
+    "variants": [
+        {
+            "id": "hg-aerial-permet-score6",
+            "variantType": "special",
+            "name": {
+                "ko": "퍼멧 스코어 6",
+                "en": "Permet Score 6"
+            },
+            "releaseLine": "p_bandai"
+        }
+    ],
+    "relatedGrades": [
+        {
+            "id": "hg-aerial-rebuild",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 개수형",
+                "en": "HG Rebuild"
+            }
+        },
+        {
+            "id": "hg-calibarn",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 캘리반",
+                "en": "HG Calibarn"
+            }
+        },
+        {
+            "id": "fm-aerial",
+            "grade": "FM",
+            "name": {
+                "ko": "FM 1/100",
+                "en": "FM 1/100"
+            }
+        }
+    ],
+    "recommendation": {
+        "matchTags": [
+            "new_series",
+            "gund_format",
+            "popular",
+            "beginner"
+        ],
+        "matchScore": 88,
+        "reasoning": {
+            "ko": "수성의 마녀 주인공기로, 최신 HG 기술이 적용되어 색분할과 조형이 뛰어납니다. 입문자도 쉽게 조립할 수 있으며, 깔끔한 화이트 디자인이 매력적입니다.",
+            "en": "Main protagonist suit from Witch from Mercury. Latest HG technology provides excellent color separation and sculpting. Easy for beginners with attractive clean white design."
+        }
+    },
+    "lastUpdated": "2026-01-10"
+}

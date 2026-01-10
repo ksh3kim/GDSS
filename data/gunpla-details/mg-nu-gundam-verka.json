@@ -1,0 +1,150 @@
+{
+    "id": "mg-nu-gundam-verka",
+    "baseProductId": "nu-gundam",
+    "name": {
+        "ko": "뉴 건담 Ver.Ka",
+        "en": "Nu Gundam Ver.Ka"
+    },
+    "modelNumber": "RX-93",
+    "series": "cca",
+    "pilot": {
+        "ko": "아무로 레이",
+        "en": "Amuro Ray"
+    },
+    "manufacturer": {
+        "ko": "애너하임 일렉트로닉스",
+        "en": "Anaheim Electronics"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2012,
+    "releaseMonth": 6,
+    "releaseLine": "standard",
+    "isRevive": false,
+    "isVerKa": true,
+    "price": 8800,
+    "height": "23cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/88",
+        "gallery": []
+    },
+    "fullSpecs": {
+        "partCount": 680,
+        "runnerCount": 28,
+        "runnerColors": 8,
+        "frameType": "full",
+        "spareParts": "many",
+        "sealDependency": "partial",
+        "clearParts": "some",
+        "coatingParts": false,
+        "eyeExpression": "clear",
+        "paintSuitability": "partial",
+        "difficulty": "advanced",
+        "mobility": 5,
+        "colorSeparation": "high",
+        "decalType": [
+            "water"
+        ],
+        "weaponCount": "many",
+        "transformation": false,
+        "combination": false,
+        "sizeFeeling": "large",
+        "recommendedUser": [
+            "collector",
+            "detail"
+        ]
+    },
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "뉴 하이퍼 바주카",
+            "빔 사벨 x2",
+            "실드",
+            "핀 판넬 x6"
+        ],
+        "en": [
+            "Beam Rifle",
+            "New Hyper Bazooka",
+            "Beam Saber x2",
+            "Shield",
+            "Fin Funnel x6"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "카토키 하지메 특유의 날카로운 디자인",
+            "핀 판넬 전개 시 압도적인 볼륨감",
+            "워터 데칼 포함으로 마무리 작업이 수월",
+            "가동성과 디테일 모두 최상급"
+        ],
+        "en": [
+            "Sharp design by Hajime Katoki",
+            "Overwhelming volume with fin funnels deployed",
+            "Water slides included for easy finishing",
+            "Both articulation and detail are top-tier"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "상급 난이도로 초보자에게 어려움",
+            "완성 후 디스플레이 공간 많이 차지",
+            "일부 관절 부담으로 장기간 포즈 유지 주의"
+        ],
+        "en": [
+            "Advanced difficulty challenging for beginners",
+            "Takes significant display space when completed",
+            "Some joints may sag over time when posed"
+        ]
+    },
+    "variants": [
+        {
+            "id": "mg-nu-gundam-verka-titanium",
+            "variantType": "finish",
+            "name": {
+                "ko": "티타늄 피니시",
+                "en": "Titanium Finish"
+            },
+            "releaseLine": "limited"
+        }
+    ],
+    "relatedGrades": [
+        {
+            "id": "hg-nu-gundam",
+            "grade": "HG",
+            "name": {
+                "ko": "HGUC",
+                "en": "HGUC"
+            }
+        },
+        {
+            "id": "rg-nu-gundam",
+            "grade": "RG",
+            "name": {
+                "ko": "RG",
+                "en": "RG"
+            }
+        },
+        {
+            "id": "mg-nu-gundam-ver2",
+            "grade": "MG",
+            "name": {
+                "ko": "MG Ver.2.0 (예정)",
+                "en": "MG Ver.2.0 (TBA)"
+            }
+        }
+    ],
+    "recommendation": {
+        "matchTags": [
+            "fin_funnel",
+            "verka",
+            "masterpiece",
+            "detailed"
+        ],
+        "matchScore": 97,
+        "reasoning": {
+            "ko": "MG 뉴건담 Ver.Ka는 MG 라인의 대표작 중 하나입니다. 핀 판넬의 볼륨감, 날카로운 카토키 디자인, 그리고 워터 데칼까지 포함된 완성도 높은 제품입니다. 중급 이상의 모델러에게 강력히 추천합니다.",
+            "en": "MG Nu Gundam Ver.Ka is one of the flagship products in MG line. Volume of fin funnels, sharp Katoki design, and included water slides make it a masterpiece. Highly recommended for intermediate to advanced modelers."
+        }
+    },
+    "lastUpdated": "2026-01-10"
+}

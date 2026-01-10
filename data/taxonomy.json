@@ -1,0 +1,317 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-10",
+  "categories": [
+    {
+      "id": "grade",
+      "type": "single",
+      "label": { "ko": "등급 (Grade)", "en": "Grade" },
+      "options": [
+        { "value": "EG", "label": { "ko": "EG (Entry Grade)", "en": "EG (Entry Grade)" } },
+        { "value": "HG", "label": { "ko": "HG (High Grade)", "en": "HG (High Grade)" } },
+        { "value": "RG", "label": { "ko": "RG (Real Grade)", "en": "RG (Real Grade)" } },
+        { "value": "MG", "label": { "ko": "MG (Master Grade)", "en": "MG (Master Grade)" } },
+        { "value": "MGEX", "label": { "ko": "MGEX (Master Grade Extreme)", "en": "MGEX (Master Grade Extreme)" } },
+        { "value": "PG", "label": { "ko": "PG (Perfect Grade)", "en": "PG (Perfect Grade)" } },
+        { "value": "PGU", "label": { "ko": "PG Unleashed", "en": "PG Unleashed" } },
+        { "value": "SD", "label": { "ko": "SD (Super Deformed)", "en": "SD (Super Deformed)" } },
+        { "value": "SDCS", "label": { "ko": "SD Cross Silhouette", "en": "SD Cross Silhouette" } },
+        { "value": "SDEX", "label": { "ko": "SD EX-Standard", "en": "SD EX-Standard" } },
+        { "value": "HGUC", "label": { "ko": "HGUC (Universal Century)", "en": "HGUC (Universal Century)" } },
+        { "value": "HGCE", "label": { "ko": "HGCE (Cosmic Era)", "en": "HGCE (Cosmic Era)" } },
+        { "value": "HGAC", "label": { "ko": "HGAC (After Colony)", "en": "HGAC (After Colony)" } },
+        { "value": "HGAW", "label": { "ko": "HGAW (After War)", "en": "HGAW (After War)" } },
+        { "value": "HGFC", "label": { "ko": "HGFC (Future Century)", "en": "HGFC (Future Century)" } },
+        { "value": "HGCC", "label": { "ko": "HGCC (Correct Century)", "en": "HGCC (Correct Century)" } },
+        { "value": "HGBD", "label": { "ko": "HGBD (Build Divers)", "en": "HGBD (Build Divers)" } },
+        { "value": "HGBF", "label": { "ko": "HGBF (Build Fighters)", "en": "HGBF (Build Fighters)" } },
+        { "value": "HGIBO", "label": { "ko": "HGIBO (Iron-Blooded Orphans)", "en": "HGIBO (Iron-Blooded Orphans)" } },
+        { "value": "HGTWFM", "label": { "ko": "HGTWFM (Witch from Mercury)", "en": "HGTWFM (Witch from Mercury)" } },
+        { "value": "FM", "label": { "ko": "FM (Full Mechanics)", "en": "FM (Full Mechanics)" } },
+        { "value": "RE100", "label": { "ko": "RE/100", "en": "RE/100" } },
+        { "value": "HiRM", "label": { "ko": "Hi-Resolution Model", "en": "Hi-Resolution Model" } }
+      ]
+    },
+    {
+      "id": "series",
+      "type": "multiple",
+      "label": { "ko": "세계관/작품", "en": "Series/Universe" },
+      "options": [
+        { "value": "first_gundam", "label": { "ko": "퍼스트 건담 (0079)", "en": "Mobile Suit Gundam (0079)" } },
+        { "value": "zeta", "label": { "ko": "기동전사 Z건담", "en": "Zeta Gundam" } },
+        { "value": "zz", "label": { "ko": "기동전사 건담 ZZ", "en": "Gundam ZZ" } },
+        { "value": "cca", "label": { "ko": "역습의 샤아", "en": "Char's Counterattack" } },
+        { "value": "unicorn", "label": { "ko": "기동전사 건담 UC", "en": "Gundam Unicorn" } },
+        { "value": "narrative", "label": { "ko": "기동전사 건담 NT", "en": "Gundam Narrative" } },
+        { "value": "hathaway", "label": { "ko": "섬광의 하사웨이", "en": "Hathaway's Flash" } },
+        { "value": "f91", "label": { "ko": "건담 F91", "en": "Gundam F91" } },
+        { "value": "victory", "label": { "ko": "기동전사 V건담", "en": "Victory Gundam" } },
+        { "value": "thunderbolt", "label": { "ko": "기동전사 건담 썬더볼트", "en": "Gundam Thunderbolt" } },
+        { "value": "the_origin", "label": { "ko": "기동전사 건담 THE ORIGIN", "en": "Gundam THE ORIGIN" } },
+        { "value": "0080", "label": { "ko": "0080 포켓 속의 전쟁", "en": "0080: War in the Pocket" } },
+        { "value": "0083", "label": { "ko": "0083 스타더스트 메모리", "en": "0083: Stardust Memory" } },
+        { "value": "08ms", "label": { "ko": "제08MS소대", "en": "08th MS Team" } },
+        { "value": "seed", "label": { "ko": "건담 SEED", "en": "Gundam SEED" } },
+        { "value": "seed_destiny", "label": { "ko": "건담 SEED DESTINY", "en": "Gundam SEED Destiny" } },
+        { "value": "seed_freedom", "label": { "ko": "건담 SEED FREEDOM", "en": "Gundam SEED Freedom" } },
+        { "value": "00", "label": { "ko": "건담 00 (더블오)", "en": "Gundam 00" } },
+        { "value": "ibo", "label": { "ko": "철혈의 오펀스", "en": "Iron-Blooded Orphans" } },
+        { "value": "wfm", "label": { "ko": "수성의 마녀", "en": "Witch from Mercury" } },
+        { "value": "wing", "label": { "ko": "신기동전기 건담W", "en": "Gundam Wing" } },
+        { "value": "ew", "label": { "ko": "건담W 엔드리스 왈츠", "en": "Endless Waltz" } },
+        { "value": "g_gundam", "label": { "ko": "기동무투전 G건담", "en": "G Gundam" } },
+        { "value": "gundam_x", "label": { "ko": "기동신세기 건담X", "en": "Gundam X" } },
+        { "value": "turn_a", "label": { "ko": "턴에이 건담", "en": "Turn A Gundam" } },
+        { "value": "age", "label": { "ko": "기동전사 건담 AGE", "en": "Gundam AGE" } },
+        { "value": "reconguista", "label": { "ko": "건담 G의 레콘기스타", "en": "Reconguista in G" } },
+        { "value": "build_fighters", "label": { "ko": "건담 빌드 파이터즈", "en": "Build Fighters" } },
+        { "value": "build_divers", "label": { "ko": "건담 빌드 다이버스", "en": "Build Divers" } },
+        { "value": "breaker_battlogue", "label": { "ko": "건담 브레이커 배틀로그", "en": "Breaker Battlogue" } },
+        { "value": "requiem", "label": { "ko": "건담 레퀴엠", "en": "Requiem for Vengeance" } }
+      ]
+    },
+    {
+      "id": "releaseLine",
+      "type": "multiple",
+      "label": { "ko": "발매 라인", "en": "Release Line" },
+      "options": [
+        { "value": "standard", "label": { "ko": "일반판", "en": "Standard Release" } },
+        { "value": "p_bandai", "label": { "ko": "프리미엄 반다이", "en": "Premium Bandai" } },
+        { "value": "limited", "label": { "ko": "한정판", "en": "Limited Edition" } },
+        { "value": "clear", "label": { "ko": "클리어 컬러", "en": "Clear Color" } },
+        { "value": "titanium", "label": { "ko": "티타늄 피니시", "en": "Titanium Finish" } },
+        { "value": "coating", "label": { "ko": "스페셜 코팅", "en": "Special Coating" } },
+        { "value": "metallic", "label": { "ko": "메탈릭 글로스", "en": "Metallic Gloss" } },
+        { "value": "narrative", "label": { "ko": "내러티브 Ver.", "en": "Narrative Ver." } },
+        { "value": "gbwc", "label": { "ko": "GBWC 기념판", "en": "GBWC Edition" } }
+      ]
+    },
+    {
+      "id": "releaseYear",
+      "type": "range",
+      "label": { "ko": "발매 연도", "en": "Release Year" },
+      "min": 1980,
+      "max": 2026,
+      "step": 1
+    },
+    {
+      "id": "isRevive",
+      "type": "boolean",
+      "label": { "ko": "리바이브 제품", "en": "Revive Version" },
+      "options": [
+        { "value": true, "label": { "ko": "리바이브", "en": "Revive" } },
+        { "value": false, "label": { "ko": "오리지널", "en": "Original" } }
+      ]
+    },
+    {
+      "id": "isVerKa",
+      "type": "boolean",
+      "label": { "ko": "Ver.Ka 제품", "en": "Ver.Ka" },
+      "options": [
+        { "value": true, "label": { "ko": "Ver.Ka", "en": "Ver.Ka" } },
+        { "value": false, "label": { "ko": "일반", "en": "Standard" } }
+      ]
+    },
+    {
+      "id": "scale",
+      "type": "single",
+      "label": { "ko": "스케일", "en": "Scale" },
+      "options": [
+        { "value": "1/144", "label": { "ko": "1/144", "en": "1/144" } },
+        { "value": "1/100", "label": { "ko": "1/100", "en": "1/100" } },
+        { "value": "1/60", "label": { "ko": "1/60", "en": "1/60" } },
+        { "value": "1/48", "label": { "ko": "1/48", "en": "1/48" } },
+        { "value": "non_scale", "label": { "ko": "논스케일", "en": "Non-scale" } }
+      ]
+    },
+    {
+      "id": "frameType",
+      "type": "single",
+      "label": { "ko": "프레임 구조", "en": "Frame Type" },
+      "options": [
+        { "value": "none", "label": { "ko": "프레임 없음", "en": "No Frame" } },
+        { "value": "partial", "label": { "ko": "부분 프레임", "en": "Partial Frame" } },
+        { "value": "full", "label": { "ko": "풀 프레임", "en": "Full Inner Frame" } }
+      ]
+    },
+    {
+      "id": "runnerColors",
+      "type": "single",
+      "label": { "ko": "러너 색상 수", "en": "Runner Colors" },
+      "options": [
+        { "value": "1", "label": { "ko": "단색 (1색)", "en": "Single Color" } },
+        { "value": "2-3", "label": { "ko": "2~3색", "en": "2-3 Colors" } },
+        { "value": "4+", "label": { "ko": "4색 이상", "en": "4+ Colors" } }
+      ]
+    },
+    {
+      "id": "spareParts",
+      "type": "single",
+      "label": { "ko": "여분 파츠 발생량", "en": "Spare Parts" },
+      "options": [
+        { "value": "none", "label": { "ko": "없음", "en": "None" } },
+        { "value": "few", "label": { "ko": "적음", "en": "Few" } },
+        { "value": "many", "label": { "ko": "많음", "en": "Many" } }
+      ]
+    },
+    {
+      "id": "sealDependency",
+      "type": "single",
+      "label": { "ko": "씰 의존도", "en": "Sticker Dependency" },
+      "options": [
+        { "value": "none", "label": { "ko": "거의 없음", "en": "Minimal" } },
+        { "value": "partial", "label": { "ko": "부분적", "en": "Partial" } },
+        { "value": "required", "label": { "ko": "필수", "en": "Required" } }
+      ]
+    },
+    {
+      "id": "clearParts",
+      "type": "single",
+      "label": { "ko": "클리어 파츠 비율", "en": "Clear Parts" },
+      "options": [
+        { "value": "none", "label": { "ko": "없음", "en": "None" } },
+        { "value": "some", "label": { "ko": "소량", "en": "Some" } },
+        { "value": "many", "label": { "ko": "다수", "en": "Many" } }
+      ]
+    },
+    {
+      "id": "coatingParts",
+      "type": "boolean",
+      "label": { "ko": "코팅/도금 파츠", "en": "Coating/Plating Parts" },
+      "options": [
+        { "value": true, "label": { "ko": "있음", "en": "Yes" } },
+        { "value": false, "label": { "ko": "없음", "en": "No" } }
+      ]
+    },
+    {
+      "id": "eyeExpression",
+      "type": "single",
+      "label": { "ko": "눈 표현 방식", "en": "Eye Expression" },
+      "options": [
+        { "value": "sticker", "label": { "ko": "씰", "en": "Sticker" } },
+        { "value": "split", "label": { "ko": "분할 사출", "en": "Color Separated" } },
+        { "value": "clear", "label": { "ko": "클리어 파츠", "en": "Clear Parts" } }
+      ]
+    },
+    {
+      "id": "paintSuitability",
+      "type": "single",
+      "label": { "ko": "도색 적합도", "en": "Paint Suitability" },
+      "options": [
+        { "value": "unnecessary", "label": { "ko": "도색 불필요", "en": "Not Required" } },
+        { "value": "partial", "label": { "ko": "부분 도색 권장", "en": "Partial Recommended" } },
+        { "value": "full", "label": { "ko": "전체 도색 권장", "en": "Full Recommended" } }
+      ]
+    },
+    {
+      "id": "difficulty",
+      "type": "single",
+      "label": { "ko": "조립 난이도", "en": "Assembly Difficulty" },
+      "options": [
+        { "value": "beginner", "label": { "ko": "초보", "en": "Beginner" } },
+        { "value": "intermediate", "label": { "ko": "중급", "en": "Intermediate" } },
+        { "value": "advanced", "label": { "ko": "상급", "en": "Advanced" } }
+      ]
+    },
+    {
+      "id": "mobility",
+      "type": "range",
+      "label": { "ko": "가동성", "en": "Articulation" },
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "labels": {
+        "1": { "ko": "제한적", "en": "Limited" },
+        "2": { "ko": "기본", "en": "Basic" },
+        "3": { "ko": "보통", "en": "Moderate" },
+        "4": { "ko": "우수", "en": "Good" },
+        "5": { "ko": "최상", "en": "Excellent" }
+      }
+    },
+    {
+      "id": "partCount",
+      "type": "range",
+      "label": { "ko": "파츠 수", "en": "Part Count" },
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "presets": [
+        { "value": [0, 100], "label": { "ko": "100개 미만", "en": "Under 100" } },
+        { "value": [100, 300], "label": { "ko": "100~300개", "en": "100-300" } },
+        { "value": [300, 600], "label": { "ko": "300~600개", "en": "300-600" } },
+        { "value": [600, 2000], "label": { "ko": "600개 이상", "en": "600+" } }
+      ]
+    },
+    {
+      "id": "runnerCount",
+      "type": "range",
+      "label": { "ko": "러너 수", "en": "Runner Count" },
+      "min": 1,
+      "max": 50,
+      "step": 1
+    },
+    {
+      "id": "colorSeparation",
+      "type": "single",
+      "label": { "ko": "색분할 수준", "en": "Color Separation Level" },
+      "options": [
+        { "value": "low", "label": { "ko": "낮음 (도색 필요)", "en": "Low (Paint Needed)" } },
+        { "value": "medium", "label": { "ko": "보통", "en": "Medium" } },
+        { "value": "high", "label": { "ko": "높음 (도색 불필요)", "en": "High (No Paint Needed)" } }
+      ]
+    },
+    {
+      "id": "decalType",
+      "type": "multiple",
+      "label": { "ko": "스티커/데칼 종류", "en": "Decal Type" },
+      "options": [
+        { "value": "sticker", "label": { "ko": "일반 씰", "en": "Sticker" } },
+        { "value": "marking", "label": { "ko": "마킹 씰", "en": "Marking Sticker" } },
+        { "value": "dry", "label": { "ko": "드라이 데칼", "en": "Dry Decal" } },
+        { "value": "water", "label": { "ko": "워터 데칼", "en": "Water Slide Decal" } }
+      ]
+    },
+    {
+      "id": "weaponCount",
+      "type": "single",
+      "label": { "ko": "무장 구성", "en": "Weapon Count" },
+      "options": [
+        { "value": "few", "label": { "ko": "적음", "en": "Few" } },
+        { "value": "standard", "label": { "ko": "표준", "en": "Standard" } },
+        { "value": "many", "label": { "ko": "다수", "en": "Many" } }
+      ]
+    },
+    {
+      "id": "transformation",
+      "type": "boolean",
+      "label": { "ko": "변형/합체 기믹", "en": "Transformation/Combination" },
+      "options": [
+        { "value": true, "label": { "ko": "있음", "en": "Yes" } },
+        { "value": false, "label": { "ko": "없음", "en": "No" } }
+      ]
+    },
+    {
+      "id": "sizeFeeling",
+      "type": "single",
+      "label": { "ko": "크기 체감", "en": "Size Impression" },
+      "options": [
+        { "value": "small", "label": { "ko": "작다", "en": "Small" } },
+        { "value": "normal", "label": { "ko": "보통", "en": "Normal" } },
+        { "value": "large", "label": { "ko": "크다", "en": "Large" } }
+      ]
+    },
+    {
+      "id": "recommendedUser",
+      "type": "multiple",
+      "label": { "ko": "추천 사용자 타입", "en": "Recommended For" },
+      "options": [
+        { "value": "beginner", "label": { "ko": "입문자", "en": "Beginners" } },
+        { "value": "posing", "label": { "ko": "포징 중시", "en": "Posing Enthusiasts" } },
+        { "value": "display", "label": { "ko": "전시용", "en": "Display Collectors" } },
+        { "value": "collector", "label": { "ko": "수집가", "en": "Collectors" } },
+        { "value": "painter", "label": { "ko": "도색러", "en": "Painters" } },
+        { "value": "detail", "label": { "ko": "디테일 중시", "en": "Detail Oriented" } }
+      ]
+    }
+  ]
+}

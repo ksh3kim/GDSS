@@ -1,0 +1,211 @@
+{
+    "id": "hg-rx-78-2-revive",
+    "baseProductId": "rx-78-2",
+    "name": {
+        "ko": "RX-78-2 건담",
+        "en": "RX-78-2 Gundam"
+    },
+    "modelNumber": "RX-78-2",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "아무로 레이",
+        "en": "Amuro Ray"
+    },
+    "manufacturer": {
+        "ko": "지구연방군",
+        "en": "Earth Federation"
+    },
+    "grade": "HG",
+    "scale": "1/144",
+    "releaseYear": 2015,
+    "releaseMonth": 7,
+    "releaseLine": "standard",
+    "isRevive": true,
+    "isVerKa": false,
+    "price": 1100,
+    "height": "12.5cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/196",
+        "gallery": [
+            "https://gunplagallery.com/kits/hg-rx-78-2-revive/1.jpg",
+            "https://gunplagallery.com/kits/hg-rx-78-2-revive/2.jpg"
+        ]
+    },
+    "fullSpecs": {
+        "partCount": 138,
+        "runnerCount": 7,
+        "runnerColors": 5,
+        "frameType": "partial",
+        "spareParts": "few",
+        "sealDependency": "partial",
+        "clearParts": "none",
+        "coatingParts": false,
+        "eyeExpression": "sticker",
+        "paintSuitability": "unnecessary",
+        "difficulty": "beginner",
+        "mobility": 4,
+        "colorSeparation": "high",
+        "decalType": [
+            "sticker",
+            "marking"
+        ],
+        "weaponCount": "standard",
+        "transformation": false,
+        "combination": false,
+        "sizeFeeling": "normal",
+        "recommendedUser": [
+            "beginner",
+            "posing"
+        ]
+    },
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 사벨 x2",
+            "실드",
+            "하이퍼 바주카"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Saber x2",
+            "Shield",
+            "Hyper Bazooka"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "액션베이스용 어댑터",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Action Base Adapter",
+            "Replacement Hand Parts"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "조립이 쉬워 입문자에게 적합",
+            "가동성이 우수하여 다양한 포즈 가능",
+            "가성비가 뛰어남",
+            "색분할이 잘 되어 도색 없이도 완성도 높음"
+        ],
+        "en": [
+            "Easy assembly perfect for beginners",
+            "Excellent articulation allows various poses",
+            "Great value for money",
+            "Good color separation, looks great without painting"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "기본 무장 외 추가 무장 없음",
+            "눈 표현이 씰 방식",
+            "일부 색분할 부족 (노란색 부분)"
+        ],
+        "en": [
+            "No additional weapons besides basic loadout",
+            "Eye expression requires stickers",
+            "Some color separation lacking (yellow parts)"
+        ]
+    },
+    "variants": [
+        {
+            "id": "hg-rx-78-2-revive-clear",
+            "variantType": "color",
+            "name": {
+                "ko": "클리어 컬러 버전",
+                "en": "Clear Color Version"
+            },
+            "releaseLine": "limited"
+        },
+        {
+            "id": "hg-rx-78-2-revive-gbwc",
+            "variantType": "special",
+            "name": {
+                "ko": "GBWC 기념판",
+                "en": "GBWC Commemorative"
+            },
+            "releaseLine": "limited"
+        }
+    ],
+    "relatedGrades": [
+        {
+            "id": "eg-rx-78-2",
+            "grade": "EG",
+            "name": {
+                "ko": "EG RX-78-2",
+                "en": "EG RX-78-2"
+            }
+        },
+        {
+            "id": "rg-rx-78-2",
+            "grade": "RG",
+            "name": {
+                "ko": "RG RX-78-2",
+                "en": "RG RX-78-2"
+            }
+        },
+        {
+            "id": "mg-rx-78-2-ver3",
+            "grade": "MG",
+            "name": {
+                "ko": "MG Ver.3.0",
+                "en": "MG Ver.3.0"
+            }
+        },
+        {
+            "id": "pg-rx-78-2",
+            "grade": "PG",
+            "name": {
+                "ko": "PG RX-78-2",
+                "en": "PG RX-78-2"
+            }
+        },
+        {
+            "id": "pgu-rx-78-2",
+            "grade": "PGU",
+            "name": {
+                "ko": "PG Unleashed",
+                "en": "PG Unleashed"
+            }
+        }
+    ],
+    "recommendation": {
+        "matchTags": [
+            "beginner",
+            "iconic",
+            "high_mobility",
+            "affordable"
+        ],
+        "matchScore": 95,
+        "reasoning": {
+            "ko": "건프라 입문자에게 가장 추천하는 제품입니다. 조립 난이도가 낮고 가동성이 뛰어나며, 건담의 상징적인 디자인을 저렴한 가격에 즐길 수 있습니다. 리바이브 버전으로 현대적인 조형과 관절 구조를 갖추고 있습니다.",
+            "en": "Most recommended for Gunpla beginners. Low assembly difficulty with excellent articulation. Enjoy the iconic Gundam design at an affordable price. Revive version features modern sculpting and joint structure."
+        },
+        "perfectFor": {
+            "ko": [
+                "처음 건프라를 접하는 입문자",
+                "포징을 즐기고 싶은 분",
+                "가성비를 중시하는 분"
+            ],
+            "en": [
+                "First-time Gunpla builders",
+                "Those who enjoy posing",
+                "Value-oriented collectors"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "게이트 자국은 사포로 정리하면 더 깔끔합니다",
+            "눈 씰은 핀셋으로 붙이면 정확하게 위치시킬 수 있습니다",
+            "관절이 뻑뻑할 경우 몇 번 움직여주면 부드러워집니다"
+        ],
+        "en": [
+            "Sand down nub marks for a cleaner finish",
+            "Use tweezers for precise sticker placement on eyes",
+            "If joints are stiff, work them a few times to loosen"
+        ]
+    },
+    "lastUpdated": "2026-01-10"
+}

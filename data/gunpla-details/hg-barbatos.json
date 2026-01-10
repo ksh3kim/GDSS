@@ -1,0 +1,146 @@
+{
+    "id": "hg-barbatos",
+    "baseProductId": "barbatos",
+    "name": {
+        "ko": "건담 바르바토스",
+        "en": "Gundam Barbatos"
+    },
+    "modelNumber": "ASW-G-08",
+    "series": "ibo",
+    "pilot": {
+        "ko": "미카즈키 오거스",
+        "en": "Mikazuki Augus"
+    },
+    "manufacturer": {
+        "ko": "철화단",
+        "en": "Tekkadan"
+    },
+    "grade": "HGIBO",
+    "scale": "1/144",
+    "releaseYear": 2015,
+    "releaseMonth": 10,
+    "releaseLine": "standard",
+    "isRevive": false,
+    "isVerKa": false,
+    "price": 1100,
+    "height": "12.5cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/240",
+        "gallery": []
+    },
+    "fullSpecs": {
+        "partCount": 140,
+        "runnerCount": 7,
+        "runnerColors": 5,
+        "frameType": "full",
+        "spareParts": "few",
+        "sealDependency": "partial",
+        "clearParts": "none",
+        "coatingParts": false,
+        "eyeExpression": "sticker",
+        "paintSuitability": "partial",
+        "difficulty": "beginner",
+        "mobility": 4,
+        "colorSeparation": "high",
+        "decalType": [
+            "sticker"
+        ],
+        "weaponCount": "standard",
+        "transformation": false,
+        "combination": false,
+        "sizeFeeling": "normal",
+        "recommendedUser": [
+            "beginner",
+            "posing"
+        ]
+    },
+    "weapons": {
+        "ko": [
+            "메이스",
+            "300mm 활강포",
+            "태도"
+        ],
+        "en": [
+            "Mace",
+            "300mm Smoothbore Gun",
+            "Katana"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "저렴한 가격에 풀 이너 프레임 제공",
+            "HG임에도 뛰어난 가동성",
+            "근접전 무기가 매력적",
+            "조립이 쉽고 사이즈가 적당"
+        ],
+        "en": [
+            "Full inner frame at affordable price",
+            "Excellent articulation for an HG",
+            "Attractive melee weapons",
+            "Easy assembly with appropriate size"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "일부 색분할 부족 (도색 권장)",
+            "눈 표현이 씰 방식",
+            "손목 파츠가 단순"
+        ],
+        "en": [
+            "Some color separation lacking (painting recommended)",
+            "Eye expression requires stickers",
+            "Simple wrist parts"
+        ]
+    },
+    "variants": [
+        {
+            "id": "hg-barbatos-clear",
+            "variantType": "color",
+            "name": {
+                "ko": "클리어 컬러",
+                "en": "Clear Color"
+            },
+            "releaseLine": "limited"
+        }
+    ],
+    "relatedGrades": [
+        {
+            "id": "hg-barbatos-lupus",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 루프스",
+                "en": "HG Lupus"
+            }
+        },
+        {
+            "id": "hg-barbatos-lupus-rex",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 루프스 렉스",
+                "en": "HG Lupus Rex"
+            }
+        },
+        {
+            "id": "fm-barbatos",
+            "grade": "FM",
+            "name": {
+                "ko": "FM 1/100",
+                "en": "FM 1/100"
+            }
+        }
+    ],
+    "recommendation": {
+        "matchTags": [
+            "frame",
+            "melee",
+            "beginner",
+            "affordable"
+        ],
+        "matchScore": 90,
+        "reasoning": {
+            "ko": "철혈의 오펀스 시리즈의 특징인 풀 이너 프레임을 HG 가격에 즐길 수 있습니다. 근접전 위주의 무장이 멋지며, 입문자도 쉽게 조립할 수 있습니다. 가성비 최강 제품 중 하나입니다.",
+            "en": "Enjoy the signature full inner frame of IBO series at HG price. Great melee weapons and easy assembly for beginners. One of the best value products."
+        }
+    },
+    "lastUpdated": "2026-01-10"
+}

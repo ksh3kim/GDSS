@@ -1,0 +1,167 @@
+{
+    "id": "rg-unicorn",
+    "baseProductId": "unicorn-gundam",
+    "name": {
+        "ko": "유니콘 건담",
+        "en": "Unicorn Gundam"
+    },
+    "modelNumber": "RX-0",
+    "series": "unicorn",
+    "pilot": {
+        "ko": "바나지 링크스",
+        "en": "Banagher Links"
+    },
+    "manufacturer": {
+        "ko": "애너하임 일렉트로닉스",
+        "en": "Anaheim Electronics"
+    },
+    "grade": "RG",
+    "scale": "1/144",
+    "releaseYear": 2017,
+    "releaseMonth": 8,
+    "releaseLine": "standard",
+    "isRevive": false,
+    "isVerKa": false,
+    "price": 4400,
+    "height": "14cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/25",
+        "gallery": []
+    },
+    "fullSpecs": {
+        "partCount": 385,
+        "runnerCount": 18,
+        "runnerColors": 6,
+        "frameType": "full",
+        "spareParts": "few",
+        "sealDependency": "partial",
+        "clearParts": "many",
+        "coatingParts": false,
+        "eyeExpression": "clear",
+        "paintSuitability": "unnecessary",
+        "difficulty": "intermediate",
+        "mobility": 4,
+        "colorSeparation": "high",
+        "decalType": [
+            "sticker",
+            "marking"
+        ],
+        "weaponCount": "standard",
+        "transformation": true,
+        "combination": false,
+        "sizeFeeling": "normal",
+        "recommendedUser": [
+            "detail",
+            "posing",
+            "collector"
+        ]
+    },
+    "weapons": {
+        "ko": [
+            "빔 매그넘",
+            "빔 사벨 x2",
+            "실드",
+            "하이퍼 바주카"
+        ],
+        "en": [
+            "Beam Magnum",
+            "Beam Saber x2",
+            "Shield",
+            "Hyper Bazooka"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "유니콘/디스트로이 모드 완전 변형 가능",
+            "사이코 프레임의 LED 발광 효과 지원",
+            "복잡한 디테일에도 안정적인 관절",
+            "RG 라인 중 최고 수준의 색분할"
+        ],
+        "en": [
+            "Full transformation between Unicorn/Destroy modes",
+            "LED lighting compatible for psycho frame",
+            "Stable joints despite complex details",
+            "Top-tier color separation in RG line"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "변형 과정이 다소 복잡",
+            "사이코 프레임 파츠가 약간 헐거울 수 있음",
+            "초보자에게는 어려울 수 있음"
+        ],
+        "en": [
+            "Transformation process is somewhat complex",
+            "Psycho frame parts may be slightly loose",
+            "May be challenging for beginners"
+        ]
+    },
+    "variants": [
+        {
+            "id": "rg-unicorn-green-psycho",
+            "variantType": "color",
+            "name": {
+                "ko": "그린 사이코 프레임",
+                "en": "Green Psycho Frame"
+            },
+            "releaseLine": "limited"
+        },
+        {
+            "id": "rg-unicorn-final-battle",
+            "variantType": "special",
+            "name": {
+                "ko": "최종 결전 Ver.",
+                "en": "Final Battle Ver."
+            },
+            "releaseLine": "p_bandai"
+        }
+    ],
+    "relatedGrades": [
+        {
+            "id": "hg-unicorn-destroy",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 디스트로이",
+                "en": "HG Destroy"
+            }
+        },
+        {
+            "id": "hg-unicorn-unicorn",
+            "grade": "HG",
+            "name": {
+                "ko": "HG 유니콘",
+                "en": "HG Unicorn"
+            }
+        },
+        {
+            "id": "mg-unicorn-verka",
+            "grade": "MG",
+            "name": {
+                "ko": "MG Ver.Ka",
+                "en": "MG Ver.Ka"
+            }
+        },
+        {
+            "id": "mgex-unicorn",
+            "grade": "MGEX",
+            "name": {
+                "ko": "MGEX",
+                "en": "MGEX"
+            }
+        }
+    ],
+    "recommendation": {
+        "matchTags": [
+            "transformation",
+            "psycho_frame",
+            "detailed",
+            "full_frame"
+        ],
+        "matchScore": 92,
+        "reasoning": {
+            "ko": "RG 유니콘은 1/144 스케일에서 완전한 변형 기믹과 사이코 프레임의 아름다움을 모두 즐길 수 있는 걸작입니다. 가동성과 디테일 모두 뛰어나며, LED 유닛을 추가하면 환상적인 발광 효과를 연출할 수 있습니다.",
+            "en": "RG Unicorn is a masterpiece that offers full transformation and beautiful psycho frame at 1/144 scale. Both articulation and detail are excellent, and adding LED unit creates fantastic lighting effects."
+        }
+    },
+    "lastUpdated": "2026-01-10"
+}
