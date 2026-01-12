@@ -230,7 +230,9 @@ input, select, textarea {
 
 /* Search */
 .search-container {
-    flex: 1;
+    flex: 0 0 auto;
+    width: 400px;
+    min-width: 300px;
     max-width: 500px;
 }
 

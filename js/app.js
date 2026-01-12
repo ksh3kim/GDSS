@@ -819,6 +819,121 @@ const GunplaApp = (function () {
                 document.querySelectorAll('.compare-btn.active').forEach(b => b.classList.remove('active'));
             });
         }
+
+        // Navigation tabs - Favorites and Compare
+        const favoritesNav = document.getElementById('favoritesNav');
+        if (favoritesNav) {
+            favoritesNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                showFavoritesView();
+            });
+        }
+
+        const compareNav = document.getElementById('compareNav');
+        if (compareNav) {
+            compareNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                showCompareView();
+            });
+        }
+
+        // Home navigation
+        document.querySelectorAll('.nav-item[data-page="home"]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                showHomeView();
+            });
+        });
+    }
+
+    /**
+     * Show favorites view
+     */
+    function showFavoritesView() {
+        // Update nav active state
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('favoritesNav')?.classList.add('active');
+
+        // Filter to show only favorites
+        const favProducts = products.filter(p => favorites.includes(p.id));
+        filteredProducts = favProducts;
+        displayedCount = 0;
+
+        // Hide recommendation panel
+        showRecommendationPanel(false);
+
+        // Update result count
+        const countEl = document.getElementById('resultCount');
+        if (countEl) countEl.textContent = favProducts.length;
+
+        // Render
+        const grid = document.getElementById('productGrid');
+        const noResults = document.getElementById('noResults');
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+
+        if (favProducts.length === 0) {
+            grid.innerHTML = '';
+            noResults.style.display = 'flex';
+            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '즐겨찾기가 없습니다' : 'No favorites yet';
+            loadMoreContainer.style.display = 'none';
+        } else {
+            noResults.style.display = 'none';
+            renderProducts();
+        }
+    }
+
+    /**
+     * Show compare view
+     */
+    function showCompareView() {
+        // Update nav active state
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('compareNav')?.classList.add('active');
+
+        // Filter to show only compare items
+        const compProducts = products.filter(p => compareList.includes(p.id));
+        filteredProducts = compProducts;
+        displayedCount = 0;
+
+        // Hide recommendation panel
+        showRecommendationPanel(false);
+
+        // Update result count
+        const countEl = document.getElementById('resultCount');
+        if (countEl) countEl.textContent = compProducts.length;
+
+        // Render
+        const grid = document.getElementById('productGrid');
+        const noResults = document.getElementById('noResults');
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+
+        if (compProducts.length === 0) {
+            grid.innerHTML = '';
+            noResults.style.display = 'flex';
+            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '비교함이 비어있습니다' : 'Compare list is empty';
+            loadMoreContainer.style.display = 'none';
+        } else {
+            noResults.style.display = 'none';
+            renderProducts();
+        }
+    }
+
+    /**
+     * Show home view (reset to normal)
+     */
+    function showHomeView() {
+        // Update nav active state
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector('.nav-item[data-page="home"]')?.classList.add('active');
+
+        // Reset no results text
+        const noResults = document.getElementById('noResults');
+        if (noResults) {
+            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '검색 결과가 없습니다' : 'No results found';
+        }
+
+        // Re-apply filters and render
+        applyFiltersAndRender();
     }
 
     // Public API
