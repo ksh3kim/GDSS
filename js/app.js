@@ -734,9 +734,13 @@ const GunplaApp = (function () {
 
         // Language change - re-render all products with new language
         document.addEventListener('langChange', () => {
-            displayedCount = 0; // Reset to force full re-render
-            renderProducts();
-            updateRecommendationPanel(Filter.getActiveFilters());
+            if (document.body.classList.contains('detail-page')) {
+                if (currentProduct) renderProductDetail(currentProduct);
+            } else {
+                displayedCount = 0; // Reset to force full re-render
+                renderProducts();
+                updateRecommendationPanel(Filter.getActiveFilters());
+            }
             updateCompareDrawer(); // Also update compare drawer names
         });
 
