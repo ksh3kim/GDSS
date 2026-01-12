@@ -13,11 +13,6 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Local development
-.env
-.env.local
-.env.*.local
-
 # Netlify
 .netlify/
 
