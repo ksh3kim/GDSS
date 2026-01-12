@@ -13,9 +13,6 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Netlify
-.netlify/
-
 # Build output (if any)
 dist/
 build/
