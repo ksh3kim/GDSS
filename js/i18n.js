@@ -87,11 +87,23 @@ const I18n = (function () {
 
     /**
      * Get localized name from object { ko: '...', en: '...' }
+     * For Korean, reorders "건담 ABC" to "ABC 건담"
      */
     function getName(obj) {
         if (!obj) return '';
         if (typeof obj === 'string') return obj;
-        return obj[currentLang] || obj.ko || obj.en || '';
+
+        let name = obj[currentLang] || obj.ko || obj.en || '';
+
+        // For Korean: reorder "건담 ABC" to "ABC 건담"
+        if (currentLang === 'ko' && name.startsWith('건담 ')) {
+            const rest = name.substring(3).trim(); // Remove "건담 " prefix
+            if (rest) {
+                name = `${rest} 건담`;
+            }
+        }
+
+        return name;
     }
 
     /**
