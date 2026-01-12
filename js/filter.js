@@ -291,10 +291,33 @@ const Filter = (function () {
      * Update active filters display
      */
     function updateActiveFiltersUI() {
+        const wrapper = document.getElementById('activeFiltersWrapper');
         const container = document.getElementById('activeFilters');
+        const countEl = document.getElementById('activeFiltersCount');
+
         if (!container) return;
 
         container.innerHTML = '';
+
+        // Count total active filters
+        let totalCount = 0;
+        for (const values of Object.values(activeFilters)) {
+            if (Array.isArray(values)) {
+                totalCount += values.length;
+            } else {
+                totalCount += 1;
+            }
+        }
+
+        // Show/hide wrapper based on count
+        if (wrapper) {
+            wrapper.style.display = totalCount > 0 ? 'block' : 'none';
+        }
+
+        // Update count
+        if (countEl) {
+            countEl.textContent = totalCount;
+        }
 
         for (const [categoryId, values] of Object.entries(activeFilters)) {
             const category = taxonomy?.categories?.find(c => c.id === categoryId);
@@ -363,6 +386,17 @@ const Filter = (function () {
         const resetBtn = document.getElementById('filterResetBtn');
         if (resetBtn) {
             resetBtn.addEventListener('click', clearAllFilters);
+        }
+
+        // Active filters summary toggle
+        const activeFiltersSummary = document.getElementById('activeFiltersSummary');
+        if (activeFiltersSummary) {
+            activeFiltersSummary.addEventListener('click', () => {
+                const wrapper = document.getElementById('activeFiltersWrapper');
+                if (wrapper) {
+                    wrapper.classList.toggle('expanded');
+                }
+            });
         }
 
         // Language change - rebuild filter UI

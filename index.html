@@ -104,8 +104,20 @@
                 <button class="filter-reset-btn" id="filterResetBtn" data-i18n="filter.reset">필터 초기화</button>
             </div>
 
-            <div class="active-filters" id="activeFilters">
-                <!-- Active filter tags will be inserted here -->
+            <div class="active-filters-wrapper" id="activeFiltersWrapper" style="display: none;">
+                <button class="active-filters-summary" id="activeFiltersSummary">
+                    <span class="active-filters-count" id="activeFiltersCount">0</span>
+                    <span data-i18n="filter.activeFilters">개 선택됨</span>
+                    <svg class="active-filters-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="active-filters-details" id="activeFiltersDetails">
+                    <div class="active-filters" id="activeFilters">
+                        <!-- Active filter tags will be inserted here -->
+                    </div>
+                </div>
             </div>
 
             <div class="filter-accordion" id="filterAccordion">
