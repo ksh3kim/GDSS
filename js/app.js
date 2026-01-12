@@ -732,10 +732,12 @@ const GunplaApp = (function () {
         // Filter change
         document.addEventListener('filterChange', applyFiltersAndRender);
 
-        // Language change
+        // Language change - re-render all products with new language
         document.addEventListener('langChange', () => {
+            displayedCount = 0; // Reset to force full re-render
             renderProducts();
             updateRecommendationPanel(Filter.getActiveFilters());
+            updateCompareDrawer(); // Also update compare drawer names
         });
 
         // Language toggle
