@@ -197,15 +197,16 @@ textarea {
     height: 100%;
     margin: 0 auto;
     padding: 0 var(--space-6);
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
-    gap: var(--space-6);
+    justify-content: space-between;
+    position: relative;
 }
 
 /* Logo */
 .logo {
     flex-shrink: 0;
+    z-index: 2;
 }
 
 .logo a {
@@ -244,11 +245,15 @@ textarea {
     color: var(--color-primary);
 }
 
-/* Search */
+/* Search - Absolute Center */
 .search-container {
-    justify-self: center;
-    width: 100%;
-    max-width: 450px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    max-width: calc(100% - 500px);
+    z-index: 1;
 }
 
 .search-box {
@@ -301,6 +306,7 @@ textarea {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    z-index: 2;
 }
 
 .nav-item {
