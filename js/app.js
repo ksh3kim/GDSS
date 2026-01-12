@@ -10,6 +10,7 @@ const GunplaApp = (function () {
     let displayedCount = 0;
     let currentView = 'grid';
     let currentSort = 'releaseDate';
+    let currentProduct = null; // For detail page language switching
     const ITEMS_PER_PAGE = 24;
 
     // Favorites and Compare
@@ -469,6 +470,8 @@ const GunplaApp = (function () {
                 return;
             }
 
+            // Store for language change re-rendering
+            currentProduct = product;
             renderProductDetail(product);
 
         } catch (error) {
@@ -960,9 +963,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('detail-page')) {
         GunplaApp.init();
     } else {
-        // Detail page - init modules only
+        // Detail page - init modules and setup language toggle
         I18n.init().then(() => {
             Filter.init();
+
+            // Setup language toggle for detail page
+            document.querySelectorAll('.lang-toggle, .mobile-lang-toggle').forEach(btn => {
+                btn.addEventListener('click', I18n.toggleLang);
+            });
+
+            // Mobile menu toggle for detail page
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            if (mobileMenuBtn && mobileMenuOverlay) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenuBtn.classList.toggle('active');
+                    mobileMenuOverlay.classList.toggle('active');
+                });
+            }
         });
     }
 });
