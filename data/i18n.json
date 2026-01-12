@@ -21,7 +21,7 @@
             "search": {
                 "placeholder": "제품명, 기체명, 형식번호로 검색...",
                 "noResults": "검색 결과가 없습니다",
-                "resultsCount": "{{count}}개의 결과",
+                "resultsCount": "개의 결과",
                 "searchIn": "검색 범위"
             },
             "filter": {
@@ -136,7 +136,7 @@
             "search": {
                 "placeholder": "Search by product name, model number...",
                 "noResults": "No results found",
-                "resultsCount": "{{count}} results",
+                "resultsCount": " results",
                 "searchIn": "Search in"
             },
             "filter": {
