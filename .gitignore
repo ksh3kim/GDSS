@@ -13,6 +13,11 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Local development
+.env
+.env.local
+.env.*.local
+
 # Build output (if any)
 dist/
 build/
