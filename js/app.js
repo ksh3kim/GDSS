@@ -65,6 +65,36 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Get properly formatted thumbnail URL from gunpla.fyi
+     * Supports both old format (without .jpeg) and new format (with .jpeg)
+     * Also supports gunplaFyiId field for direct ID mapping
+     */
+    function getThumbnailUrl(product) {
+        // If gunplaFyiId is provided, use it directly
+        if (product.gunplaFyiId) {
+            return `https://gunpla.fyi/images/boxarts/${product.gunplaFyiId}.jpeg`;
+        }
+
+        // If thumbnail URL is provided
+        if (product.thumbnail) {
+            let url = product.thumbnail;
+
+            // Check if it's a gunpla.fyi URL
+            if (url.includes('gunpla.fyi/images/boxarts/')) {
+                // Add .jpeg extension if missing
+                if (!url.endsWith('.jpeg') && !url.endsWith('.jpg') && !url.endsWith('.png')) {
+                    url = url + '.jpeg';
+                }
+                return url;
+            }
+
+            return url;
+        }
+
+        return 'images/placeholder.png';
+    }
+
+    /**
      * Apply filters and render products
      */
     function applyFiltersAndRender() {
@@ -173,11 +203,12 @@ const GunplaApp = (function () {
         const clone = template.content.cloneNode(true);
         const card = clone.querySelector('.product-card');
 
+
         card.setAttribute('data-id', product.id);
 
-        // Image
+        // Image - get proper gunpla.fyi URL
         const img = card.querySelector('.product-card-image img');
-        img.src = product.thumbnail || 'images/placeholder.png';
+        img.src = getThumbnailUrl(product);
         img.alt = I18n.getName(product.name);
         img.onerror = function () { this.src = 'images/placeholder.png'; };
 
