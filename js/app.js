@@ -521,10 +521,11 @@ const GunplaApp = (function () {
         document.getElementById('breadcrumbGrade').textContent = product.grade;
         document.getElementById('breadcrumbCurrent').textContent = I18n.getName(product.name);
 
-        // Main image
+        // Main image - use same logic as main page for consistency
         const mainImage = document.getElementById('mainImage');
-        mainImage.src = product.images?.boxart || product.thumbnail;
+        mainImage.src = product.images?.boxart || getThumbnailUrl(product);
         mainImage.alt = I18n.getName(product.name);
+        mainImage.onerror = function () { this.src = 'images/placeholder.png'; };
 
         // Badges
         const badges = document.getElementById('detailBadges');
