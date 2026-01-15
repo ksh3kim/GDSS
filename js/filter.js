@@ -263,10 +263,20 @@ const Filter = (function () {
                 });
             }
 
-            // Accordion toggle
+            // Accordion toggle - close others when opening new one
             const header = clone.querySelector('.filter-category-header');
             header.addEventListener('click', () => {
-                categoryEl.classList.toggle('active');
+                const isCurrentlyActive = categoryEl.classList.contains('active');
+                
+                // Close all other categories
+                document.querySelectorAll('.filter-category.active').forEach(cat => {
+                    cat.classList.remove('active');
+                });
+                
+                // Toggle current category (if it was closed, open it)
+                if (!isCurrentlyActive) {
+                    categoryEl.classList.add('active');
+                }
             });
 
             container.appendChild(clone);
