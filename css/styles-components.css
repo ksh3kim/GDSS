@@ -13,7 +13,6 @@
 .filter-category {
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-md);
-    overflow: hidden;
 }
 
 .filter-category-header {
@@ -72,8 +71,23 @@
 }
 
 .filter-category.active .filter-category-content {
-    max-height: 300px;
+    max-height: 500px;
     overflow-y: auto;
+    overflow-x: visible;
+}
+
+/* Custom scrollbar for filter content */
+.filter-category-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.filter-category-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filter-category-content::-webkit-scrollbar-thumb {
+    background: var(--color-dark-border);
+    border-radius: 2px;
 }
 
 .filter-options {
