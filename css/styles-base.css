@@ -330,16 +330,16 @@ textarea {
 }
 
 .badge {
-    min-width: 20px;
-    height: 20px;
-    padding: 0 var(--space-2);
-    font-size: var(--text-xs);
+    min-width: auto;
+    height: auto;
+    padding: 0;
+    font-size: var(--text-sm);
     font-weight: 600;
-    line-height: 20px;
+    line-height: 1;
     text-align: center;
     color: var(--color-white);
-    background: var(--color-primary);
-    border-radius: var(--radius-full);
+    background: transparent;
+    border-radius: 0;
 }
 
 .badge:empty,
