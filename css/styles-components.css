@@ -923,6 +923,19 @@
     color: var(--color-white);
 }
 
+.action-btn-large.manual-btn {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.action-btn-large.manual-btn:hover {
+    background: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+    color: var(--color-white);
+}
+
 /* Detail Meta */
 .detail-meta {
     display: grid;

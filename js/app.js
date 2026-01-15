@@ -712,6 +712,7 @@ const GunplaApp = (function () {
     function setupDetailActions(product) {
         const favBtn = document.getElementById('detailFavoriteBtn');
         const compBtn = document.getElementById('detailCompareBtn');
+        const manualBtn = document.getElementById('detailManualBtn');
 
         if (favBtn) {
             if (favorites.includes(product.id)) favBtn.classList.add('active');
@@ -727,6 +728,24 @@ const GunplaApp = (function () {
                 toggleCompare(product.id);
                 compBtn.classList.toggle('active');
             });
+        }
+
+        // Bandai manual link
+        if (manualBtn) {
+            let productId = product.gunplaFyiId;
+
+            // Try to extract ID from thumbnail URL if gunplaFyiId not available
+            if (!productId && product.thumbnail) {
+                const match = product.thumbnail.match(/boxarts\/(\d+)/);
+                if (match) productId = match[1];
+            }
+
+            if (productId) {
+                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${productId}`;
+                manualBtn.style.display = 'flex';
+            } else {
+                manualBtn.style.display = 'none';
+            }
         }
     }
 
