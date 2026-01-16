@@ -994,7 +994,9 @@ const GunplaApp = (function () {
         init,
         loadProductDetail,
         toggleFavorite,
-        toggleCompare
+        toggleCompare,
+        setFavorites: (list) => { favorites = list; },
+        setCompareList: (list) => { compareList = list; }
     };
 })();
 
@@ -1010,6 +1012,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Detail page - init modules and setup language toggle
         I18n.init().then(() => {
             Filter.init();
+
+            // Load saved favorites and compare data
+            const savedFavorites = localStorage.getItem('gunplaFavorites');
+            const savedCompare = localStorage.getItem('gunplaCompare');
+            if (savedFavorites) {
+                try {
+                    GunplaApp.setFavorites(JSON.parse(savedFavorites));
+                } catch (e) {
+                    GunplaApp.setFavorites([]);
+                }
+            }
+            if (savedCompare) {
+                try {
+                    GunplaApp.setCompareList(JSON.parse(savedCompare));
+                } catch (e) {
+                    GunplaApp.setCompareList([]);
+                }
+            }
+
+            // Load product from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            if (productId) {
+                GunplaApp.loadProductDetail(productId);
+            }
 
             // Setup language toggle for detail page
             document.querySelectorAll('.lang-toggle, .mobile-lang-toggle').forEach(btn => {
