@@ -1014,8 +1014,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Filter.init();
 
             // Load saved favorites and compare data
-            const savedFavorites = localStorage.getItem('gunplaFavorites');
-            const savedCompare = localStorage.getItem('gunplaCompare');
+            const savedFavorites = localStorage.getItem('gunpla-favorites');
+            const savedCompare = localStorage.getItem('gunpla-compare');
             if (savedFavorites) {
                 try {
                     GunplaApp.setFavorites(JSON.parse(savedFavorites));
