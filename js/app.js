@@ -285,13 +285,6 @@ const GunplaApp = (function () {
             compareBtn.classList.toggle('active');
         });
 
-        const quickViewBtn = card.querySelector('.quick-view-btn');
-        quickViewBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            openQuickView(product.id);
-        });
-
         return card;
     }
 
