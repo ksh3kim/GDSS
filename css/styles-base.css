@@ -787,13 +787,48 @@ textarea {
 }
 
 .filter-reset-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
     font-size: var(--text-sm);
+    font-weight: 500;
     color: var(--color-primary);
-    transition: var(--transition-fast);
+    background: rgba(227, 24, 55, 0.1);
+    border: 1px solid rgba(227, 24, 55, 0.3);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .filter-reset-btn:hover {
-    text-decoration: underline;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+.filter-reset-btn::before {
+    content: '↺';
+    font-size: 14px;
+}
+
+/* Quick Reset Button in Results Area */
+.quick-reset-btn {
+    margin-left: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-primary);
+    background: rgba(227, 24, 55, 0.1);
+    border: 1px solid rgba(227, 24, 55, 0.3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-reset-btn:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
 }
 
 /* Active Filters - Collapsible Summary */

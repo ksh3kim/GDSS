@@ -263,9 +263,24 @@ const Filter = (function () {
             el.textContent = '';
         });
 
+        // Hide quick reset button
+        const quickResetBtn = document.getElementById('quickResetBtn');
+        if (quickResetBtn) quickResetBtn.style.display = 'none';
+
         updateURL();
         updateActiveFiltersUI();
         dispatchFilterChange();
+    }
+
+    /**
+     * Update quick reset button visibility
+     */
+    function updateQuickResetVisibility() {
+        const quickResetBtn = document.getElementById('quickResetBtn');
+        if (!quickResetBtn) return;
+
+        const hasFilters = Object.keys(activeFilters).length > 0 || searchQuery.length > 0;
+        quickResetBtn.style.display = hasFilters ? 'inline-block' : 'none';
     }
 
     /**
@@ -725,6 +740,12 @@ const Filter = (function () {
             resetBtn.addEventListener('click', clearAllFilters);
         }
 
+        // Quick reset button (in results area)
+        const quickResetBtn = document.getElementById('quickResetBtn');
+        if (quickResetBtn) {
+            quickResetBtn.addEventListener('click', clearAllFilters);
+        }
+
         // Active filters summary toggle
         const activeFiltersSummary = document.getElementById('activeFiltersSummary');
         if (activeFiltersSummary) {
@@ -814,6 +835,7 @@ const Filter = (function () {
      * Dispatch filter change event
      */
     function dispatchFilterChange() {
+        updateQuickResetVisibility();
         document.dispatchEvent(new CustomEvent('filterChange', {
             detail: { filters: activeFilters, query: searchQuery }
         }));
