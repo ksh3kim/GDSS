@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "rg-sazabi",
     "baseProductId": "sazabi",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "RG",
     "scale": "1/144",
     "releaseYear": 2018,
+    "releaseMonth": 8,
     "price": 4950,
     "height": "16cm",
     "weapons": {

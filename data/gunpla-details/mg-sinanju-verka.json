@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "mg-sinanju-verka",
     "baseProductId": "sinanju",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "MG",
     "scale": "1/100",
     "releaseYear": 2012,
+    "releaseMonth": 11,
     "price": 8800,
     "height": "22cm",
     "weapons": {

@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "rg-freedom",
     "baseProductId": "freedom-gundam",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "RG",
     "scale": "1/144",
     "releaseYear": 2012,
+    "releaseMonth": 11,
     "price": 2750,
     "height": "13.5cm",
     "weapons": {

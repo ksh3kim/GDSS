@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "rg-wing-zero-ew",
     "baseProductId": "wing-zero",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "RG",
     "scale": "1/144",
     "releaseYear": 2014,
+    "releaseMonth": 11,
     "price": 3300,
     "height": "13.5cm",
     "weapons": {

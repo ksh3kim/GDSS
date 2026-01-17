@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "hg-calibarn",
     "baseProductId": "calibarn",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "HGTWFM",
     "scale": "1/144",
     "releaseYear": 2023,
+    "releaseMonth": 7,
     "price": 2200,
     "height": "13.5cm",
     "weapons": {

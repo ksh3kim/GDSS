@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "mgex-unicorn",
     "baseProductId": "unicorn-gundam-ex",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "MGEX",
     "scale": "1/100",
     "releaseYear": 2020,
+    "releaseMonth": 12,
     "price": 27500,
     "height": "22cm",
     "weapons": {

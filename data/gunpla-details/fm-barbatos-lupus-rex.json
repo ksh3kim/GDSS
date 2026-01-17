@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "fm-barbatos-lupus-rex",
     "baseProductId": "barbatos-lupus-rex",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "FM",
     "scale": "1/100",
     "releaseYear": 2017,
+    "releaseMonth": 3,
     "price": 4400,
     "height": "19cm",
     "weapons": {

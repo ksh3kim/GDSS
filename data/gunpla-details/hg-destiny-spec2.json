@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "hg-destiny-spec2",
     "baseProductId": "destiny-spec2",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "HGCE",
     "scale": "1/144",
     "releaseYear": 2024,
+    "releaseMonth": 6,
     "price": 2420,
     "height": "14cm",
     "weapons": {

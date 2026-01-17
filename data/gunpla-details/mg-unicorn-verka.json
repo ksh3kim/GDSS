@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "mg-unicorn-verka",
     "baseProductId": "unicorn-gundam",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "MG",
     "scale": "1/100",
     "releaseYear": 2007,
+    "releaseMonth": 9,
     "price": 6600,
     "height": "20cm",
     "weapons": {

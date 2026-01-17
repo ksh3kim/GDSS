@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "pgu-rx-78-2",
     "baseProductId": "rx-78-2",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "PGU",
     "scale": "1/60",
     "releaseYear": 2020,
+    "releaseMonth": 12,
     "price": 38500,
     "height": "30cm",
     "weapons": {

@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "hg-rising-freedom",
     "baseProductId": "rising-freedom",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "HGCE",
     "scale": "1/144",
     "releaseYear": 2024,
+    "releaseMonth": 1,
     "price": 2200,
     "height": "13.5cm",
     "weapons": {

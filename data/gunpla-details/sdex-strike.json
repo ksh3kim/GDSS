@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "sdex-strike",
     "baseProductId": "strike-sd",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "SDEX",
     "scale": "non_scale",
     "releaseYear": 2015,
+    "releaseMonth": 10,
     "price": 660,
     "height": "8cm",
     "weapons": {

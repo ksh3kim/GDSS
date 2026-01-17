@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "hg-barbatos-lupus-rex",
     "baseProductId": "barbatos-lupus-rex",
     "name": {
@@ -14,6 +14,7 @@
     "grade": "HGIBO",
     "scale": "1/144",
     "releaseYear": 2017,
+    "releaseMonth": 2,
     "price": 1320,
     "height": "13.5cm",
     "weapons": {
