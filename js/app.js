@@ -512,6 +512,81 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Render compare spec table
+     */
+    function renderCompareTable(compProducts) {
+        const section = document.getElementById('compareTableSection');
+        const table = document.getElementById('compareTable');
+
+        if (!section || !table || compProducts.length === 0) {
+            if (section) section.style.display = 'none';
+            return;
+        }
+
+        // Spec rows to compare
+        const specs = [
+            { key: 'grade', label: '그레이드', getValue: p => p.grade || '-' },
+            { key: 'scale', label: '스케일', getValue: p => p.scale || '-' },
+            { key: 'price', label: '가격', getValue: p => p.price ? `¥${p.price.toLocaleString()}` : '-', numeric: true },
+            { key: 'releaseYear', label: '출시연도', getValue: p => p.releaseYear || '-' },
+            { key: 'height', label: '높이', getValue: p => p.height ? `${p.height}mm` : '-', numeric: true },
+            { key: 'difficulty', label: '난이도', getValue: p => I18n.getDifficultyText(p.difficulty) || '-', rating: p => p.difficulty },
+            { key: 'mobility', label: '가동성', getValue: p => I18n.getMobilityText(p.mobility) || '-', rating: p => p.mobility },
+            { key: 'model', label: '형식번호', getValue: p => p.modelNumber || '-' },
+            { key: 'series', label: '시리즈', getValue: p => p.series || '-' }
+        ];
+
+        // Build table HTML
+        let html = '<thead><tr><th></th>';
+        compProducts.forEach(p => {
+            html += `
+                <td class="product-header">
+                    <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}" 
+                         onerror="this.src='images/placeholder.png'">
+                    <span class="product-name">${I18n.getName(p.name)}</span>
+                </td>
+            `;
+        });
+        html += '</tr></thead><tbody>';
+
+        // Add spec rows
+        specs.forEach(spec => {
+            html += `<tr><th>${spec.label}</th>`;
+
+            // Get values and find best for numeric comparison
+            const values = compProducts.map(p => ({
+                display: spec.getValue(p),
+                raw: spec.numeric ? (p[spec.key] || 0) : (spec.rating ? spec.rating(p) || 0 : null)
+            }));
+
+            const maxVal = spec.numeric || spec.rating ? Math.max(...values.map(v => v.raw || 0)) : null;
+            const minVal = spec.numeric || spec.rating ? Math.min(...values.filter(v => v.raw > 0).map(v => v.raw)) : null;
+
+            values.forEach((v, i) => {
+                let cellClass = '';
+                if ((spec.numeric || spec.rating) && v.raw > 0) {
+                    if (v.raw === maxVal && compProducts.length > 1) cellClass = 'highlight-best';
+                    else if (v.raw === minVal && maxVal !== minVal && compProducts.length > 1) cellClass = 'highlight-worst';
+                }
+
+                let barHtml = '';
+                if (spec.rating && v.raw > 0) {
+                    const percent = (v.raw / 5) * 100;
+                    barHtml = `<div class="compare-bar"><div class="compare-bar-fill" style="width: ${percent}%"></div></div>`;
+                }
+
+                html += `<td class="${cellClass}">${v.display}${barHtml}</td>`;
+            });
+
+            html += '</tr>';
+        });
+
+        html += '</tbody>';
+        table.innerHTML = html;
+        section.style.display = 'block';
+    }
+
+    /**
      * Open quick view modal
      */
     function openQuickView(productId) {
@@ -1099,9 +1174,14 @@ const GunplaApp = (function () {
             noResults.style.display = 'flex';
             noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '비교함이 비어있습니다' : 'Compare list is empty';
             loadMoreContainer.style.display = 'none';
+            // Hide compare table
+            const tableSection = document.getElementById('compareTableSection');
+            if (tableSection) tableSection.style.display = 'none';
         } else {
             noResults.style.display = 'none';
             renderProducts();
+            // Render spec comparison table
+            renderCompareTable(compProducts);
         }
     }
 
@@ -1118,6 +1198,10 @@ const GunplaApp = (function () {
         if (noResults) {
             noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '검색 결과가 없습니다' : 'No results found';
         }
+
+        // Hide compare table
+        const tableSection = document.getElementById('compareTableSection');
+        if (tableSection) tableSection.style.display = 'none';
 
         // Re-apply filters and render
         applyFiltersAndRender();
