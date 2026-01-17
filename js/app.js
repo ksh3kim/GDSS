@@ -540,11 +540,14 @@ const GunplaApp = (function () {
         document.getElementById('detailReleaseDate').textContent = I18n.formatDate(product.releaseYear, product.releaseMonth);
         document.getElementById('detailHeight').textContent = product.height || '-';
 
-        // Recommendation
+        // Recommendation (optional elements - may have been removed)
         const matchScore = product.recommendation?.matchScore || 85;
-        document.getElementById('matchScoreValue').textContent = matchScore;
-        document.getElementById('recommendationReason').textContent =
-            I18n.getName(product.recommendation?.reasoning) || I18n.t('recommendation.basedOnFilters');
+        const matchScoreEl = document.getElementById('matchScoreValue');
+        if (matchScoreEl) matchScoreEl.textContent = matchScore;
+        const reasonEl = document.getElementById('recommendationReason');
+        if (reasonEl) {
+            reasonEl.textContent = I18n.getName(product.recommendation?.reasoning) || I18n.t('recommendation.basedOnFilters');
+        }
 
         // Specs
         renderSpecs(product);
