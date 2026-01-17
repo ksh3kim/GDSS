@@ -12,6 +12,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "HG",
             "scale": "1/144",
             "series": "first_gundam",
@@ -53,6 +54,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "RG",
             "scale": "1/144",
             "series": "first_gundam",
@@ -94,6 +96,7 @@
                 "ko": "RX-78-2 건담 Ver.3.0",
                 "en": "RX-78-2 Gundam Ver.3.0"
             },
+            "modelNumber": "RX-78-2",
             "grade": "MG",
             "scale": "1/100",
             "series": "first_gundam",
@@ -135,6 +138,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "PG",
             "scale": "1/60",
             "series": "first_gundam",
@@ -176,6 +180,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "PGU",
             "scale": "1/60",
             "series": "first_gundam",
@@ -218,6 +223,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "EG",
             "scale": "1/144",
             "series": "first_gundam",
@@ -258,6 +264,7 @@
                 "ko": "유니콘 건담 디스트로이 모드",
                 "en": "Unicorn Gundam Destroy Mode"
             },
+            "modelNumber": "RX-0",
             "grade": "HGUC",
             "scale": "1/144",
             "series": "unicorn",
@@ -299,6 +306,7 @@
                 "ko": "유니콘 건담 유니콘 모드",
                 "en": "Unicorn Gundam Unicorn Mode"
             },
+            "modelNumber": "RX-0",
             "grade": "HGUC",
             "scale": "1/144",
             "series": "unicorn",
@@ -340,6 +348,7 @@
                 "ko": "유니콘 건담",
                 "en": "Unicorn Gundam"
             },
+            "modelNumber": "RX-0",
             "grade": "RG",
             "scale": "1/144",
             "series": "unicorn",
@@ -382,6 +391,7 @@
                 "ko": "유니콘 건담 Ver.Ka",
                 "en": "Unicorn Gundam Ver.Ka"
             },
+            "modelNumber": "RX-0",
             "grade": "MG",
             "scale": "1/100",
             "series": "unicorn",
@@ -423,6 +433,7 @@
                 "ko": "프리덤 건담",
                 "en": "Freedom Gundam"
             },
+            "modelNumber": "ZGMF-X10A",
             "grade": "HGCE",
             "scale": "1/144",
             "series": "seed",
@@ -464,6 +475,7 @@
                 "ko": "프리덤 건담",
                 "en": "Freedom Gundam"
             },
+            "modelNumber": "ZGMF-X10A",
             "grade": "RG",
             "scale": "1/144",
             "series": "seed",
@@ -505,6 +517,7 @@
                 "ko": "프리덤 건담 Ver.2.0",
                 "en": "Freedom Gundam Ver.2.0"
             },
+            "modelNumber": "ZGMF-X10A",
             "grade": "MG",
             "scale": "1/100",
             "series": "seed",
@@ -546,6 +559,7 @@
                 "ko": "스트라이크 프리덤 건담",
                 "en": "Strike Freedom Gundam"
             },
+            "modelNumber": "ZGMF-X20A",
             "grade": "HGCE",
             "scale": "1/144",
             "series": "seed_destiny",
@@ -587,6 +601,7 @@
                 "ko": "스트라이크 프리덤 건담",
                 "en": "Strike Freedom Gundam"
             },
+            "modelNumber": "ZGMF-X20A",
             "grade": "RG",
             "scale": "1/144",
             "series": "seed_destiny",
@@ -628,6 +643,7 @@
                 "ko": "건담 엑시아",
                 "en": "Gundam Exia"
             },
+            "modelNumber": "GN-001",
             "grade": "HG",
             "scale": "1/144",
             "series": "00",
@@ -669,6 +685,7 @@
                 "ko": "건담 엑시아",
                 "en": "Gundam Exia"
             },
+            "modelNumber": "GN-001",
             "grade": "RG",
             "scale": "1/144",
             "series": "00",
@@ -710,6 +727,7 @@
                 "ko": "건담 엑시아",
                 "en": "Gundam Exia"
             },
+            "modelNumber": "GN-001",
             "grade": "MG",
             "scale": "1/100",
             "series": "00",
@@ -751,6 +769,7 @@
                 "ko": "더블오 라이저",
                 "en": "00 Raiser"
             },
+            "modelNumber": "GN-0000+GNR-010",
             "grade": "HG",
             "scale": "1/144",
             "series": "00",
@@ -792,6 +811,7 @@
                 "ko": "더블오 라이저",
                 "en": "00 Raiser"
             },
+            "modelNumber": "GN-0000+GNR-010",
             "grade": "RG",
             "scale": "1/144",
             "series": "00",
@@ -833,6 +853,7 @@
                 "ko": "건담 바르바토스",
                 "en": "Gundam Barbatos"
             },
+            "modelNumber": "ASW-G-08",
             "grade": "HGIBO",
             "scale": "1/144",
             "series": "ibo",
@@ -874,6 +895,7 @@
                 "ko": "건담 바르바토스 루프스 렉스",
                 "en": "Gundam Barbatos Lupus Rex"
             },
+            "modelNumber": "ASW-G-08",
             "grade": "HGIBO",
             "scale": "1/144",
             "series": "ibo",
@@ -915,6 +937,7 @@
                 "ko": "건담 바르바토스 루프스 렉스",
                 "en": "Gundam Barbatos Lupus Rex"
             },
+            "modelNumber": "ASW-G-08",
             "grade": "FM",
             "scale": "1/100",
             "series": "ibo",
@@ -956,6 +979,7 @@
                 "ko": "건담 에어리얼",
                 "en": "Gundam Aerial"
             },
+            "modelNumber": "XVX-016",
             "grade": "HGTWFM",
             "scale": "1/144",
             "series": "wfm",
@@ -997,6 +1021,7 @@
                 "ko": "건담 에어리얼 개수형",
                 "en": "Gundam Aerial Rebuild"
             },
+            "modelNumber": "XVX-016RN",
             "grade": "HGTWFM",
             "scale": "1/144",
             "series": "wfm",
@@ -1038,6 +1063,7 @@
                 "ko": "건담 캘리반",
                 "en": "Gundam Calibarn"
             },
+            "modelNumber": "XVX-016RN",
             "grade": "HGTWFM",
             "scale": "1/144",
             "series": "wfm",
@@ -1079,6 +1105,7 @@
                 "ko": "윙 건담 제로 EW",
                 "en": "Wing Gundam Zero EW"
             },
+            "modelNumber": "XXXG-00W0",
             "grade": "HGAC",
             "scale": "1/144",
             "series": "ew",
@@ -1120,6 +1147,7 @@
                 "ko": "윙 건담 제로 EW",
                 "en": "Wing Gundam Zero EW"
             },
+            "modelNumber": "XXXG-00W0",
             "grade": "RG",
             "scale": "1/144",
             "series": "ew",
@@ -1161,6 +1189,7 @@
                 "ko": "윙 건담 제로 EW Ver.Ka",
                 "en": "Wing Gundam Zero EW Ver.Ka"
             },
+            "modelNumber": "XXXG-00W0",
             "grade": "MG",
             "scale": "1/100",
             "series": "ew",
@@ -1202,6 +1231,7 @@
                 "ko": "뉴 건담",
                 "en": "Nu Gundam"
             },
+            "modelNumber": "RX-93",
             "grade": "HGUC",
             "scale": "1/144",
             "series": "cca",
@@ -1243,6 +1273,7 @@
                 "ko": "뉴 건담",
                 "en": "Nu Gundam"
             },
+            "modelNumber": "RX-93",
             "grade": "RG",
             "scale": "1/144",
             "series": "cca",
@@ -1284,6 +1315,7 @@
                 "ko": "뉴 건담 Ver.Ka",
                 "en": "Nu Gundam Ver.Ka"
             },
+            "modelNumber": "RX-93",
             "grade": "MG",
             "scale": "1/100",
             "series": "cca",
@@ -1325,6 +1357,7 @@
                 "ko": "사자비",
                 "en": "Sazabi"
             },
+            "modelNumber": "MSN-04",
             "grade": "RG",
             "scale": "1/144",
             "series": "cca",
@@ -1366,6 +1399,7 @@
                 "ko": "사자비 Ver.Ka",
                 "en": "Sazabi Ver.Ka"
             },
+            "modelNumber": "MSN-04",
             "grade": "MG",
             "scale": "1/100",
             "series": "cca",
@@ -1407,6 +1441,7 @@
                 "ko": "시난주",
                 "en": "Sinanju"
             },
+            "modelNumber": "MSN-06S",
             "grade": "HGUC",
             "scale": "1/144",
             "series": "unicorn",
@@ -1448,6 +1483,7 @@
                 "ko": "시난주",
                 "en": "Sinanju"
             },
+            "modelNumber": "MSN-06S",
             "grade": "RG",
             "scale": "1/144",
             "series": "unicorn",
@@ -1489,6 +1525,7 @@
                 "ko": "시난주 Ver.Ka",
                 "en": "Sinanju Ver.Ka"
             },
+            "modelNumber": "MSN-06S",
             "grade": "MG",
             "scale": "1/100",
             "series": "unicorn",
@@ -1530,6 +1567,7 @@
                 "ko": "자쿠 II",
                 "en": "Zaku II"
             },
+            "modelNumber": "MS-06F",
             "grade": "HGUC",
             "scale": "1/144",
             "series": "first_gundam",
@@ -1571,6 +1609,7 @@
                 "ko": "자쿠 II",
                 "en": "Zaku II"
             },
+            "modelNumber": "MS-06F",
             "grade": "RG",
             "scale": "1/144",
             "series": "first_gundam",
@@ -1612,6 +1651,7 @@
                 "ko": "자쿠 II Ver.2.0",
                 "en": "Zaku II Ver.2.0"
             },
+            "modelNumber": "MS-06F",
             "grade": "MG",
             "scale": "1/100",
             "series": "first_gundam",
@@ -1653,6 +1693,7 @@
                 "ko": "샤아 전용 자쿠 II",
                 "en": "Char's Zaku II"
             },
+            "modelNumber": "MS-06S",
             "grade": "RG",
             "scale": "1/144",
             "series": "first_gundam",
@@ -1694,6 +1735,7 @@
                 "ko": "RX-78-2 건담",
                 "en": "RX-78-2 Gundam"
             },
+            "modelNumber": "RX-78-2",
             "grade": "SDCS",
             "scale": "non_scale",
             "series": "first_gundam",
@@ -1734,6 +1776,7 @@
                 "ko": "스트라이크 건담",
                 "en": "Strike Gundam"
             },
+            "modelNumber": "GAT-X105",
             "grade": "SDEX",
             "scale": "non_scale",
             "series": "seed",
@@ -1774,6 +1817,7 @@
                 "ko": "유니콘 건담",
                 "en": "Unicorn Gundam"
             },
+            "modelNumber": "RX-0",
             "grade": "MGEX",
             "scale": "1/100",
             "series": "unicorn",
@@ -1816,6 +1860,7 @@
                 "ko": "라이징 프리덤 건담",
                 "en": "Rising Freedom Gundam"
             },
+            "modelNumber": "STTS-909",
             "grade": "HGCE",
             "scale": "1/144",
             "series": "seed_freedom",
@@ -1857,6 +1902,7 @@
                 "ko": "마이티 스트라이크 프리덤 건담",
                 "en": "Mighty Strike Freedom Gundam"
             },
+            "modelNumber": "STTS-808",
             "grade": "HGCE",
             "scale": "1/144",
             "series": "seed_freedom",
@@ -1898,6 +1944,7 @@
                 "ko": "데스티니 건담 스펙 II",
                 "en": "Destiny Gundam Spec II"
             },
+            "modelNumber": "ZGMF-X42S-REVOLUTION",
             "grade": "HGCE",
             "scale": "1/144",
             "series": "seed_freedom",
