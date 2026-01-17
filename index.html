@@ -39,7 +39,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="제품명, 기체명, 형식번호로 검색..."
-                        data-i18n-placeholder="search.placeholder">
+                        data-i18n-placeholder="search.placeholder" autocomplete="off">
                     <button class="search-btn" id="searchBtn" aria-label="Search">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
@@ -47,6 +47,9 @@
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
                     </button>
+                    <div class="search-autocomplete" id="searchAutocomplete">
+                        <!-- Autocomplete suggestions will be inserted here -->
+                    </div>
                 </div>
             </div>
 

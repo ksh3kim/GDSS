@@ -365,18 +365,172 @@ const Filter = (function () {
     }
 
     /**
+     * Show autocomplete suggestions
+     */
+    function showAutocompleteSuggestions(query, container) {
+        const products = window.GunplaApp?.getProducts() || [];
+        const suggestions = [];
+        const lowerQuery = query.toLowerCase();
+        const maxSuggestions = 8;
+
+        // Search in product names
+        products.forEach(p => {
+            const nameKo = p.name?.ko || '';
+            const nameEn = p.name?.en || '';
+            const modelNumber = p.modelNumber || '';
+
+            if (nameKo.toLowerCase().includes(lowerQuery)) {
+                suggestions.push({ type: 'product', text: nameKo, value: nameKo, match: lowerQuery });
+            } else if (nameEn.toLowerCase().includes(lowerQuery)) {
+                suggestions.push({ type: 'product', text: nameEn, value: nameEn, match: lowerQuery });
+            }
+
+            // Model number search
+            if (modelNumber.toLowerCase().includes(lowerQuery)) {
+                suggestions.push({ type: 'model', text: `${modelNumber} - ${I18n.getName(p.name)}`, value: modelNumber, match: lowerQuery });
+            }
+        });
+
+        // Search in series (from taxonomy)
+        const seriesCategory = taxonomy?.categories?.find(c => c.id === 'series');
+        if (seriesCategory) {
+            seriesCategory.options.forEach(opt => {
+                const labelKo = opt.label?.ko || '';
+                const labelEn = opt.label?.en || '';
+                if (labelKo.toLowerCase().includes(lowerQuery) || labelEn.toLowerCase().includes(lowerQuery)) {
+                    suggestions.push({ type: 'series', text: I18n.getName(opt.label), value: I18n.getName(opt.label), match: lowerQuery });
+                }
+            });
+        }
+
+        // Remove duplicates and limit
+        const unique = [];
+        const seen = new Set();
+        for (const s of suggestions) {
+            if (!seen.has(s.text) && unique.length < maxSuggestions) {
+                seen.add(s.text);
+                unique.push(s);
+            }
+        }
+
+        if (unique.length === 0) {
+            container.classList.remove('active');
+            return;
+        }
+
+        // Render suggestions
+        container.innerHTML = unique.map(s => `
+            <div class="autocomplete-item" data-value="${s.value}">
+                <span class="autocomplete-item-type ${s.type}">${s.type === 'product' ? '제품' : s.type === 'series' ? '시리즈' : '형식'}</span>
+                <span class="autocomplete-item-text">${highlightMatch(s.text, s.match)}</span>
+            </div>
+        `).join('');
+
+        // Add click handlers
+        container.querySelectorAll('.autocomplete-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const value = item.getAttribute('data-value');
+                const input = document.getElementById('searchInput');
+                if (input) {
+                    input.value = value;
+                    setSearchQuery(value);
+                }
+                container.classList.remove('active');
+            });
+        });
+
+        container.classList.add('active');
+    }
+
+    /**
+     * Highlight matching text
+     */
+    function highlightMatch(text, match) {
+        const index = text.toLowerCase().indexOf(match.toLowerCase());
+        if (index === -1) return text;
+        return text.slice(0, index) + '<mark>' + text.slice(index, index + match.length) + '</mark>' + text.slice(index + match.length);
+    }
+
+    /**
+     * Update selected autocomplete item
+     */
+    function updateSelectedItem(items, index) {
+        items.forEach((item, i) => {
+            item.classList.toggle('selected', i === index);
+        });
+        if (items[index]) {
+            items[index].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    /**
      * Setup event listeners
      */
     function setupEventListeners() {
-        // Search input
+        // Search input with autocomplete
         const searchInput = document.getElementById('searchInput');
+        const autocomplete = document.getElementById('searchAutocomplete');
+        let selectedIndex = -1;
+
         if (searchInput) {
             let debounceTimer;
+
+            // Input event - show autocomplete and filter
             searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+
+                // Show autocomplete suggestions
+                if (query.length >= 1 && autocomplete) {
+                    showAutocompleteSuggestions(query, autocomplete);
+                    selectedIndex = -1;
+                } else if (autocomplete) {
+                    autocomplete.classList.remove('active');
+                }
+
+                // Debounced search
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
-                    setSearchQuery(e.target.value);
+                    setSearchQuery(query);
                 }, 300);
+            });
+
+            // Keyboard navigation
+            searchInput.addEventListener('keydown', (e) => {
+                if (!autocomplete || !autocomplete.classList.contains('active')) return;
+
+                const items = autocomplete.querySelectorAll('.autocomplete-item');
+                if (items.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                    updateSelectedItem(items, selectedIndex);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, 0);
+                    updateSelectedItem(items, selectedIndex);
+                } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                    e.preventDefault();
+                    items[selectedIndex].click();
+                } else if (e.key === 'Escape') {
+                    autocomplete.classList.remove('active');
+                    selectedIndex = -1;
+                }
+            });
+
+            // Hide on blur (with delay for click)
+            searchInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    if (autocomplete) autocomplete.classList.remove('active');
+                }, 200);
+            });
+
+            // Show on focus if has value
+            searchInput.addEventListener('focus', (e) => {
+                const query = e.target.value.trim();
+                if (query.length >= 1 && autocomplete) {
+                    showAutocompleteSuggestions(query, autocomplete);
+                }
             });
         }
 

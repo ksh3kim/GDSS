@@ -1035,7 +1035,8 @@ const GunplaApp = (function () {
         toggleCompare,
         setupDetailTabs,
         setFavorites: (list) => { favorites = list; },
-        setCompareList: (list) => { compareList = list; }
+        setCompareList: (list) => { compareList = list; },
+        getProducts: () => products
     };
 })();
 
