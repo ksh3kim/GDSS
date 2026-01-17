@@ -1217,7 +1217,8 @@ const GunplaApp = (function () {
         setFavorites: (list) => { favorites = list; },
         setCompareList: (list) => { compareList = list; },
         getProducts: () => products,
-        addToRecent
+        addToRecent,
+        updateBadges
     };
 })();
 
@@ -1252,6 +1253,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     GunplaApp.setCompareList([]);
                 }
             }
+
+            // Update nav badges with loaded data
+            GunplaApp.updateBadges();
 
             // Load product from URL parameter
             const urlParams = new URLSearchParams(window.location.search);
