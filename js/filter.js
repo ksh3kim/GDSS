@@ -267,12 +267,12 @@ const Filter = (function () {
             const header = clone.querySelector('.filter-category-header');
             header.addEventListener('click', () => {
                 const isCurrentlyActive = categoryEl.classList.contains('active');
-                
+
                 // Close all other categories
                 document.querySelectorAll('.filter-category.active').forEach(cat => {
                     cat.classList.remove('active');
                 });
-                
+
                 // Toggle current category (if it was closed, open it)
                 if (!isCurrentlyActive) {
                     categoryEl.classList.add('active');
