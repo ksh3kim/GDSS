@@ -105,11 +105,81 @@ const Filter = (function () {
         return searchQuery;
     }
 
+    // Search History constants
+    const SEARCH_HISTORY_KEY = 'gunpla-search-history';
+    const MAX_HISTORY_ITEMS = 10;
+
+    /**
+     * Get search history from localStorage
+     */
+    function getSearchHistory() {
+        try {
+            const history = localStorage.getItem(SEARCH_HISTORY_KEY);
+            return history ? JSON.parse(history) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    /**
+     * Save search query to history
+     */
+    function saveToHistory(query) {
+        if (!query || query.length < 2) return;
+
+        let history = getSearchHistory();
+
+        // Remove if already exists (to move to top)
+        history = history.filter(h => h.toLowerCase() !== query.toLowerCase());
+
+        // Add to beginning
+        history.unshift(query);
+
+        // Limit to max items
+        history = history.slice(0, MAX_HISTORY_ITEMS);
+
+        try {
+            localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+        } catch (e) {
+            console.warn('Failed to save search history:', e);
+        }
+    }
+
+    /**
+     * Remove item from search history
+     */
+    function removeFromHistory(query) {
+        let history = getSearchHistory();
+        history = history.filter(h => h !== query);
+        try {
+            localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+        } catch (e) {
+            console.warn('Failed to update search history:', e);
+        }
+    }
+
+    /**
+     * Clear all search history
+     */
+    function clearSearchHistory() {
+        try {
+            localStorage.removeItem(SEARCH_HISTORY_KEY);
+        } catch (e) {
+            console.warn('Failed to clear search history:', e);
+        }
+    }
+
     /**
      * Set search query
      */
     function setSearchQuery(query) {
         searchQuery = query.trim().toLowerCase();
+
+        // Save to history if meaningful query
+        if (searchQuery.length >= 2) {
+            saveToHistory(query.trim());
+        }
+
         updateURL();
         dispatchFilterChange();
     }
@@ -470,32 +540,54 @@ const Filter = (function () {
             });
         }
 
-        // Remove duplicates and limit
-        const unique = [];
-        const seen = new Set();
-        for (const s of suggestions) {
-            if (!seen.has(s.text) && unique.length < maxSuggestions) {
-                seen.add(s.text);
-                unique.push(s);
-            }
+        // Note: deduplication moved to finalSuggestions below after adding history
+
+        // Add search history items (at top or when query is short)
+        const history = getSearchHistory();
+        if (history.length > 0 && lowerQuery.length <= 1) {
+            // Show recent history when query is short
+            history.slice(0, 5).forEach(h => {
+                suggestions.unshift({ type: 'history', text: h, value: h, match: '' });
+            });
+        } else if (history.length > 0) {
+            // Add matching history items
+            history.forEach(h => {
+                if (h.toLowerCase().includes(lowerQuery) && !suggestions.find(s => s.value === h)) {
+                    suggestions.unshift({ type: 'history', text: h, value: h, match: lowerQuery });
+                }
+            });
         }
 
-        if (unique.length === 0) {
+        if (suggestions.length === 0) {
             container.classList.remove('active');
             return;
         }
 
+        // Rebuild unique list including history
+        const finalSuggestions = [];
+        const seen = new Set();
+        for (const s of suggestions) {
+            if (!seen.has(s.text.toLowerCase()) && finalSuggestions.length < maxSuggestions) {
+                seen.add(s.text.toLowerCase());
+                finalSuggestions.push(s);
+            }
+        }
+
         // Render suggestions
-        container.innerHTML = unique.map(s => `
-            <div class="autocomplete-item" data-value="${s.value}">
-                <span class="autocomplete-item-type ${s.type}">${s.type === 'product' ? '제품' : s.type === 'series' ? '시리즈' : '형식'}</span>
-                <span class="autocomplete-item-text">${highlightMatch(s.text, s.match)}</span>
+        container.innerHTML = finalSuggestions.map(s => `
+            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" data-value="${s.value}" data-type="${s.type}">
+                <span class="autocomplete-item-type ${s.type}">${s.type === 'product' ? '제품' : s.type === 'series' ? '시리즈' : s.type === 'model' ? '형식' : '🕒'}</span>
+                <span class="autocomplete-item-text">${s.match ? highlightMatch(s.text, s.match) : s.text}</span>
+                ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + s.value + '">×</button>' : ''}
             </div>
         `).join('');
 
-        // Add click handlers
+        // Add click handlers for suggestions
         container.querySelectorAll('.autocomplete-item').forEach(item => {
-            item.addEventListener('click', () => {
+            item.addEventListener('click', (e) => {
+                // Don't trigger if clicking delete button
+                if (e.target.classList.contains('history-delete-btn')) return;
+
                 const value = item.getAttribute('data-value');
                 const input = document.getElementById('searchInput');
                 if (input) {
@@ -503,6 +595,20 @@ const Filter = (function () {
                     setSearchQuery(value);
                 }
                 container.classList.remove('active');
+            });
+        });
+
+        // Add delete handlers for history items
+        container.querySelectorAll('.history-delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const query = btn.getAttribute('data-query');
+                removeFromHistory(query);
+                // Refresh autocomplete
+                const input = document.getElementById('searchInput');
+                if (input) {
+                    showAutocompleteSuggestions(input.value, container);
+                }
             });
         });
 
