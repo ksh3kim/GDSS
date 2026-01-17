@@ -558,25 +558,33 @@ const GunplaApp = (function () {
         // Variants
         renderVariants(product);
 
-        // Weapons
+        // Weapons & Accessories
         if (product.weapons) {
             const weaponsList = document.getElementById('weaponsList');
-            const weapons = I18n.getLang() === 'ko' ? product.weapons.ko : product.weapons.en;
-            weaponsList.innerHTML = weapons?.map(w => `<span class="product-tag">${w}</span>`).join('') || '';
+            if (weaponsList) {
+                const weapons = I18n.getLang() === 'ko' ? product.weapons.ko : product.weapons.en;
+                const accessories = product.accessories ? (I18n.getLang() === 'ko' ? product.accessories.ko : product.accessories.en) : [];
+                const allItems = [...(weapons || []), ...(accessories || [])];
+                weaponsList.innerHTML = allItems.map(w => `<span class="product-tag">${w}</span>`).join('') || '';
+            }
         }
 
         // Recommended for
         if (product.recommendation?.perfectFor) {
             const list = document.getElementById('recommendedForList');
-            const items = I18n.getLang() === 'ko' ? product.recommendation.perfectFor.ko : product.recommendation.perfectFor.en;
-            list.innerHTML = items?.map(item => `<li>• ${item}</li>`).join('') || '';
+            if (list) {
+                const items = I18n.getLang() === 'ko' ? product.recommendation.perfectFor.ko : product.recommendation.perfectFor.en;
+                list.innerHTML = items?.map(item => `<li>• ${item}</li>`).join('') || '';
+            }
         }
 
         // Building tips
         if (product.buildingTips) {
             const tipsList = document.getElementById('tipsList');
-            const tips = I18n.getLang() === 'ko' ? product.buildingTips.ko : product.buildingTips.en;
-            tipsList.innerHTML = tips?.map(tip => `<li>💡 ${tip}</li>`).join('') || '';
+            if (tipsList) {
+                const tips = I18n.getLang() === 'ko' ? product.buildingTips.ko : product.buildingTips.en;
+                tipsList.innerHTML = tips?.map(tip => `<li>💡 ${tip}</li>`).join('') || '';
+            }
         }
 
         // Setup tabs
