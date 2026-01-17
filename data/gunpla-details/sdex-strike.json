@@ -1,0 +1,66 @@
+{
+    "id": "sdex-strike",
+    "baseProductId": "strike-sd",
+    "name": {
+        "ko": "스트라이크 건담",
+        "en": "Strike Gundam"
+    },
+    "modelNumber": "GAT-X105",
+    "series": "seed",
+    "pilot": {
+        "ko": "키라 야마토",
+        "en": "Kira Yamato"
+    },
+    "grade": "SDEX",
+    "scale": "non_scale",
+    "releaseYear": 2015,
+    "price": 660,
+    "height": "8cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "아머 슈나이더",
+            "실드"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Armor Schneider",
+            "Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "스티커"
+        ],
+        "en": [
+            "Stickers"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "SD 입문자",
+                "어린이",
+                "SEED 팬"
+            ],
+            "en": [
+                "SD beginners",
+                "Children",
+                "SEED fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "초간단 조립",
+            "스티커 의존도 높음",
+            "에일 스트라이커 별매"
+        ],
+        "en": [
+            "Super simple assembly",
+            "High sticker dependency",
+            "Aile Striker sold separately"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

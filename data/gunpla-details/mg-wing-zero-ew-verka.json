@@ -1,0 +1,74 @@
+{
+    "id": "mg-wing-zero-ew-verka",
+    "baseProductId": "wing-zero",
+    "name": {
+        "ko": "윙 건담 제로 EW Ver.Ka",
+        "en": "Wing Gundam Zero EW Ver.Ka"
+    },
+    "modelNumber": "XXXG-00W0",
+    "series": "ew",
+    "pilot": {
+        "ko": "히이로 유이",
+        "en": "Heero Yuy"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2004,
+    "price": 5500,
+    "height": "18.5cm",
+    "weapons": {
+        "ko": [
+            "트윈 버스터 라이플",
+            "빔 사벨 x2",
+            "머신 캐논 x2",
+            "쉴드"
+        ],
+        "en": [
+            "Twin Buster Rifle",
+            "Beam Saber x2",
+            "Machine Cannon x2",
+            "Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "대형 천사 날개",
+            "Ver.Ka 마킹 데칼",
+            "교체용 손 파츠 x6",
+            "변형 가능"
+        ],
+        "en": [
+            "Large Angel Wings",
+            "Ver.Ka Marking Decals",
+            "Replacement Hand Parts x6",
+            "Transformable"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "Ver.Ka 컬렉터",
+                "대형 디스플레이 팬",
+                "윙 시리즈 마스터"
+            ],
+            "en": [
+                "Ver.Ka collectors",
+                "Large display fans",
+                "Wing series masters"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "네오버드 모드 변형 가능",
+            "날개 대형으로 스탠드 필수",
+            "Ver.Ka 특유 디테일 데칼"
+        ],
+        "en": [
+            "Neo-Bird Mode transformation possible",
+            "Stand required due to large wings",
+            "Ver.Ka signature detail decals"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

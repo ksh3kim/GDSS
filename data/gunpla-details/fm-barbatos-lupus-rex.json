@@ -1,0 +1,74 @@
+{
+    "id": "fm-barbatos-lupus-rex",
+    "baseProductId": "barbatos-lupus-rex",
+    "name": {
+        "ko": "건담 바르바토스 루프스 렉스",
+        "en": "Gundam Barbatos Lupus Rex"
+    },
+    "modelNumber": "ASW-G-08",
+    "series": "ibo",
+    "pilot": {
+        "ko": "미카즈키 오거스",
+        "en": "Mikazuki Augus"
+    },
+    "grade": "FM",
+    "scale": "1/100",
+    "releaseYear": 2017,
+    "price": 4400,
+    "height": "19cm",
+    "weapons": {
+        "ko": [
+            "초대형 메이스",
+            "렉스 네일 x2",
+            "테일 블레이드",
+            "200mm 포",
+            "롱 소드"
+        ],
+        "en": [
+            "Ultra Large Mace",
+            "Rex Nail x2",
+            "Tail Blade",
+            "200mm Cannon",
+            "Long Sword"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "풀 이너 프레임",
+            "풍부한 손 파츠",
+            "마킹 스티커"
+        ],
+        "en": [
+            "Full Inner Frame",
+            "Rich Hand Parts",
+            "Marking Stickers"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "대형 디스플레이 원하는 분",
+                "IBO 팬",
+                "프레임 전시 선호자"
+            ],
+            "en": [
+                "Those wanting large displays",
+                "IBO fans",
+                "Frame display enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "1/100 스케일로 디테일 풍부",
+            "프레임 노출 디자인",
+            "테일 블레이드 길이 주의"
+        ],
+        "en": [
+            "Rich detail at 1/100 scale",
+            "Exposed frame design",
+            "Watch tail blade length"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

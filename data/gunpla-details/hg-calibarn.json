@@ -1,0 +1,72 @@
+{
+    "id": "hg-calibarn",
+    "baseProductId": "calibarn",
+    "name": {
+        "ko": "건담 캘리반",
+        "en": "Gundam Calibarn"
+    },
+    "modelNumber": "XVX-016RN",
+    "series": "wfm",
+    "pilot": {
+        "ko": "슬레타 머큐리",
+        "en": "Suletta Mercury"
+    },
+    "grade": "HGTWFM",
+    "scale": "1/144",
+    "releaseYear": 2023,
+    "price": 2200,
+    "height": "13.5cm",
+    "weapons": {
+        "ko": [
+            "빔 사벨 x2",
+            "에스캇천 발칸",
+            "빔 라이플",
+            "건비트 x11"
+        ],
+        "en": [
+            "Beam Saber x2",
+            "Escutcheon Vulcan",
+            "Beam Rifle",
+            "Gun Bit x11"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "에스캇천 (분리 가능)",
+            "새로운 윙 파츠",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Escutcheon (separable)",
+            "New Wing Parts",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "수성의 마녀 최종화 팬",
+                "화이트 컬러 팬",
+                "윙 기체 선호자"
+            ],
+            "en": [
+                "Witch from Mercury finale fans",
+                "White color fans",
+                "Wing unit enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "에어리얼 개수형과 호환 파츠 있음",
+            "깔끔한 화이트 외장",
+            "섬세한 윙 조립"
+        ],
+        "en": [
+            "Compatible parts with Aerial Rebuild",
+            "Clean white exterior",
+            "Delicate wing assembly"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

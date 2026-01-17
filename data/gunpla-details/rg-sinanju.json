@@ -1,0 +1,76 @@
+{
+    "id": "rg-sinanju",
+    "baseProductId": "sinanju",
+    "name": {
+        "ko": "시난주",
+        "en": "Sinanju"
+    },
+    "modelNumber": "MSN-06S",
+    "series": "unicorn",
+    "pilot": {
+        "ko": "풀 프론탈",
+        "en": "Full Frontal"
+    },
+    "grade": "RG",
+    "scale": "1/144",
+    "releaseYear": 2015,
+    "price": 4400,
+    "height": "14cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "로켓 바주카",
+            "빔 액스",
+            "빔 사벨 x2",
+            "실드",
+            "그레네이드 런처"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Rocket Bazooka",
+            "Beam Axe",
+            "Beam Saber x2",
+            "Shield",
+            "Grenade Launcher"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "리얼리스틱 데칼",
+            "골드 파츠",
+            "풍부한 손 파츠"
+        ],
+        "en": [
+            "Realistic Decals",
+            "Gold Parts",
+            "Rich Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "디테일 중시",
+                "UC 팬",
+                "도전적 조립 선호자"
+            ],
+            "en": [
+                "Detail-oriented",
+                "UC fans",
+                "Challenging build enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "관절 헐거움 주의 (보강 권장)",
+            "골드 파츠 취급 주의",
+            "RG 난이도 높은 편"
+        ],
+        "en": [
+            "Watch for loose joints (reinforcement recommended)",
+            "Handle gold parts carefully",
+            "Higher RG difficulty"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

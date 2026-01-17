@@ -1,0 +1,74 @@
+{
+    "id": "hg-destiny-spec2",
+    "baseProductId": "destiny-spec2",
+    "name": {
+        "ko": "데스티니 건담 스펙 II",
+        "en": "Destiny Gundam Spec II"
+    },
+    "modelNumber": "ZGMF-X42S-REVOLUTION",
+    "series": "seed_freedom",
+    "pilot": {
+        "ko": "신 아스카",
+        "en": "Shinn Asuka"
+    },
+    "grade": "HGCE",
+    "scale": "1/144",
+    "releaseYear": 2024,
+    "price": 2420,
+    "height": "14cm",
+    "weapons": {
+        "ko": [
+            "고에너지 긴 사정거리 빔 캐논",
+            "플래시 엣지 2 빔 부메랑 x2",
+            "팔라스 아테나 빔 사벨 x2",
+            "빔 실드",
+            "안티 쉽 소드"
+        ],
+        "en": [
+            "High-Energy Long-Range Beam Cannon",
+            "Flash Edge 2 Beam Boomerang x2",
+            "Pallasch Beam Saber x2",
+            "Beam Shield",
+            "Anti-Ship Sword"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "윙 오브 라이트 이펙트 파츠",
+            "교체용 손 파츠",
+            "마킹 스티커"
+        ],
+        "en": [
+            "Wings of Light Effect Parts",
+            "Replacement Hand Parts",
+            "Marking Stickers"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "극장판 SEED Freedom 팬",
+                "데스티니 건담 팬",
+                "신 아스카 팬"
+            ],
+            "en": [
+                "SEED Freedom movie fans",
+                "Destiny Gundam fans",
+                "Shinn Asuka fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "기존 데스티니와 다른 신규 디자인",
+            "윙 오브 라이트 재현 가능",
+            "빔 부메랑 탈착 가능"
+        ],
+        "en": [
+            "New design different from original Destiny",
+            "Wings of Light effect reproducible",
+            "Beam boomerangs are detachable"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

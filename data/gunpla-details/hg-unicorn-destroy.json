@@ -1,0 +1,70 @@
+{
+    "id": "hg-unicorn-destroy",
+    "baseProductId": "unicorn-gundam",
+    "name": {
+        "ko": "유니콘 건담 디스트로이 모드",
+        "en": "Unicorn Gundam Destroy Mode"
+    },
+    "modelNumber": "RX-0",
+    "series": "unicorn",
+    "pilot": {
+        "ko": "바나지 링크스",
+        "en": "Banagher Links"
+    },
+    "grade": "HGUC",
+    "scale": "1/144",
+    "releaseYear": 2009,
+    "price": 2200,
+    "height": "14cm",
+    "weapons": {
+        "ko": [
+            "빔 매그넘",
+            "하이퍼 바주카",
+            "빔 사벨 x2",
+            "실드"
+        ],
+        "en": [
+            "Beam Magnum",
+            "Hyper Bazooka",
+            "Beam Saber x2",
+            "Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "사이코 프레임 클리어 파츠",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Psycho Frame Clear Parts",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "사이코 프레임 팬",
+                "화려한 디자인 선호자",
+                "UC 시리즈 팬"
+            ],
+            "en": [
+                "Psycho Frame fans",
+                "Those who prefer flashy designs",
+                "UC series fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "클리어 파츠 취급 주의",
+            "변형 불가 (디스트로이 모드 고정)",
+            "씰 부착 필요한 부분 있음"
+        ],
+        "en": [
+            "Handle clear parts carefully",
+            "No transformation (Destroy Mode fixed)",
+            "Some areas require stickers"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

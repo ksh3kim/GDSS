@@ -1,0 +1,64 @@
+{
+    "id": "eg-rx-78-2",
+    "baseProductId": "rx-78-2",
+    "name": {
+        "ko": "RX-78-2 건담",
+        "en": "RX-78-2 Gundam"
+    },
+    "modelNumber": "RX-78-2",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "아무로 레이",
+        "en": "Amuro Ray"
+    },
+    "grade": "EG",
+    "scale": "1/144",
+    "releaseYear": 2020,
+    "price": 770,
+    "height": "13cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "실드"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "마킹 스티커"
+        ],
+        "en": [
+            "Marking Stickers"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "완전 초보자",
+                "어린이",
+                "빠른 조립을 원하는 분"
+            ],
+            "en": [
+                "Complete beginners",
+                "Children",
+                "Those wanting quick builds"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "니퍼 없이도 조립 가능",
+            "터치 게이트로 손쉬운 분리",
+            "30분 내 완성 가능"
+        ],
+        "en": [
+            "Can be built without nippers",
+            "Touch gate for easy separation",
+            "Completable within 30 minutes"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

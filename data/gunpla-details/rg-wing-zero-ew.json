@@ -1,0 +1,70 @@
+{
+    "id": "rg-wing-zero-ew",
+    "baseProductId": "wing-zero",
+    "name": {
+        "ko": "윙 건담 제로 EW",
+        "en": "Wing Gundam Zero EW"
+    },
+    "modelNumber": "XXXG-00W0",
+    "series": "ew",
+    "pilot": {
+        "ko": "히이로 유이",
+        "en": "Heero Yuy"
+    },
+    "grade": "RG",
+    "scale": "1/144",
+    "releaseYear": 2014,
+    "price": 3300,
+    "height": "13.5cm",
+    "weapons": {
+        "ko": [
+            "트윈 버스터 라이플",
+            "빔 사벨 x2",
+            "머신 캐논 x2"
+        ],
+        "en": [
+            "Twin Buster Rifle",
+            "Beam Saber x2",
+            "Machine Cannon x2"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "대형 천사 날개 (깃털 개별 가동)",
+            "리얼리스틱 데칼",
+            "풍부한 손 파츠"
+        ],
+        "en": [
+            "Large Angel Wings (individual feather articulation)",
+            "Realistic Decals",
+            "Rich Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "디테일 중시 모델러",
+                "천사 날개 팬",
+                "RG 컬렉터"
+            ],
+            "en": [
+                "Detail-oriented modelers",
+                "Angel wing fans",
+                "RG collectors"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "깃털 개별 조립 (시간 소요)",
+            "날개 무게로 밸런스 주의",
+            "스탠드 필수"
+        ],
+        "en": [
+            "Individual feather assembly (time-consuming)",
+            "Watch balance due to wing weight",
+            "Stand required"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

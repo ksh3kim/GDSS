@@ -1,0 +1,76 @@
+{
+    "id": "mg-exia",
+    "baseProductId": "exia",
+    "name": {
+        "ko": "건담 엑시아",
+        "en": "Gundam Exia"
+    },
+    "modelNumber": "GN-001",
+    "series": "00",
+    "pilot": {
+        "ko": "세츠나 F. 세이에이",
+        "en": "Setsuna F. Seiei"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2009,
+    "price": 4950,
+    "height": "18cm",
+    "weapons": {
+        "ko": [
+            "GN 소드",
+            "GN 롱 블레이드",
+            "GN 숏 블레이드",
+            "GN 빔 사벨 x2",
+            "GN 빔 대거 x2",
+            "GN 실드"
+        ],
+        "en": [
+            "GN Sword",
+            "GN Long Blade",
+            "GN Short Blade",
+            "GN Beam Saber x2",
+            "GN Beam Dagger x2",
+            "GN Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "LED 유닛 호환",
+            "교체용 손 파츠 x6",
+            "드라이 데칼"
+        ],
+        "en": [
+            "LED Unit Compatible",
+            "Replacement Hand Parts x6",
+            "Dry Decals"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "MG 컬렉터",
+                "00 팬",
+                "LED 커스터마이저"
+            ],
+            "en": [
+                "MG collectors",
+                "00 fans",
+                "LED customizers"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "LED 별매",
+            "GN 드라이브 발광 재현 가능",
+            "무장 풍부"
+        ],
+        "en": [
+            "LED sold separately",
+            "Can recreate GN Drive glow",
+            "Rich weaponry"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

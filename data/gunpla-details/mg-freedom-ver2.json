@@ -1,0 +1,72 @@
+{
+    "id": "mg-freedom-ver2",
+    "baseProductId": "freedom-gundam",
+    "name": {
+        "ko": "프리덤 건담 Ver.2.0",
+        "en": "Freedom Gundam Ver.2.0"
+    },
+    "modelNumber": "ZGMF-X10A",
+    "series": "seed",
+    "pilot": {
+        "ko": "키라 야마토",
+        "en": "Kira Yamato"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2016,
+    "price": 5500,
+    "height": "18.5cm",
+    "weapons": {
+        "ko": [
+            "M100 바라에나 플라즈마 수집 빔포 x2",
+            "M100A 쿠스피드 레일건 x2",
+            "MA-M01 라케르타 빔 사벨 x2",
+            "MA-M20 루프스 빔 라이플 x2",
+            "라미네이트 안티빔 실드"
+        ],
+        "en": [
+            "M100 Balaena Plasma Beam Cannon x2",
+            "M100A Xiphias Rail Cannon x2",
+            "MA-M01 Lacerta Beam Saber x2",
+            "MA-M20 Lupus Beam Rifle x2",
+            "Laminated Anti-Beam Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "풀 버스트 모드 전개 파츠",
+            "교체용 손 파츠 x6",
+            "액션베이스 호환"
+        ],
+        "en": [
+            "Full Burst Mode Parts",
+            "Replacement Hand Parts x6",
+            "Action Base Compatible"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "MG 컬렉터",
+                "SEED 팬",
+                "디테일 중시"
+            ],
+            "en": [
+                "MG collectors",
+                "SEED fans",
+                "Detail-oriented"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "윙 유닛 조립 주의",
+            "풀 버스트 모드 안정적"
+        ],
+        "en": [
+            "Be careful with wing units",
+            "Full Burst Mode is stable"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

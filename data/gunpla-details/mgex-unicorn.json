@@ -1,0 +1,80 @@
+{
+    "id": "mgex-unicorn",
+    "baseProductId": "unicorn-gundam-ex",
+    "name": {
+        "ko": "유니콘 건담",
+        "en": "Unicorn Gundam"
+    },
+    "modelNumber": "RX-0",
+    "series": "unicorn",
+    "pilot": {
+        "ko": "바나지 링크스",
+        "en": "Banagher Links"
+    },
+    "grade": "MGEX",
+    "scale": "1/100",
+    "releaseYear": 2020,
+    "price": 27500,
+    "height": "22cm",
+    "weapons": {
+        "ko": [
+            "빔 매그넘",
+            "하이퍼 바주카",
+            "빔 사벨 x4",
+            "실드 x2",
+            "빔 가틀링 건 x2"
+        ],
+        "en": [
+            "Beam Magnum",
+            "Hyper Bazooka",
+            "Beam Saber x4",
+            "Shield x2",
+            "Beam Gatling Gun x2"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "LED 유닛 (내장)",
+            "풀 사이코 프레임 발광",
+            "유니콘↔디스트로이 완전 변형",
+            "풍부한 손 파츠",
+            "액션베이스"
+        ],
+        "en": [
+            "LED Unit (built-in)",
+            "Full Psycho Frame Illumination",
+            "Full Unicorn↔Destroy Transformation",
+            "Rich Hand Parts",
+            "Action Base"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "궁극의 유니콘 팬",
+                "LED 발광 애호가",
+                "프리미엄 컬렉터"
+            ],
+            "en": [
+                "Ultimate Unicorn fans",
+                "LED illumination lovers",
+                "Premium collectors"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "LED 배선 섬세한 작업 필요",
+            "완전 변형 구현",
+            "조립 시간 10시간+",
+            "건전지 별도 구매"
+        ],
+        "en": [
+            "LED wiring requires delicate work",
+            "Full transformation implemented",
+            "Assembly time 10+ hours",
+            "Batteries sold separately"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

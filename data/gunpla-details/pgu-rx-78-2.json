@@ -1,0 +1,78 @@
+{
+    "id": "pgu-rx-78-2",
+    "baseProductId": "rx-78-2",
+    "name": {
+        "ko": "RX-78-2 건담",
+        "en": "RX-78-2 Gundam"
+    },
+    "modelNumber": "RX-78-2",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "아무로 레이",
+        "en": "Amuro Ray"
+    },
+    "grade": "PGU",
+    "scale": "1/60",
+    "releaseYear": 2020,
+    "price": 38500,
+    "height": "30cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 사벨 x2 (LED 발광)",
+            "실드",
+            "하이퍼 바주카",
+            "슈퍼 나팔름"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Saber x2 (LED lit)",
+            "Shield",
+            "Hyper Bazooka",
+            "Super Napalm"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "LED 유닛 (내장)",
+            "코어 파이터 (분리/변형 가능)",
+            "교체용 손 파츠 x8",
+            "전용 스탠드",
+            "풀 마킹 데칼"
+        ],
+        "en": [
+            "LED Unit (built-in)",
+            "Core Fighter (separable/transformable)",
+            "Replacement Hand Parts x8",
+            "Dedicated Stand",
+            "Full Marking Decals"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "최고급 컬렉터",
+                "LED 기믹 애호가",
+                "건프라 마스터"
+            ],
+            "en": [
+                "Premium collectors",
+                "LED feature enthusiasts",
+                "Gunpla masters"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "LED 배선 주의 깊게 작업",
+            "외장 탈착 시스템 숙지 필요",
+            "풀 조립에 10시간 이상 소요"
+        ],
+        "en": [
+            "Carefully work with LED wiring",
+            "Understand armor removal system",
+            "Full assembly takes 10+ hours"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

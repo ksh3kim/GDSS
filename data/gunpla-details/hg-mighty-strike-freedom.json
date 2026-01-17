@@ -1,0 +1,78 @@
+{
+    "id": "hg-mighty-strike-freedom",
+    "baseProductId": "mighty-strike-freedom",
+    "name": {
+        "ko": "마이티 스트라이크 프리덤 건담",
+        "en": "Mighty Strike Freedom Gundam"
+    },
+    "modelNumber": "STTS-808",
+    "series": "seed_freedom",
+    "pilot": {
+        "ko": "키라 야마토",
+        "en": "Kira Yamato"
+    },
+    "grade": "HGCE",
+    "scale": "1/144",
+    "releaseYear": 2024,
+    "price": 3520,
+    "height": "15cm",
+    "weapons": {
+        "ko": [
+            "고출력 빔 라이플",
+            "레거시 빔 사벨 x2",
+            "칼리두스 복합 빔포",
+            "슈퍼 드라군 (개량형) x8",
+            "광자 방패"
+        ],
+        "en": [
+            "High-Output Beam Rifle",
+            "Legacy Beam Saber x2",
+            "Callidus Multi-Phase Beam Cannon",
+            "Super DRAGOON (Improved) x8",
+            "Photon Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "대형 윙 유닛",
+            "드라군 분리 가능",
+            "골드 코팅 파츠",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Large Wing Unit",
+            "Separable DRAGOONs",
+            "Gold Coated Parts",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "극장판 SEED Freedom 팬",
+                "화려한 기체 선호자",
+                "스트라이크 프리덤 팬"
+            ],
+            "en": [
+                "SEED Freedom movie fans",
+                "Flashy design enthusiasts",
+                "Strike Freedom fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "대형 키트로 볼륨감 있음",
+            "드라군 조립 주의",
+            "골드 파츠 취급 주의",
+            "스탠드 권장"
+        ],
+        "en": [
+            "Large kit with impressive volume",
+            "DRAGOON assembly requires care",
+            "Handle gold parts carefully",
+            "Stand recommended"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

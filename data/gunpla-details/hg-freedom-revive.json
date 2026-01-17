@@ -1,0 +1,72 @@
+{
+    "id": "hg-freedom-revive",
+    "baseProductId": "freedom-gundam",
+    "name": {
+        "ko": "프리덤 건담",
+        "en": "Freedom Gundam"
+    },
+    "modelNumber": "ZGMF-X10A",
+    "series": "seed",
+    "pilot": {
+        "ko": "키라 야마토",
+        "en": "Kira Yamato"
+    },
+    "grade": "HGCE",
+    "scale": "1/144",
+    "releaseYear": 2015,
+    "price": 1650,
+    "height": "13.5cm",
+    "weapons": {
+        "ko": [
+            "M100 바라에나 플라즈마 수집 빔포 x2",
+            "M100A 쿠스피드 레일건 x2",
+            "MA-M01 라케르타 빔 사벨 x2",
+            "MA-M20 루프스 빔 라이플 x2",
+            "라미네이트 안티빔 실드"
+        ],
+        "en": [
+            "M100 Balaena Plasma Beam Cannon x2",
+            "M100A Xiphias Rail Cannon x2",
+            "MA-M01 Lacerta Beam Saber x2",
+            "MA-M20 Lupus Beam Rifle x2",
+            "Laminated Anti-Beam Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "윙 전개 파츠",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Wing Deployment Parts",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "SEED 시리즈 팬",
+                "윙 기믹 애호가",
+                "입문자"
+            ],
+            "en": [
+                "SEED series fans",
+                "Wing gimmick enthusiasts",
+                "Beginners"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "윙 전개 시 관절 주의",
+            "빔 라이플 결합 가능",
+            "색분할 우수해 무도장 가능"
+        ],
+        "en": [
+            "Be careful with wing joints",
+            "Beam rifles can be combined",
+            "Excellent color separation, no painting needed"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

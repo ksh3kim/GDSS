@@ -1,0 +1,72 @@
+{
+    "id": "hg-aerial-rebuild",
+    "baseProductId": "aerial-rebuild",
+    "name": {
+        "ko": "건담 에어리얼 개수형",
+        "en": "Gundam Aerial Rebuild"
+    },
+    "modelNumber": "XVX-016RN",
+    "series": "wfm",
+    "pilot": {
+        "ko": "슬레타 머큐리",
+        "en": "Suletta Mercury"
+    },
+    "grade": "HGTWFM",
+    "scale": "1/144",
+    "releaseYear": 2023,
+    "price": 1760,
+    "height": "13cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 사벨",
+            "에스캇천 (비트 스테이브/빔 실드)",
+            "건비트 x11"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Saber",
+            "Escutcheon (Bit Stave/Beam Shield)",
+            "Gun Bit x11"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "에스캇천 전개 파츠",
+            "클리어 파츠",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Escutcheon Deployment Parts",
+            "Clear Parts",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "수성의 마녀 팬",
+                "건비트 기믹 애호가",
+                "최신 시리즈 팬"
+            ],
+            "en": [
+                "Witch from Mercury fans",
+                "Gun Bit gimmick lovers",
+                "Latest series fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "에스캇천 조립 주의",
+            "건비트 분실 주의",
+            "클리어 파츠 취급 주의"
+        ],
+        "en": [
+            "Careful with Escutcheon assembly",
+            "Don't lose Gun Bits",
+            "Handle clear parts carefully"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

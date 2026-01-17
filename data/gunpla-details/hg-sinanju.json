@@ -1,0 +1,74 @@
+{
+    "id": "hg-sinanju",
+    "baseProductId": "sinanju",
+    "name": {
+        "ko": "시난주",
+        "en": "Sinanju"
+    },
+    "modelNumber": "MSN-06S",
+    "series": "unicorn",
+    "pilot": {
+        "ko": "풀 프론탈",
+        "en": "Full Frontal"
+    },
+    "grade": "HGUC",
+    "scale": "1/144",
+    "releaseYear": 2010,
+    "price": 2750,
+    "height": "14cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 액스",
+            "빔 사벨 x2",
+            "실드",
+            "그레네이드 런처",
+            "하이 빔 라이플"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Axe",
+            "Beam Saber x2",
+            "Shield",
+            "Grenade Launcher",
+            "High Beam Rifle"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "골드 엠블럼 스티커",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Gold Emblem Stickers",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "UC 시리즈 팬",
+                "레드 컬러 팬",
+                "화려한 기체 선호자"
+            ],
+            "en": [
+                "UC series fans",
+                "Red color fans",
+                "Flashy design enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "골드 데코 스티커 작업 정밀 필요",
+            "도색 시 효과 극대화",
+            "날렵한 실루엣"
+        ],
+        "en": [
+            "Gold decal work requires precision",
+            "Painting maximizes effect",
+            "Sleek silhouette"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

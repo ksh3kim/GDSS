@@ -1,0 +1,70 @@
+{
+    "id": "hg-00-raiser",
+    "baseProductId": "00-raiser",
+    "name": {
+        "ko": "더블오 라이저",
+        "en": "00 Raiser"
+    },
+    "modelNumber": "GN-0000+GNR-010",
+    "series": "00",
+    "pilot": {
+        "ko": "세츠나 F. 세이에이",
+        "en": "Setsuna F. Seiei"
+    },
+    "grade": "HG",
+    "scale": "1/144",
+    "releaseYear": 2008,
+    "price": 2200,
+    "height": "14.5cm",
+    "weapons": {
+        "ko": [
+            "GN 소드 III x2",
+            "GN 빔 사벨 x2",
+            "GN 실드 x2",
+            "GN 미사일 런처"
+        ],
+        "en": [
+            "GN Sword III x2",
+            "GN Beam Saber x2",
+            "GN Shield x2",
+            "GN Missile Launcher"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "오 라이저 유닛",
+            "GN 드라이브 클리어 파츠",
+            "합체 파츠"
+        ],
+        "en": [
+            "O Raiser Unit",
+            "GN Drive Clear Parts",
+            "Combination Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "00 팬",
+                "합체 기믹 애호가",
+                "트윈 드라이브 팬"
+            ],
+            "en": [
+                "00 fans",
+                "Combination gimmick lovers",
+                "Twin Drive fans"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "더블오와 오 라이저 합체 가능",
+            "분리 상태로 디스플레이 가능"
+        ],
+        "en": [
+            "Can combine 00 and O Raiser",
+            "Can display separately"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

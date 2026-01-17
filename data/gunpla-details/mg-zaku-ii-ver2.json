@@ -1,0 +1,74 @@
+{
+    "id": "mg-zaku-ii-ver2",
+    "baseProductId": "zaku-ii",
+    "name": {
+        "ko": "자쿠 II Ver.2.0",
+        "en": "Zaku II Ver.2.0"
+    },
+    "modelNumber": "MS-06F",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "지온 병사",
+        "en": "Zeon Soldier"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2007,
+    "price": 3850,
+    "height": "17.5cm",
+    "weapons": {
+        "ko": [
+            "자쿠 머신건",
+            "히트 호크",
+            "자쿠 바주카",
+            "크래커 x6"
+        ],
+        "en": [
+            "Zaku Machine Gun",
+            "Heat Hawk",
+            "Zaku Bazooka",
+            "Cracker x6"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "풀 이너 프레임",
+            "드라이 데칼",
+            "교체용 손 파츠 x6",
+            "모노아이 레일 가동"
+        ],
+        "en": [
+            "Full Inner Frame",
+            "Dry Decals",
+            "Replacement Hand Parts x6",
+            "Movable Mono-Eye Rail"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "MG 입문자",
+                "지온 팬",
+                "양산기 컬렉터"
+            ],
+            "en": [
+                "MG beginners",
+                "Zeon fans",
+                "Mass-production collectors"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "MG 양산기의 기준",
+            "모노아이 레일 움직임",
+            "파이프 정리 깔끔하게"
+        ],
+        "en": [
+            "MG mass-production standard",
+            "Mono-eye rail movement",
+            "Keep pipes organized"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

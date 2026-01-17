@@ -1,0 +1,70 @@
+{
+    "id": "hg-zaku-ii",
+    "baseProductId": "zaku-ii",
+    "name": {
+        "ko": "자쿠 II",
+        "en": "Zaku II"
+    },
+    "modelNumber": "MS-06F",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "지온 병사",
+        "en": "Zeon Soldier"
+    },
+    "grade": "HGUC",
+    "scale": "1/144",
+    "releaseYear": 2015,
+    "price": 1320,
+    "height": "12.5cm",
+    "weapons": {
+        "ko": [
+            "자쿠 머신건",
+            "히트 호크",
+            "자쿠 바주카",
+            "크래커 x3"
+        ],
+        "en": [
+            "Zaku Machine Gun",
+            "Heat Hawk",
+            "Zaku Bazooka",
+            "Cracker x3"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "교체용 손 파츠",
+            "숄더 실드"
+        ],
+        "en": [
+            "Replacement Hand Parts",
+            "Shoulder Shield"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "지온 팬",
+                "양산기 컬렉터",
+                "입문자"
+            ],
+            "en": [
+                "Zeon fans",
+                "Mass-production collectors",
+                "Beginners"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "리바이브 버전으로 가동성 우수",
+            "색분할 좋음",
+            "히트 호크 보관 파츠 있음"
+        ],
+        "en": [
+            "Revive version with excellent articulation",
+            "Good color separation",
+            "Heat Hawk storage parts included"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

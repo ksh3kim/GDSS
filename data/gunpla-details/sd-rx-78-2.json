@@ -1,0 +1,68 @@
+{
+    "id": "sd-rx-78-2",
+    "baseProductId": "rx-78-2-sd",
+    "name": {
+        "ko": "RX-78-2 건담",
+        "en": "RX-78-2 Gundam"
+    },
+    "modelNumber": "RX-78-2",
+    "series": "first_gundam",
+    "pilot": {
+        "ko": "아무로 레이",
+        "en": "Amuro Ray"
+    },
+    "grade": "SDCS",
+    "scale": "non_scale",
+    "releaseYear": 2018,
+    "price": 770,
+    "height": "8cm",
+    "weapons": {
+        "ko": [
+            "빔 라이플",
+            "빔 사벨",
+            "실드"
+        ],
+        "en": [
+            "Beam Rifle",
+            "Beam Saber",
+            "Shield"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "CS 프레임 (별매로 HG화 가능)",
+            "스티커"
+        ],
+        "en": [
+            "CS Frame (can become HG with separate purchase)",
+            "Stickers"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "SD 팬",
+                "어린이",
+                "귀여운 디자인 선호자"
+            ],
+            "en": [
+                "SD fans",
+                "Children",
+                "Cute design enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "CS 프레임으로 프로포션 변경 가능",
+            "조립 간단",
+            "눈 스티커 붙이기"
+        ],
+        "en": [
+            "Can change proportions with CS Frame",
+            "Simple assembly",
+            "Apply eye stickers"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

@@ -1,0 +1,70 @@
+{
+    "id": "hg-barbatos-lupus-rex",
+    "baseProductId": "barbatos-lupus-rex",
+    "name": {
+        "ko": "건담 바르바토스 루프스 렉스",
+        "en": "Gundam Barbatos Lupus Rex"
+    },
+    "modelNumber": "ASW-G-08",
+    "series": "ibo",
+    "pilot": {
+        "ko": "미카즈키 오거스",
+        "en": "Mikazuki Augus"
+    },
+    "grade": "HGIBO",
+    "scale": "1/144",
+    "releaseYear": 2017,
+    "price": 1320,
+    "height": "13.5cm",
+    "weapons": {
+        "ko": [
+            "초대형 메이스",
+            "렉스 네일 x2",
+            "테일 블레이드",
+            "200mm 포"
+        ],
+        "en": [
+            "Ultra Large Mace",
+            "Rex Nail x2",
+            "Tail Blade",
+            "200mm Cannon"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "풀 이너 프레임",
+            "교체용 손 파츠"
+        ],
+        "en": [
+            "Full Inner Frame",
+            "Replacement Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "IBO 팬",
+                "근접전 기체 선호자",
+                "프레임 애호가"
+            ],
+            "en": [
+                "IBO fans",
+                "Melee unit lovers",
+                "Frame enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "테일 블레이드 가동 가능",
+            "프레임부터 조립",
+            "대형 메이스 무게 주의"
+        ],
+        "en": [
+            "Tail Blade is articulated",
+            "Start with frame",
+            "Large mace is heavy"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

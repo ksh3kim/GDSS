@@ -1,0 +1,82 @@
+{
+    "id": "mg-sazabi-verka",
+    "baseProductId": "sazabi",
+    "name": {
+        "ko": "사자비 Ver.Ka",
+        "en": "Sazabi Ver.Ka"
+    },
+    "modelNumber": "MSN-04",
+    "series": "cca",
+    "pilot": {
+        "ko": "샤아 아즈나블",
+        "en": "Char Aznable"
+    },
+    "grade": "MG",
+    "scale": "1/100",
+    "releaseYear": 2013,
+    "price": 11000,
+    "height": "23cm",
+    "weapons": {
+        "ko": [
+            "빔 샷 라이플",
+            "빔 토마호크",
+            "빔 사벨 x2",
+            "실드",
+            "판넬 x6",
+            "복부 메가 입자포",
+            "그레네이드 런처"
+        ],
+        "en": [
+            "Beam Shot Rifle",
+            "Beam Tomahawk",
+            "Beam Saber x2",
+            "Shield",
+            "Funnel x6",
+            "Abdominal Mega Particle Cannon",
+            "Grenade Launcher"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "LED 유닛 호환",
+            "Ver.Ka 마킹 데칼",
+            "탈출 포드 재현",
+            "헤치 오픈 기믹"
+        ],
+        "en": [
+            "LED Unit Compatible",
+            "Ver.Ka Marking Decals",
+            "Escape Pod Recreation",
+            "Hatch Open Gimmick"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "MG 마스터피스 컬렉터",
+                "샤아 팬",
+                "대형 키트 선호자"
+            ],
+            "en": [
+                "MG masterpiece collectors",
+                "Char fans",
+                "Large kit enthusiasts"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "MG 역대급 볼륨",
+            "LED 별매",
+            "조립 시간 많이 소요",
+            "무게감 있는 완성품"
+        ],
+        "en": [
+            "Ultimate MG volume",
+            "LED sold separately",
+            "Long assembly time",
+            "Weighty finished product"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}

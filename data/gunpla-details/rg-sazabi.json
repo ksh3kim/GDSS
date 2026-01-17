@@ -1,0 +1,78 @@
+{
+    "id": "rg-sazabi",
+    "baseProductId": "sazabi",
+    "name": {
+        "ko": "사자비",
+        "en": "Sazabi"
+    },
+    "modelNumber": "MSN-04",
+    "series": "cca",
+    "pilot": {
+        "ko": "샤아 아즈나블",
+        "en": "Char Aznable"
+    },
+    "grade": "RG",
+    "scale": "1/144",
+    "releaseYear": 2018,
+    "price": 4950,
+    "height": "16cm",
+    "weapons": {
+        "ko": [
+            "빔 샷 라이플",
+            "빔 토마호크",
+            "빔 사벨 x2",
+            "실드",
+            "판넬 x6",
+            "복부 메가 입자포"
+        ],
+        "en": [
+            "Beam Shot Rifle",
+            "Beam Tomahawk",
+            "Beam Saber x2",
+            "Shield",
+            "Funnel x6",
+            "Abdominal Mega Particle Cannon"
+        ]
+    },
+    "accessories": {
+        "ko": [
+            "판넬 전개 파츠",
+            "리얼리스틱 데칼",
+            "탈출 포드 재현",
+            "풍부한 손 파츠"
+        ],
+        "en": [
+            "Funnel Deployment Parts",
+            "Realistic Decals",
+            "Escape Pod Recreation",
+            "Rich Hand Parts"
+        ]
+    },
+    "recommendation": {
+        "perfectFor": {
+            "ko": [
+                "샤아 팬",
+                "대형 RG 선호자",
+                "라이벌기 컬렉터"
+            ],
+            "en": [
+                "Char fans",
+                "Large RG enthusiasts",
+                "Rival unit collectors"
+            ]
+        }
+    },
+    "buildingTips": {
+        "ko": [
+            "RG 최대 사이즈",
+            "헤치 오픈 기믹",
+            "판넬 수납/전개 가능"
+        ],
+        "en": [
+            "Largest RG",
+            "Hatch open gimmick",
+            "Funnels can store/deploy"
+        ]
+    },
+    "lastUpdated": "2026-01-18"
+}
