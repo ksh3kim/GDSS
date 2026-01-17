@@ -10,6 +10,7 @@ const GunplaApp = (function () {
     let displayedCount = 0;
     let currentView = 'grid';
     let currentSort = 'releaseDate';
+    let sortOrder = 'desc'; // 'desc' = descending (newest first), 'asc' = ascending
     let currentProduct = null; // For detail page language switching
     const ITEMS_PER_PAGE = 24;
 
@@ -131,22 +132,32 @@ const GunplaApp = (function () {
         // If filters active, keep score-based sorting
         if (Object.keys(filters).length > 0) return;
 
+        // multiplier: 1 for asc, -1 for desc
+        const multiplier = sortOrder === 'asc' ? 1 : -1;
+
         filteredProducts.sort((a, b) => {
+            let result = 0;
             switch (currentSort) {
                 case 'releaseDate':
-                    return (b.releaseYear || 0) - (a.releaseYear || 0);
+                    result = (a.releaseYear || 0) - (b.releaseYear || 0);
+                    break;
                 case 'name':
-                    return I18n.getName(a.name).localeCompare(I18n.getName(b.name));
+                    result = I18n.getName(a.name).localeCompare(I18n.getName(b.name));
+                    break;
                 case 'price':
-                    return (a.price || 0) - (b.price || 0);
+                    result = (a.price || 0) - (b.price || 0);
+                    break;
                 case 'difficulty':
                     const diffOrder = { beginner: 1, intermediate: 2, advanced: 3 };
-                    return (diffOrder[a.filterData?.difficulty] || 0) - (diffOrder[b.filterData?.difficulty] || 0);
+                    result = (diffOrder[a.filterData?.difficulty] || 0) - (diffOrder[b.filterData?.difficulty] || 0);
+                    break;
                 case 'partCount':
-                    return (a.filterData?.partCount || 0) - (b.filterData?.partCount || 0);
+                    result = (a.filterData?.partCount || 0) - (b.filterData?.partCount || 0);
+                    break;
                 default:
-                    return 0;
+                    result = 0;
             }
+            return result * multiplier;
         });
     }
 
@@ -831,6 +842,22 @@ const GunplaApp = (function () {
         if (sortSelect) {
             sortSelect.addEventListener('change', (e) => {
                 currentSort = e.target.value;
+                sortProducts();
+                displayedCount = 0;
+                renderProducts();
+            });
+        }
+
+        // Sort order toggle (asc/desc)
+        const sortOrderToggle = document.getElementById('sortOrderToggle');
+        if (sortOrderToggle) {
+            sortOrderToggle.addEventListener('click', () => {
+                sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+                const label = sortOrderToggle.querySelector('.sort-order-label');
+                if (label) {
+                    label.textContent = sortOrder === 'desc' ? '↓' : '↑';
+                }
+                sortOrderToggle.classList.toggle('asc', sortOrder === 'asc');
                 sortProducts();
                 displayedCount = 0;
                 renderProducts();
