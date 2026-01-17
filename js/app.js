@@ -913,19 +913,29 @@ const GunplaApp = (function () {
 
         // Bandai manual link
         if (manualBtn) {
-            let productId = product.gunplaFyiId;
+            let manualId = product.gunplaFyiId || product.manualId;
 
-            // Try to extract ID from thumbnail URL if gunplaFyiId not available
-            if (!productId && product.thumbnail) {
+            // Try to extract ID from thumbnail URL if not available
+            if (!manualId && product.thumbnail) {
+                // Match patterns like /boxarts/196 or /boxarts/196.jpeg
                 const match = product.thumbnail.match(/boxarts\/(\d+)/);
-                if (match) productId = match[1];
+                if (match) manualId = match[1];
             }
 
-            if (productId) {
-                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${productId}`;
+            if (manualId) {
+                // Direct manual link
+                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${manualId}`;
                 manualBtn.style.display = 'flex';
             } else {
-                manualBtn.style.display = 'none';
+                // Fallback: search by product name on manual site
+                const searchName = encodeURIComponent(I18n.getName(product.name) || product.modelNumber || '');
+                if (searchName) {
+                    manualBtn.href = `https://manual.bandai-hobby.net/?q=${searchName}`;
+                    manualBtn.style.display = 'flex';
+                    manualBtn.title = '설명서 검색 (정확한 링크 없음)';
+                } else {
+                    manualBtn.style.display = 'none';
+                }
             }
         }
     }
