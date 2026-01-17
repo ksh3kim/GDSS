@@ -140,7 +140,31 @@
         "reasoning": {
             "ko": "철혈의 오펀스 시리즈의 특징인 풀 이너 프레임을 HG 가격에 즐길 수 있습니다. 근접전 위주의 무장이 멋지며, 입문자도 쉽게 조립할 수 있습니다. 가성비 최강 제품 중 하나입니다.",
             "en": "Enjoy the signature full inner frame of IBO series at HG price. Great melee weapons and easy assembly for beginners. One of the best value products."
+        },
+        "perfectFor": {
+            "ko": [
+                "IBO 시리즈 팬",
+                "근접전 기체 선호자",
+                "가성비 중시 입문자"
+            ],
+            "en": [
+                "IBO series fans",
+                "Melee unit enthusiasts",
+                "Value-oriented beginners"
+            ]
         }
+    },
+    "buildingTips": {
+        "ko": [
+            "프레임부터 조립 시작",
+            "메이스 무게감 있음",
+            "관절 가동 전 충분히 움직여주기"
+        ],
+        "en": [
+            "Start with frame assembly",
+            "Mace has weight",
+            "Work joints before posing"
+        ]
     },
     "lastUpdated": "2026-01-10"
 }

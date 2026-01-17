@@ -144,7 +144,31 @@
         "reasoning": {
             "ko": "MG 뉴건담 Ver.Ka는 MG 라인의 대표작 중 하나입니다. 핀 판넬의 볼륨감, 날카로운 카토키 디자인, 그리고 워터 데칼까지 포함된 완성도 높은 제품입니다. 중급 이상의 모델러에게 강력히 추천합니다.",
             "en": "MG Nu Gundam Ver.Ka is one of the flagship products in MG line. Volume of fin funnels, sharp Katoki design, and included water slides make it a masterpiece. Highly recommended for intermediate to advanced modelers."
+        },
+        "perfectFor": {
+            "ko": [
+                "Ver.Ka 컬렉터",
+                "역습의 샤아 팬",
+                "핀 판넬 애호가"
+            ],
+            "en": [
+                "Ver.Ka collectors",
+                "Char's Counterattack fans",
+                "Fin Funnel enthusiasts"
+            ]
         }
+    },
+    "buildingTips": {
+        "ko": [
+            "핀 판넬 조립 시간 많이 소요",
+            "워터 데칼 작업 권장",
+            "관절 보강 권장"
+        ],
+        "en": [
+            "Fin Funnel assembly takes time",
+            "Water slide work recommended",
+            "Joint reinforcement recommended"
+        ]
     },
     "lastUpdated": "2026-01-10"
 }

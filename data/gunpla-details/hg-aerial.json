@@ -139,7 +139,31 @@
         "reasoning": {
             "ko": "수성의 마녀 주인공기로, 최신 HG 기술이 적용되어 색분할과 조형이 뛰어납니다. 입문자도 쉽게 조립할 수 있으며, 깔끔한 화이트 디자인이 매력적입니다.",
             "en": "Main protagonist suit from Witch from Mercury. Latest HG technology provides excellent color separation and sculpting. Easy for beginners with attractive clean white design."
+        },
+        "perfectFor": {
+            "ko": [
+                "수성의 마녀 팬",
+                "최신 시리즈 입문자",
+                "화이트 컬러 팬"
+            ],
+            "en": [
+                "Witch from Mercury fans",
+                "Latest series beginners",
+                "White color enthusiasts"
+            ]
         }
+    },
+    "buildingTips": {
+        "ko": [
+            "비트 스테이브 분실 주의",
+            "클리어 파츠 취급 주의",
+            "최신 HG라 조립 편리"
+        ],
+        "en": [
+            "Don't lose Bit Staves",
+            "Handle clear parts carefully",
+            "Latest HG, easy assembly"
+        ]
     },
     "lastUpdated": "2026-01-10"
 }
