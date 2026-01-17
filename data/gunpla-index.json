@@ -1,4 +1,4 @@
-{
+﻿{
     "meta": {
         "version": "1.0.0",
         "totalCount": 50,
@@ -22,6 +22,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/196",
             "price": 1100,
+            "height": "약 130mm",
             "tags": [
                 "beginner",
                 "iconic",
@@ -64,6 +65,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/1",
             "price": 2750,
+            "height": "약 130mm",
             "tags": [
                 "detailed",
                 "iconic",
@@ -106,6 +108,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/86",
             "price": 4400,
+            "height": "약 180mm",
             "tags": [
                 "masterpiece",
                 "iconic",
@@ -148,6 +151,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/308",
             "price": 13200,
+            "height": "약 300mm",
             "tags": [
                 "ultimate",
                 "iconic",
@@ -190,6 +194,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/434",
             "price": 38500,
+            "height": "약 300mm",
             "tags": [
                 "ultimate",
                 "iconic",
@@ -233,6 +238,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/435",
             "price": 770,
+            "height": "약 130mm",
             "tags": [
                 "entry",
                 "beginner",
@@ -274,6 +280,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/51",
             "price": 2200,
+            "height": "약 140mm",
             "tags": [
                 "psycho_frame",
                 "popular",
@@ -316,6 +323,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/50",
             "price": 2200,
+            "height": "약 140mm",
             "tags": [
                 "psycho_frame",
                 "clean",
@@ -358,6 +366,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/25",
             "price": 4400,
+            "height": "약 140mm",
             "tags": [
                 "transformation",
                 "psycho_frame",
@@ -401,6 +410,7 @@
             "isVerKa": true,
             "thumbnail": "https://gunpla.fyi/images/boxarts/115",
             "price": 6600,
+            "height": "약 200mm",
             "tags": [
                 "transformation",
                 "verka",
@@ -443,6 +453,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/200",
             "price": 1650,
+            "height": "약 130mm",
             "tags": [
                 "popular",
                 "wing",
@@ -485,6 +496,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/5",
             "price": 2750,
+            "height": "약 130mm",
             "tags": [
                 "popular",
                 "wing",
@@ -527,6 +539,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/145",
             "price": 5500,
+            "height": "약 185mm",
             "tags": [
                 "masterpiece",
                 "wing",
@@ -569,6 +582,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/225",
             "price": 2200,
+            "height": "약 130mm",
             "tags": [
                 "popular",
                 "gold",
@@ -611,6 +625,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/14",
             "price": 3300,
+            "height": "약 130mm",
             "tags": [
                 "popular",
                 "gold",
@@ -653,6 +668,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/175",
             "price": 1320,
+            "height": "약 130mm",
             "tags": [
                 "melee",
                 "seven_swords",
@@ -695,6 +711,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/15",
             "price": 2750,
+            "height": "약 130mm",
             "tags": [
                 "melee",
                 "detailed",
@@ -737,6 +754,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/109",
             "price": 4950,
+            "height": "약 180mm",
             "tags": [
                 "masterpiece",
                 "led_compatible",
@@ -779,6 +797,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/180",
             "price": 2200,
+            "height": "약 145mm",
             "tags": [
                 "combination",
                 "twin_drive",
@@ -821,6 +840,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/30",
             "price": 4400,
+            "height": "약 145mm",
             "tags": [
                 "combination",
                 "twin_drive",
@@ -863,6 +883,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/758.jpeg",
             "price": 1100,
+            "height": "약 130mm",
             "tags": [
                 "frame",
                 "melee",
@@ -905,6 +926,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/250",
             "price": 1320,
+            "height": "약 135mm",
             "tags": [
                 "frame",
                 "melee",
@@ -947,6 +969,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/375",
             "price": 4400,
+            "height": "약 190mm",
             "tags": [
                 "frame",
                 "melee",
@@ -989,6 +1012,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/129.jpeg",
             "price": 1650,
+            "height": "약 130mm",
             "tags": [
                 "new_series",
                 "gund_format",
@@ -1031,6 +1055,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/495",
             "price": 1760,
+            "height": "약 130mm",
             "tags": [
                 "new_series",
                 "gund_format",
@@ -1073,6 +1098,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/510",
             "price": 2200,
+            "height": "약 130mm",
             "tags": [
                 "new_series",
                 "gund_format",
@@ -1115,6 +1141,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/185",
             "price": 1650,
+            "height": "약 130mm",
             "tags": [
                 "angel_wing",
                 "iconic",
@@ -1157,6 +1184,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/17",
             "price": 3300,
+            "height": "약 130mm",
             "tags": [
                 "angel_wing",
                 "detailed",
@@ -1199,6 +1227,7 @@
             "isVerKa": true,
             "thumbnail": "https://gunpla.fyi/images/boxarts/92",
             "price": 5500,
+            "height": "약 185mm",
             "tags": [
                 "angel_wing",
                 "verka",
@@ -1241,6 +1270,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/55",
             "price": 2750,
+            "height": "약 145mm",
             "tags": [
                 "fin_funnel",
                 "iconic",
@@ -1283,6 +1313,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/32",
             "price": 4950,
+            "height": "약 145mm",
             "tags": [
                 "fin_funnel",
                 "detailed",
@@ -1325,6 +1356,7 @@
             "isVerKa": true,
             "thumbnail": "https://gunpla.fyi/images/boxarts/88",
             "price": 8800,
+            "height": "약 220mm",
             "tags": [
                 "fin_funnel",
                 "verka",
@@ -1367,6 +1399,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/29",
             "price": 4950,
+            "height": "약 160mm",
             "tags": [
                 "funnel",
                 "char",
@@ -1409,6 +1442,7 @@
             "isVerKa": true,
             "thumbnail": "https://gunpla.fyi/images/boxarts/89",
             "price": 11000,
+            "height": "약 230mm",
             "tags": [
                 "funnel",
                 "verka",
@@ -1451,6 +1485,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/65",
             "price": 2750,
+            "height": "약 140mm",
             "tags": [
                 "neo_zeon",
                 "full_frontal",
@@ -1493,6 +1528,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/22",
             "price": 4400,
+            "height": "약 140mm",
             "tags": [
                 "neo_zeon",
                 "detailed",
@@ -1535,6 +1571,7 @@
             "isVerKa": true,
             "thumbnail": "https://gunpla.fyi/images/boxarts/120",
             "price": 8800,
+            "height": "약 220mm",
             "tags": [
                 "neo_zeon",
                 "verka",
@@ -1577,6 +1614,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/197",
             "price": 1320,
+            "height": "약 130mm",
             "tags": [
                 "mass_production",
                 "iconic",
@@ -1619,6 +1657,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/3",
             "price": 2750,
+            "height": "약 130mm",
             "tags": [
                 "mass_production",
                 "detailed",
@@ -1661,6 +1700,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/78",
             "price": 3850,
+            "height": "약 175mm",
             "tags": [
                 "mass_production",
                 "masterpiece",
@@ -1703,6 +1743,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/2",
             "price": 2750,
+            "height": "약 130mm",
             "tags": [
                 "char",
                 "iconic",
@@ -1745,6 +1786,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/350",
             "price": 770,
+            "height": "약 80mm",
             "tags": [
                 "sd",
                 "cute",
@@ -1786,6 +1828,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/355",
             "price": 660,
+            "height": "약 80mm",
             "tags": [
                 "sd",
                 "beginner",
@@ -1827,6 +1870,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/440",
             "price": 27500,
+            "height": "약 220mm",
             "tags": [
                 "led",
                 "transformation",
@@ -1870,6 +1914,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/520",
             "price": 2200,
+            "height": "약 130mm",
             "tags": [
                 "new",
                 "movie",
@@ -1912,6 +1957,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/525",
             "price": 3520,
+            "height": "약 150mm",
             "tags": [
                 "new",
                 "movie",
@@ -1954,6 +2000,7 @@
             "isVerKa": false,
             "thumbnail": "https://gunpla.fyi/images/boxarts/530",
             "price": 2420,
+            "height": "약 130mm",
             "tags": [
                 "new",
                 "movie",
@@ -1981,3 +2028,4 @@
         }
     ]
 }
+
