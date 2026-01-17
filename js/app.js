@@ -19,6 +19,10 @@ const GunplaApp = (function () {
     let compareList = [];
     const MAX_COMPARE = 4;
 
+    // Recently Viewed
+    const RECENT_KEY = 'gunpla-recent-viewed';
+    const MAX_RECENT = 10;
+
     /**
      * Initialize the application
      */
@@ -43,6 +47,7 @@ const GunplaApp = (function () {
 
             // Initial render
             applyFiltersAndRender();
+            renderRecentProducts();
 
             showLoading(false);
 
@@ -94,6 +99,90 @@ const GunplaApp = (function () {
         }
 
         return 'images/placeholder.png';
+    }
+
+    /**
+     * Get recently viewed products from localStorage
+     */
+    function getRecentProducts() {
+        try {
+            const data = localStorage.getItem(RECENT_KEY);
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    /**
+     * Add product to recently viewed
+     */
+    function addToRecent(productId) {
+        let recent = getRecentProducts();
+
+        // Remove if exists (to move to front)
+        recent = recent.filter(id => id !== productId);
+
+        // Add to beginning
+        recent.unshift(productId);
+
+        // Limit to max
+        recent = recent.slice(0, MAX_RECENT);
+
+        try {
+            localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+        } catch (e) {
+            console.warn('Failed to save recent products:', e);
+        }
+
+        renderRecentProducts();
+    }
+
+    /**
+     * Clear all recent products
+     */
+    function clearRecentProducts() {
+        try {
+            localStorage.removeItem(RECENT_KEY);
+            renderRecentProducts();
+        } catch (e) {
+            console.warn('Failed to clear recent products:', e);
+        }
+    }
+
+    /**
+     * Render recently viewed products thumbnails
+     */
+    function renderRecentProducts() {
+        const section = document.getElementById('recentProductsSection');
+        const list = document.getElementById('recentProductsList');
+
+        if (!section || !list) return;
+
+        const recentIds = getRecentProducts();
+
+        if (recentIds.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        // Find products
+        const recentProducts = recentIds
+            .map(id => products.find(p => p.id === id))
+            .filter(p => p);
+
+        if (recentProducts.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        list.innerHTML = recentProducts.map(p => `
+            <a href="detail.html?id=${p.id}" class="recent-product-thumb" title="${I18n.getName(p.name)}">
+                <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}" 
+                     onerror="this.src='images/placeholder.png'">
+            </a>
+        `).join('');
+
+        section.style.display = 'block';
     }
 
     /**
@@ -912,6 +1001,12 @@ const GunplaApp = (function () {
             });
         }
 
+        // Clear recent products button
+        const clearRecentBtn = document.getElementById('clearRecentBtn');
+        if (clearRecentBtn) {
+            clearRecentBtn.addEventListener('click', clearRecentProducts);
+        }
+
         // Navigation tabs - Favorites and Compare
         const favoritesNav = document.getElementById('favoritesNav');
         if (favoritesNav) {
@@ -1037,7 +1132,8 @@ const GunplaApp = (function () {
         setupDetailTabs,
         setFavorites: (list) => { favorites = list; },
         setCompareList: (list) => { compareList = list; },
-        getProducts: () => products
+        getProducts: () => products,
+        addToRecent
     };
 })();
 
@@ -1078,6 +1174,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const productId = urlParams.get('id');
             if (productId) {
                 GunplaApp.loadProductDetail(productId);
+                // Track as recently viewed
+                GunplaApp.addToRecent(productId);
             }
 
             // Setup tabs immediately (don't depend on data load)
