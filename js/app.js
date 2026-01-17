@@ -995,6 +995,7 @@ const GunplaApp = (function () {
         loadProductDetail,
         toggleFavorite,
         toggleCompare,
+        setupDetailTabs,
         setFavorites: (list) => { favorites = list; },
         setCompareList: (list) => { compareList = list; }
     };
@@ -1037,6 +1038,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (productId) {
                 GunplaApp.loadProductDetail(productId);
             }
+
+            // Setup tabs immediately (don't depend on data load)
+            GunplaApp.setupDetailTabs();
 
             // Setup language toggle for detail page
             document.querySelectorAll('.lang-toggle, .mobile-lang-toggle').forEach(btn => {
