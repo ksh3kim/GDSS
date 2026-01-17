@@ -8,6 +8,59 @@ const Filter = (function () {
     let activeFilters = {};
     let searchQuery = '';
 
+    // Korean Choseong (초성) constants
+    const CHOSEONG = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+    const HANGUL_START = 0xAC00;
+    const HANGUL_END = 0xD7A3;
+    const CHOSEONG_BASE = 588; // 21 * 28
+
+    /**
+     * Check if character is a Korean consonant (초성)
+     */
+    function isChoseong(char) {
+        return CHOSEONG.includes(char);
+    }
+
+    /**
+     * Extract choseong from a Korean syllable
+     */
+    function getChoseong(char) {
+        const code = char.charCodeAt(0);
+        if (code >= HANGUL_START && code <= HANGUL_END) {
+            const index = Math.floor((code - HANGUL_START) / CHOSEONG_BASE);
+            return CHOSEONG[index];
+        }
+        return char;
+    }
+
+    /**
+     * Extract all choseong from a Korean string
+     */
+    function extractChoseong(str) {
+        return str.split('').map(char => {
+            const code = char.charCodeAt(0);
+            if (code >= HANGUL_START && code <= HANGUL_END) {
+                return getChoseong(char);
+            }
+            return char;
+        }).join('');
+    }
+
+    /**
+     * Check if query is a choseong-only string
+     */
+    function isChoseongQuery(query) {
+        return query.split('').every(char => isChoseong(char) || char === ' ');
+    }
+
+    /**
+     * Match choseong query against text
+     */
+    function matchChoseong(text, query) {
+        const textChoseong = extractChoseong(text);
+        return textChoseong.toLowerCase().includes(query.toLowerCase());
+    }
+
     /**
      * Initialize filter module
      */
@@ -151,16 +204,25 @@ const Filter = (function () {
     function matchesFilters(product) {
         // Search query matching
         if (searchQuery) {
+            const searchLower = searchQuery.toLowerCase();
             const searchFields = [
                 I18n.getName(product.name),
                 product.id,
                 product.modelNumber || '',
                 product.grade,
                 product.series
-            ].map(s => (s || '').toLowerCase());
+            ];
 
-            const matches = searchFields.some(field => field.includes(searchQuery));
-            if (!matches) return false;
+            // Check regular text match
+            const regularMatch = searchFields.some(field =>
+                (field || '').toLowerCase().includes(searchLower)
+            );
+
+            // Check choseong match for Korean names
+            const nameKo = product.name?.ko || '';
+            const choseongMatch = isChoseongQuery(searchQuery) && matchChoseong(nameKo, searchQuery);
+
+            if (!regularMatch && !choseongMatch) return false;
         }
 
         // Filter matching
@@ -372,6 +434,7 @@ const Filter = (function () {
         const suggestions = [];
         const lowerQuery = query.toLowerCase();
         const maxSuggestions = 8;
+        const isChoseongSearch = isChoseongQuery(query);
 
         // Search in product names
         products.forEach(p => {
@@ -379,8 +442,12 @@ const Filter = (function () {
             const nameEn = p.name?.en || '';
             const modelNumber = p.modelNumber || '';
 
+            // Regular text search OR choseong search
             if (nameKo.toLowerCase().includes(lowerQuery)) {
                 suggestions.push({ type: 'product', text: nameKo, value: nameKo, match: lowerQuery });
+            } else if (isChoseongSearch && matchChoseong(nameKo, query)) {
+                // Choseong match (e.g., 'ㄱㄷ' matches '건담')
+                suggestions.push({ type: 'product', text: nameKo, value: nameKo, match: query, isChoseong: true });
             } else if (nameEn.toLowerCase().includes(lowerQuery)) {
                 suggestions.push({ type: 'product', text: nameEn, value: nameEn, match: lowerQuery });
             }
