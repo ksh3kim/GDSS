@@ -170,6 +170,82 @@ const I18n = (function () {
         return t(`mobility.${level}`);
     }
 
+    // ===== Theme Management =====
+    const THEME_KEY = 'gunpla-theme';
+    const DEFAULT_THEME = 'dark';
+    const VALID_THEMES = ['dark', 'light', 'rx78', 'char', 'zeon'];
+
+    /**
+     * Get current theme from localStorage
+     */
+    function getTheme() {
+        try {
+            const saved = localStorage.getItem(THEME_KEY);
+            return VALID_THEMES.includes(saved) ? saved : DEFAULT_THEME;
+        } catch (e) {
+            return DEFAULT_THEME;
+        }
+    }
+
+    /**
+     * Set theme and apply to document
+     */
+    function setTheme(theme) {
+        if (!VALID_THEMES.includes(theme)) theme = DEFAULT_THEME;
+
+        // Apply to document
+        if (theme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        // Save to localStorage
+        try {
+            localStorage.setItem(THEME_KEY, theme);
+        } catch (e) {
+            console.warn('Failed to save theme:', e);
+        }
+
+        // Update active state in menu
+        document.querySelectorAll('.theme-option').forEach(opt => {
+            opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
+        });
+    }
+
+    /**
+     * Initialize theme from saved preference
+     */
+    function initTheme() {
+        const theme = getTheme();
+        setTheme(theme);
+
+        // Setup dropdown toggle
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const dropdown = toggleBtn?.closest('.theme-dropdown');
+
+        if (toggleBtn && dropdown) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
+
+            // Close on outside click
+            document.addEventListener('click', () => {
+                dropdown.classList.remove('active');
+            });
+
+            // Theme option clicks
+            dropdown.querySelectorAll('.theme-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const newTheme = opt.getAttribute('data-theme');
+                    setTheme(newTheme);
+                    dropdown.classList.remove('active');
+                });
+            });
+        }
+    }
+
     // Public API
     return {
         init,
@@ -182,7 +258,10 @@ const I18n = (function () {
         formatPrice,
         formatDate,
         getDifficultyText,
-        getMobilityText
+        getMobilityText,
+        getTheme,
+        setTheme,
+        initTheme
     };
 })();
 

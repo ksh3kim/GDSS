@@ -29,6 +29,7 @@ const GunplaApp = (function () {
 
             // Initialize modules
             await I18n.init();
+            I18n.initTheme(); // Apply saved theme
             await Filter.init();
 
             // Load product data
@@ -1051,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // Detail page - init modules and setup language toggle
         I18n.init().then(() => {
+            I18n.initTheme(); // Apply saved theme
             Filter.init();
 
             // Load saved favorites and compare data

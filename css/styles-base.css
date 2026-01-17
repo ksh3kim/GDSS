@@ -109,6 +109,79 @@
     --header-height: 64px;
     --sidebar-width: 280px;
     --container-max: 1400px;
+
+    /* Theme-specific (default: dark) */
+    --theme-bg: var(--color-dark-bg);
+    --theme-surface: var(--color-dark-surface);
+    --theme-border: var(--color-dark-border);
+    --theme-text: var(--color-dark-text);
+    --theme-text-muted: var(--color-gray-400);
+    --theme-hover: rgba(255, 255, 255, 0.05);
+    --theme-card-bg: var(--color-dark-surface);
+}
+
+/* ===== Theme: Light ===== */
+[data-theme="light"] {
+    --theme-bg: #F8FAFC;
+    --theme-surface: #FFFFFF;
+    --theme-border: #E2E8F0;
+    --theme-text: #1E293B;
+    --theme-text-muted: #64748B;
+    --theme-hover: rgba(0, 0, 0, 0.05);
+    --theme-card-bg: #FFFFFF;
+    --color-dark-bg: #F8FAFC;
+    --color-dark-surface: #FFFFFF;
+    --color-dark-border: #E2E8F0;
+    --color-dark-text: #1E293B;
+    --color-dark-hover: rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Theme: RX-78 Edition (Blue accent) ===== */
+[data-theme="rx78"] {
+    --color-primary: #2563EB;
+    --color-primary-dark: #1D4ED8;
+    --color-primary-light: #3B82F6;
+    --theme-bg: #0C1929;
+    --theme-surface: #132337;
+    --theme-border: #1E3A5F;
+    --theme-text: #E2E8F0;
+    --theme-text-muted: #94A3B8;
+    --color-dark-bg: #0C1929;
+    --color-dark-surface: #132337;
+    --color-dark-border: #1E3A5F;
+    --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+
+/* ===== Theme: Red Comet Edition (Char's theme) ===== */
+[data-theme="char"] {
+    --color-primary: #DC2626;
+    --color-primary-dark: #B91C1C;
+    --color-primary-light: #EF4444;
+    --theme-bg: #1A0A0A;
+    --theme-surface: #2D1515;
+    --theme-border: #4A2020;
+    --theme-text: #FEE2E2;
+    --theme-text-muted: #FCA5A5;
+    --color-dark-bg: #1A0A0A;
+    --color-dark-surface: #2D1515;
+    --color-dark-border: #4A2020;
+    --shadow-glow: 0 0 20px rgba(220, 38, 38, 0.4);
+}
+
+/* ===== Theme: Zeon Edition (Green accent) ===== */
+[data-theme="zeon"] {
+    --color-primary: #22C55E;
+    --color-primary-dark: #16A34A;
+    --color-primary-light: #4ADE80;
+    --theme-bg: #0A1A0F;
+    --theme-surface: #132D1A;
+    --theme-border: #1E4A28;
+    --theme-text: #DCFCE7;
+    --theme-text-muted: #86EFAC;
+    --color-dark-bg: #0A1A0F;
+    --color-dark-surface: #132D1A;
+    --color-dark-border: #1E4A28;
+    --shadow-glow: 0 0 20px rgba(34, 197, 94, 0.3);
 }
 
 /* ===== Reset & Base ===== */
@@ -406,6 +479,84 @@ textarea {
     align-items: center;
     gap: var(--space-2);
     z-index: 2;
+}
+
+/* Theme Dropdown */
+.theme-dropdown {
+    position: relative;
+}
+
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--color-dark-border);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-400);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: rgba(227, 24, 55, 0.1);
+}
+
+.theme-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: var(--space-2);
+    background: var(--color-dark-surface);
+    border: 1px solid var(--color-dark-border);
+    border-radius: var(--radius-lg);
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: var(--z-dropdown);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.theme-dropdown.active .theme-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.theme-option {
+    display: block;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    color: var(--color-gray-300);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    font-size: var(--text-sm);
+}
+
+.theme-option:first-child {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.theme-option:last-child {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.theme-option:hover {
+    background: var(--color-dark-hover);
+}
+
+.theme-option.active {
+    color: var(--color-primary);
+    background: rgba(227, 24, 55, 0.1);
 }
 
 .nav-item {
