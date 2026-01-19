@@ -441,6 +441,8 @@ const GunplaApp = (function () {
      */
     function toggleFavorite(productId) {
         const index = favorites.indexOf(productId);
+        const isNowFavorite = index === -1;
+
         if (index > -1) {
             favorites.splice(index, 1);
         } else {
@@ -448,6 +450,17 @@ const GunplaApp = (function () {
         }
         saveFavorites();
         updateBadges();
+
+        // Immediately update all matching buttons in the DOM
+        document.querySelectorAll(`.favorite-btn[data-id="${productId}"]`).forEach(btn => {
+            btn.classList.toggle('active', isNowFavorite);
+        });
+
+        // Also update detail page button if present
+        const detailFavBtn = document.getElementById('detailFavoriteBtn');
+        if (detailFavBtn) {
+            detailFavBtn.classList.toggle('active', isNowFavorite);
+        }
     }
 
     /**
@@ -455,6 +468,8 @@ const GunplaApp = (function () {
      */
     function toggleCompare(productId) {
         const index = compareList.indexOf(productId);
+        const isNowInCompare = index === -1;
+
         if (index > -1) {
             compareList.splice(index, 1);
         } else {
@@ -467,6 +482,17 @@ const GunplaApp = (function () {
         saveCompareList();
         updateBadges();
         updateCompareDrawer();
+
+        // Immediately update all matching buttons in the DOM
+        document.querySelectorAll(`.compare-btn[data-id="${productId}"]`).forEach(btn => {
+            btn.classList.toggle('active', isNowInCompare);
+        });
+
+        // Also update detail page button if present
+        const detailCompBtn = document.getElementById('detailCompareBtn');
+        if (detailCompBtn) {
+            detailCompBtn.classList.toggle('active', isNowInCompare);
+        }
     }
 
     /**
