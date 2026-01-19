@@ -1,67 +1,125 @@
 ﻿{
-    "id": "hg-unicorn-unicorn",
-    "baseProductId": "unicorn-gundam",
-    "name": {
-        "ko": "유니콘 건담 유니콘 모드",
-        "en": "Unicorn Gundam Unicorn Mode"
-    },
-    "modelNumber": "RX-0",
-    "series": "unicorn",
-    "pilot": {
-        "ko": "바나지 링크스",
-        "en": "Banagher Links"
-    },
-    "grade": "HGUC",
-    "scale": "1/144",
-    "releaseYear": 2009,
-    "releaseMonth": 12,
-    "price": 2200,
-    "height": "14cm",
-    "weapons": {
-        "ko": [
-            "빔 매그넘",
-            "하이퍼 바주카",
-            "빔 사벨 x2",
-            "실드"
-        ],
-        "en": [
-            "Beam Magnum",
-            "Hyper Bazooka",
-            "Beam Saber x2",
-            "Shield"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "교체용 손 파츠"
-        ],
-        "en": [
-            "Replacement Hand Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "클린한 디자인 선호자",
-                "UC 시리즈 팬",
-                "심플한 실루엣 선호자"
-            ],
-            "en": [
-                "Those who prefer clean designs",
-                "UC series fans",
-                "Simple silhouette enthusiasts"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "변형 불가 (유니콘 모드 고정)",
-            "흰색 외장이 많아 도장 시 주의"
-        ],
-        "en": [
-            "No transformation (Unicorn Mode fixed)",
-            "Lots of white armor, be careful when painting"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "hg-unicorn-unicorn",
+    "baseProductId":  "unicorn-gundam",
+    "name":  {
+                 "ko":  "유니콘 건담 유니콘 모드",
+                 "en":  "Unicorn Gundam Unicorn Mode"
+             },
+    "modelNumber":  "RX-0",
+    "series":  "unicorn",
+    "pilot":  {
+                  "ko":  "바나지 링크스",
+                  "en":  "Banagher Links"
+              },
+    "grade":  "HGUC",
+    "scale":  "1/144",
+    "releaseYear":  2009,
+    "releaseMonth":  12,
+    "price":  2200,
+    "height":  "14cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 매그넘",
+                               "하이퍼 바주카",
+                               "빔 사벨 x2",
+                               "실드"
+                           ],
+                    "en":  [
+                               "Beam Magnum",
+                               "Hyper Bazooka",
+                               "Beam Saber x2",
+                               "Shield"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "교체용 손 파츠"
+                               ],
+                        "en":  [
+                                   "Replacement Hand Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "클린한 디자인 선호자",
+                                                         "UC 시리즈 팬",
+                                                         "심플한 실루엣 선호자"
+                                                     ],
+                                              "en":  [
+                                                         "Those who prefer clean designs",
+                                                         "UC series fans",
+                                                         "Simple silhouette enthusiasts"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "변형 불가 (유니콘 모드 고정)",
+                                    "흰색 외장이 많아 도장 시 주의"
+                                ],
+                         "en":  [
+                                    "No transformation (Unicorn Mode fixed)",
+                                    "Lots of white armor, be careful when painting"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/hg-unicorn-unicorn"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "beginner",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  8,
+                      "paintSuitability":  "partial",
+                      "partCount":  150,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "partial",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  4,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

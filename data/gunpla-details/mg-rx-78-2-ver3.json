@@ -1,81 +1,135 @@
-{
-    "id": "mg-rx-78-2-ver3",
-    "baseProductId": "rx-78-2",
-    "name": {
-        "ko": "RX-78-2 건담 Ver.3.0",
-        "en": "RX-78-2 Gundam Ver.3.0"
-    },
-    "modelNumber": "RX-78-2",
-    "series": "first_gundam",
-    "pilot": {
-        "ko": "아무로 레이",
-        "en": "Amuro Ray"
-    },
-    "manufacturer": {
-        "ko": "지구연방군",
-        "en": "Earth Federation"
-    },
-    "grade": "MG",
-    "scale": "1/100",
-    "releaseYear": 2013,
-    "releaseMonth": 8,
-    "price": 4400,
-    "height": "18cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "빔 사벨 x2",
-            "실드",
-            "하이퍼 바주카",
-            "건담 해머"
-        ],
-        "en": [
-            "Beam Rifle",
-            "Beam Saber x2",
-            "Shield",
-            "Hyper Bazooka",
-            "Gundam Hammer"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "코어 파이터 (변형 가능)",
-            "교체용 손 파츠 x6",
-            "마킹 스티커",
-            "드라이 데칼"
-        ],
-        "en": [
-            "Core Fighter (transformable)",
-            "Replacement Hand Parts x6",
-            "Marking Stickers",
-            "Dry Decals"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "MG 입문자",
-                "건담의 정석을 원하는 분",
-                "디스플레이용 컬렉터"
-            ],
-            "en": [
-                "MG beginners",
-                "Those who want the definitive Gundam",
-                "Display collectors"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "내부 프레임을 먼저 완성한 후 외장 장착",
-            "코어 파이터 변형은 신중하게",
-            "무릎 관절 조립 시 방향 주의"
-        ],
-        "en": [
-            "Complete inner frame before outer armor",
-            "Be careful with Core Fighter transformation",
-            "Watch knee joint direction during assembly"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+﻿{
+    "id":  "mg-rx-78-2-ver3",
+    "baseProductId":  "rx-78-2",
+    "name":  {
+                 "ko":  "RX-78-2 건담 Ver.3.0",
+                 "en":  "RX-78-2 Gundam Ver.3.0"
+             },
+    "modelNumber":  "RX-78-2",
+    "series":  "first_gundam",
+    "pilot":  {
+                  "ko":  "아무로 레이",
+                  "en":  "Amuro Ray"
+              },
+    "manufacturer":  {
+                         "ko":  "지구연방군",
+                         "en":  "Earth Federation"
+                     },
+    "grade":  "MG",
+    "scale":  "1/100",
+    "releaseYear":  2013,
+    "releaseMonth":  8,
+    "price":  4400,
+    "height":  "18cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "빔 사벨 x2",
+                               "실드",
+                               "하이퍼 바주카",
+                               "건담 해머"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "Beam Saber x2",
+                               "Shield",
+                               "Hyper Bazooka",
+                               "Gundam Hammer"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "코어 파이터 (변형 가능)",
+                                   "교체용 손 파츠 x6",
+                                   "마킹 스티커",
+                                   "드라이 데칼"
+                               ],
+                        "en":  [
+                                   "Core Fighter (transformable)",
+                                   "Replacement Hand Parts x6",
+                                   "Marking Stickers",
+                                   "Dry Decals"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "MG 입문자",
+                                                         "건담의 정석을 원하는 분",
+                                                         "디스플레이용 컬렉터"
+                                                     ],
+                                              "en":  [
+                                                         "MG beginners",
+                                                         "Those who want the definitive Gundam",
+                                                         "Display collectors"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "내부 프레임을 먼저 완성한 후 외장 장착",
+                                    "코어 파이터 변형은 신중하게",
+                                    "무릎 관절 조립 시 방향 주의"
+                                ],
+                         "en":  [
+                                    "Complete inner frame before outer armor",
+                                    "Be careful with Core Fighter transformation",
+                                    "Watch knee joint direction during assembly"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/mg-rx-78-2-ver3"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  20,
+                      "paintSuitability":  "partial",
+                      "partCount":  400,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

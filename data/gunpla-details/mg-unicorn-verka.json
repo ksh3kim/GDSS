@@ -1,77 +1,135 @@
 ﻿{
-    "id": "mg-unicorn-verka",
-    "baseProductId": "unicorn-gundam",
-    "name": {
-        "ko": "유니콘 건담 Ver.Ka",
-        "en": "Unicorn Gundam Ver.Ka"
-    },
-    "modelNumber": "RX-0",
-    "series": "unicorn",
-    "pilot": {
-        "ko": "바나지 링크스",
-        "en": "Banagher Links"
-    },
-    "grade": "MG",
-    "scale": "1/100",
-    "releaseYear": 2007,
-    "releaseMonth": 9,
-    "price": 6600,
-    "height": "20cm",
-    "weapons": {
-        "ko": [
-            "빔 매그넘",
-            "하이퍼 바주카",
-            "빔 사벨 x4",
-            "실드 x2",
-            "빔 가틀링 건"
-        ],
-        "en": [
-            "Beam Magnum",
-            "Hyper Bazooka",
-            "Beam Saber x4",
-            "Shield x2",
-            "Beam Gatling Gun"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "LED 유닛 호환",
-            "풀 아머 파츠 별매",
-            "교체용 손 파츠",
-            "Ver.Ka 마킹 데칼"
-        ],
-        "en": [
-            "LED Unit Compatible",
-            "Full Armor Parts sold separately",
-            "Replacement Hand Parts",
-            "Ver.Ka Marking Decals"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "변신 기믹 애호가",
-                "Ver.Ka 컬렉터",
-                "LED 커스터마이저"
-            ],
-            "en": [
-                "Transformation gimmick lovers",
-                "Ver.Ka collectors",
-                "LED customizers"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "변신은 부품 교체 방식",
-            "LED는 별매품 구매 필요",
-            "관절 강도 주의 (느슨해질 수 있음)"
-        ],
-        "en": [
-            "Transformation via parts replacement",
-            "LED unit sold separately",
-            "Watch joint strength (may loosen)"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "mg-unicorn-verka",
+    "baseProductId":  "unicorn-gundam",
+    "name":  {
+                 "ko":  "유니콘 건담 Ver.Ka",
+                 "en":  "Unicorn Gundam Ver.Ka"
+             },
+    "modelNumber":  "RX-0",
+    "series":  "unicorn",
+    "pilot":  {
+                  "ko":  "바나지 링크스",
+                  "en":  "Banagher Links"
+              },
+    "grade":  "MG",
+    "scale":  "1/100",
+    "releaseYear":  2007,
+    "releaseMonth":  9,
+    "price":  6600,
+    "height":  "20cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 매그넘",
+                               "하이퍼 바주카",
+                               "빔 사벨 x4",
+                               "실드 x2",
+                               "빔 가틀링 건"
+                           ],
+                    "en":  [
+                               "Beam Magnum",
+                               "Hyper Bazooka",
+                               "Beam Saber x4",
+                               "Shield x2",
+                               "Beam Gatling Gun"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "LED 유닛 호환",
+                                   "풀 아머 파츠 별매",
+                                   "교체용 손 파츠",
+                                   "Ver.Ka 마킹 데칼"
+                               ],
+                        "en":  [
+                                   "LED Unit Compatible",
+                                   "Full Armor Parts sold separately",
+                                   "Replacement Hand Parts",
+                                   "Ver.Ka Marking Decals"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "변신 기믹 애호가",
+                                                         "Ver.Ka 컬렉터",
+                                                         "LED 커스터마이저"
+                                                     ],
+                                              "en":  [
+                                                         "Transformation gimmick lovers",
+                                                         "Ver.Ka collectors",
+                                                         "LED customizers"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "변신은 부품 교체 방식",
+                                    "LED는 별매품 구매 필요",
+                                    "관절 강도 주의 (느슨해질 수 있음)"
+                                ],
+                         "en":  [
+                                    "Transformation via parts replacement",
+                                    "LED unit sold separately",
+                                    "Watch joint strength (may loosen)"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  true,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/mg-unicorn-verka"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  20,
+                      "paintSuitability":  "partial",
+                      "partCount":  400,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

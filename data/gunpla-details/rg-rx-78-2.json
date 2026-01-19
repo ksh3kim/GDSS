@@ -1,77 +1,131 @@
-{
-    "id": "rg-rx-78-2",
-    "baseProductId": "rx-78-2",
-    "name": {
-        "ko": "RX-78-2 건담",
-        "en": "RX-78-2 Gundam"
-    },
-    "modelNumber": "RX-78-2",
-    "series": "first_gundam",
-    "pilot": {
-        "ko": "아무로 레이",
-        "en": "Amuro Ray"
-    },
-    "manufacturer": {
-        "ko": "지구연방군",
-        "en": "Earth Federation"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2010,
-    "releaseMonth": 7,
-    "price": 2750,
-    "height": "13cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "빔 사벨 x2",
-            "실드",
-            "하이퍼 바주카"
-        ],
-        "en": [
-            "Beam Rifle",
-            "Beam Saber x2",
-            "Shield",
-            "Hyper Bazooka"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "리얼리스틱 데칼",
-            "교체용 손 파츠 x4",
-            "코어 파이터"
-        ],
-        "en": [
-            "Realistic Decals",
-            "Replacement Hand Parts x4",
-            "Core Fighter"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "디테일을 중시하는 중급자",
-                "포징을 즐기고 싶은 분",
-                "RG 입문자"
-            ],
-            "en": [
-                "Intermediate builders who value detail",
-                "Those who enjoy posing",
-                "RG beginners"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "어드밴스드 MS 조인트는 조립 전 충분히 움직여주세요",
-            "데칼은 마크소프터 사용 권장",
-            "실드 연결부 주의 (헐거울 수 있음)"
-        ],
-        "en": [
-            "Work the Advanced MS Joint before assembly",
-            "Use mark softer for decals",
-            "Shield connection may be loose"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+﻿{
+    "id":  "rg-rx-78-2",
+    "baseProductId":  "rx-78-2",
+    "name":  {
+                 "ko":  "RX-78-2 건담",
+                 "en":  "RX-78-2 Gundam"
+             },
+    "modelNumber":  "RX-78-2",
+    "series":  "first_gundam",
+    "pilot":  {
+                  "ko":  "아무로 레이",
+                  "en":  "Amuro Ray"
+              },
+    "manufacturer":  {
+                         "ko":  "지구연방군",
+                         "en":  "Earth Federation"
+                     },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2010,
+    "releaseMonth":  7,
+    "price":  2750,
+    "height":  "13cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "빔 사벨 x2",
+                               "실드",
+                               "하이퍼 바주카"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "Beam Saber x2",
+                               "Shield",
+                               "Hyper Bazooka"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "리얼리스틱 데칼",
+                                   "교체용 손 파츠 x4",
+                                   "코어 파이터"
+                               ],
+                        "en":  [
+                                   "Realistic Decals",
+                                   "Replacement Hand Parts x4",
+                                   "Core Fighter"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "디테일을 중시하는 중급자",
+                                                         "포징을 즐기고 싶은 분",
+                                                         "RG 입문자"
+                                                     ],
+                                              "en":  [
+                                                         "Intermediate builders who value detail",
+                                                         "Those who enjoy posing",
+                                                         "RG beginners"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "어드밴스드 MS 조인트는 조립 전 충분히 움직여주세요",
+                                    "데칼은 마크소프터 사용 권장",
+                                    "실드 연결부 주의 (헐거울 수 있음)"
+                                ],
+                         "en":  [
+                                    "Work the Advanced MS Joint before assembly",
+                                    "Use mark softer for decals",
+                                    "Shield connection may be loose"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-rx-78-2"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

@@ -11,12 +11,49 @@
         "ko": "키라 야마토",
         "en": "Kira Yamato"
     },
+    "manufacturer": {
+        "ko": "오브 연합 수장국",
+        "en": "Orb Union"
+    },
     "grade": "SDEX",
     "scale": "non_scale",
     "releaseYear": 2015,
     "releaseMonth": 10,
+    "releaseLine": "standard",
+    "isRevive": false,
+    "isVerKa": false,
     "price": 660,
     "height": "8cm",
+    "images": {
+        "boxart": "https://gunpla.fyi/images/boxarts/sdex-strike",
+        "gallery": []
+    },
+    "fullSpecs": {
+        "partCount": 35,
+        "runnerCount": 3,
+        "runnerColors": 4,
+        "frameType": "none",
+        "spareParts": "none",
+        "sealDependency": "high",
+        "clearParts": "none",
+        "coatingParts": false,
+        "eyeExpression": "sticker",
+        "paintSuitability": "unnecessary",
+        "difficulty": "beginner",
+        "mobility": 2,
+        "colorSeparation": "low",
+        "decalType": [
+            "sticker"
+        ],
+        "weaponCount": "standard",
+        "transformation": false,
+        "combination": false,
+        "sizeFeeling": "small",
+        "recommendedUser": [
+            "beginner",
+            "child"
+        ]
+    },
     "weapons": {
         "ko": [
             "빔 라이플",
@@ -35,6 +72,30 @@
         ],
         "en": [
             "Stickers"
+        ]
+    },
+    "pros": {
+        "ko": [
+            "초간단 조립",
+            "저렴한 가격",
+            "귀여운 프로포션"
+        ],
+        "en": [
+            "Super simple assembly",
+            "Affordable price",
+            "Cute proportions"
+        ]
+    },
+    "cons": {
+        "ko": [
+            "스티커 의존도 높음",
+            "에일 스트라이커 별매",
+            "가동성 제한적"
+        ],
+        "en": [
+            "High sticker dependency",
+            "Aile Striker sold separately",
+            "Limited articulation"
         ]
     },
     "recommendation": {
@@ -63,5 +124,5 @@
             "Aile Striker sold separately"
         ]
     },
-    "lastUpdated": "2026-01-18"
+    "lastUpdated": "2026-01-19"
 }

@@ -1,73 +1,131 @@
 ﻿{
-    "id": "hg-exia",
-    "baseProductId": "exia",
-    "name": {
-        "ko": "건담 엑시아",
-        "en": "Gundam Exia"
-    },
-    "modelNumber": "GN-001",
-    "series": "00",
-    "pilot": {
-        "ko": "세츠나 F. 세이에이",
-        "en": "Setsuna F. Seiei"
-    },
-    "grade": "HG",
-    "scale": "1/144",
-    "releaseYear": 2007,
-    "releaseMonth": 10,
-    "price": 1320,
-    "height": "13cm",
-    "weapons": {
-        "ko": [
-            "GN 소드",
-            "GN 롱 블레이드",
-            "GN 숏 블레이드",
-            "GN 빔 사벨 x2",
-            "GN 빔 대거 x2",
-            "GN 실드"
-        ],
-        "en": [
-            "GN Sword",
-            "GN Long Blade",
-            "GN Short Blade",
-            "GN Beam Saber x2",
-            "GN Beam Dagger x2",
-            "GN Shield"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "교체용 손 파츠",
-            "GN 드라이브 클리어 파츠"
-        ],
-        "en": [
-            "Replacement Hand Parts",
-            "GN Drive Clear Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "00 시리즈 팬",
-                "근접전 기체 선호자",
-                "세븐 소드 애호가"
-            ],
-            "en": [
-                "00 series fans",
-                "Melee unit enthusiasts",
-                "Seven Sword lovers"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "무장 많아 정리 필요",
-            "GN 드라이브 클리어 파츠 주의"
-        ],
-        "en": [
-            "Many weapons, organize well",
-            "Be careful with GN Drive clear parts"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "hg-exia",
+    "baseProductId":  "exia",
+    "name":  {
+                 "ko":  "건담 엑시아",
+                 "en":  "Gundam Exia"
+             },
+    "modelNumber":  "GN-001",
+    "series":  "00",
+    "pilot":  {
+                  "ko":  "세츠나 F. 세이에이",
+                  "en":  "Setsuna F. Seiei"
+              },
+    "grade":  "HG",
+    "scale":  "1/144",
+    "releaseYear":  2007,
+    "releaseMonth":  10,
+    "price":  1320,
+    "height":  "13cm",
+    "weapons":  {
+                    "ko":  [
+                               "GN 소드",
+                               "GN 롱 블레이드",
+                               "GN 숏 블레이드",
+                               "GN 빔 사벨 x2",
+                               "GN 빔 대거 x2",
+                               "GN 실드"
+                           ],
+                    "en":  [
+                               "GN Sword",
+                               "GN Long Blade",
+                               "GN Short Blade",
+                               "GN Beam Saber x2",
+                               "GN Beam Dagger x2",
+                               "GN Shield"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "교체용 손 파츠",
+                                   "GN 드라이브 클리어 파츠"
+                               ],
+                        "en":  [
+                                   "Replacement Hand Parts",
+                                   "GN Drive Clear Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "00 시리즈 팬",
+                                                         "근접전 기체 선호자",
+                                                         "세븐 소드 애호가"
+                                                     ],
+                                              "en":  [
+                                                         "00 series fans",
+                                                         "Melee unit enthusiasts",
+                                                         "Seven Sword lovers"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "무장 많아 정리 필요",
+                                    "GN 드라이브 클리어 파츠 주의"
+                                ],
+                         "en":  [
+                                    "Many weapons, organize well",
+                                    "Be careful with GN Drive clear parts"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/hg-exia"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "beginner",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  8,
+                      "paintSuitability":  "partial",
+                      "partCount":  150,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "partial",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  4,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

@@ -1,73 +1,131 @@
 ﻿{
-    "id": "hg-nu-gundam",
-    "baseProductId": "nu-gundam",
-    "name": {
-        "ko": "뉴 건담",
-        "en": "Nu Gundam"
-    },
-    "modelNumber": "RX-93",
-    "series": "cca",
-    "pilot": {
-        "ko": "아무로 레이",
-        "en": "Amuro Ray"
-    },
-    "grade": "HGUC",
-    "scale": "1/144",
-    "releaseYear": 2008,
-    "releaseMonth": 7,
-    "price": 2750,
-    "height": "14.5cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "뉴 하이퍼 바주카",
-            "빔 사벨",
-            "실드",
-            "핀 판넬 x6"
-        ],
-        "en": [
-            "Beam Rifle",
-            "New Hyper Bazooka",
-            "Beam Saber",
-            "Shield",
-            "Fin Funnel x6"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "핀 판넬 전개 파츠",
-            "교체용 손 파츠"
-        ],
-        "en": [
-            "Fin Funnel Deployment Parts",
-            "Replacement Hand Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "역습의 샤아 팬",
-                "아무로 팬",
-                "핀 판넬 애호가"
-            ],
-            "en": [
-                "Char's Counterattack fans",
-                "Amuro fans",
-                "Fin Funnel lovers"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "핀 판넬 하나하나 조립",
-            "실드 마운트 확인",
-            "백팩 밸런스 주의"
-        ],
-        "en": [
-            "Assemble each Fin Funnel",
-            "Check shield mount",
-            "Watch backpack balance"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "hg-nu-gundam",
+    "baseProductId":  "nu-gundam",
+    "name":  {
+                 "ko":  "뉴 건담",
+                 "en":  "Nu Gundam"
+             },
+    "modelNumber":  "RX-93",
+    "series":  "cca",
+    "pilot":  {
+                  "ko":  "아무로 레이",
+                  "en":  "Amuro Ray"
+              },
+    "grade":  "HGUC",
+    "scale":  "1/144",
+    "releaseYear":  2008,
+    "releaseMonth":  7,
+    "price":  2750,
+    "height":  "14.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "뉴 하이퍼 바주카",
+                               "빔 사벨",
+                               "실드",
+                               "핀 판넬 x6"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "New Hyper Bazooka",
+                               "Beam Saber",
+                               "Shield",
+                               "Fin Funnel x6"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "핀 판넬 전개 파츠",
+                                   "교체용 손 파츠"
+                               ],
+                        "en":  [
+                                   "Fin Funnel Deployment Parts",
+                                   "Replacement Hand Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "역습의 샤아 팬",
+                                                         "아무로 팬",
+                                                         "핀 판넬 애호가"
+                                                     ],
+                                              "en":  [
+                                                         "Char\u0027s Counterattack fans",
+                                                         "Amuro fans",
+                                                         "Fin Funnel lovers"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "핀 판넬 하나하나 조립",
+                                    "실드 마운트 확인",
+                                    "백팩 밸런스 주의"
+                                ],
+                         "en":  [
+                                    "Assemble each Fin Funnel",
+                                    "Check shield mount",
+                                    "Watch backpack balance"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/hg-nu-gundam"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "beginner",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  8,
+                      "paintSuitability":  "partial",
+                      "partCount":  150,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "partial",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  4,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

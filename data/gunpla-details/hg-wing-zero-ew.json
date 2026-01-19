@@ -1,71 +1,129 @@
 ﻿{
-    "id": "hg-wing-zero-ew",
-    "baseProductId": "wing-zero",
-    "name": {
-        "ko": "윙 건담 제로 EW",
-        "en": "Wing Gundam Zero EW"
-    },
-    "modelNumber": "XXXG-00W0",
-    "series": "ew",
-    "pilot": {
-        "ko": "히이로 유이",
-        "en": "Heero Yuy"
-    },
-    "grade": "HGAC",
-    "scale": "1/144",
-    "releaseYear": 2014,
-    "releaseMonth": 6,
-    "price": 1540,
-    "height": "13.5cm",
-    "weapons": {
-        "ko": [
-            "트윈 버스터 라이플",
-            "빔 사벨 x2",
-            "머신 캐논 x2 (내장)"
-        ],
-        "en": [
-            "Twin Buster Rifle",
-            "Beam Saber x2",
-            "Machine Cannon x2 (built-in)"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "천사 날개 (디스플레이용)",
-            "교체용 손 파츠",
-            "실드 (날개 일체형)"
-        ],
-        "en": [
-            "Angel Wings (for display)",
-            "Replacement Hand Parts",
-            "Shield (integrated with wings)"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "엔들리스 왈츠 팬",
-                "천사 날개 팬",
-                "윙 시리즈 입문자"
-            ],
-            "en": [
-                "Endless Waltz fans",
-                "Angel wing fans",
-                "Wing series beginners"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "날개 전개 가능",
-            "트윈 버스터 라이플 결합/분리 가능",
-            "스탠드 권장"
-        ],
-        "en": [
-            "Wings are deployable",
-            "Twin Buster Rifle can combine/separate",
-            "Stand recommended"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "hg-wing-zero-ew",
+    "baseProductId":  "wing-zero",
+    "name":  {
+                 "ko":  "윙 건담 제로 EW",
+                 "en":  "Wing Gundam Zero EW"
+             },
+    "modelNumber":  "XXXG-00W0",
+    "series":  "ew",
+    "pilot":  {
+                  "ko":  "히이로 유이",
+                  "en":  "Heero Yuy"
+              },
+    "grade":  "HGAC",
+    "scale":  "1/144",
+    "releaseYear":  2014,
+    "releaseMonth":  6,
+    "price":  1540,
+    "height":  "13.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "트윈 버스터 라이플",
+                               "빔 사벨 x2",
+                               "머신 캐논 x2 (내장)"
+                           ],
+                    "en":  [
+                               "Twin Buster Rifle",
+                               "Beam Saber x2",
+                               "Machine Cannon x2 (built-in)"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "천사 날개 (디스플레이용)",
+                                   "교체용 손 파츠",
+                                   "실드 (날개 일체형)"
+                               ],
+                        "en":  [
+                                   "Angel Wings (for display)",
+                                   "Replacement Hand Parts",
+                                   "Shield (integrated with wings)"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "엔들리스 왈츠 팬",
+                                                         "천사 날개 팬",
+                                                         "윙 시리즈 입문자"
+                                                     ],
+                                              "en":  [
+                                                         "Endless Waltz fans",
+                                                         "Angel wing fans",
+                                                         "Wing series beginners"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "날개 전개 가능",
+                                    "트윈 버스터 라이플 결합/분리 가능",
+                                    "스탠드 권장"
+                                ],
+                         "en":  [
+                                    "Wings are deployable",
+                                    "Twin Buster Rifle can combine/separate",
+                                    "Stand recommended"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/hg-wing-zero-ew"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "beginner",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  8,
+                      "paintSuitability":  "partial",
+                      "partCount":  150,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "partial",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  4,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

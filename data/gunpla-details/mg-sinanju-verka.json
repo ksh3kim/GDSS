@@ -1,77 +1,135 @@
 ﻿{
-    "id": "mg-sinanju-verka",
-    "baseProductId": "sinanju",
-    "name": {
-        "ko": "시난주 Ver.Ka",
-        "en": "Sinanju Ver.Ka"
-    },
-    "modelNumber": "MSN-06S",
-    "series": "unicorn",
-    "pilot": {
-        "ko": "풀 프론탈",
-        "en": "Full Frontal"
-    },
-    "grade": "MG",
-    "scale": "1/100",
-    "releaseYear": 2012,
-    "releaseMonth": 11,
-    "price": 8800,
-    "height": "22cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "로켓 바주카",
-            "빔 액스",
-            "빔 사벨 x2",
-            "실드",
-            "그레네이드 런처"
-        ],
-        "en": [
-            "Beam Rifle",
-            "Rocket Bazooka",
-            "Beam Axe",
-            "Beam Saber x2",
-            "Shield",
-            "Grenade Launcher"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "Ver.Ka 마킹 데칼",
-            "골드 파츠",
-            "교체용 손 파츠 x6"
-        ],
-        "en": [
-            "Ver.Ka Marking Decals",
-            "Gold Parts",
-            "Replacement Hand Parts x6"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "Ver.Ka 컬렉터",
-                "UC 팬",
-                "화려한 디스플레이 선호자"
-            ],
-            "en": [
-                "Ver.Ka collectors",
-                "UC fans",
-                "Flashy display enthusiasts"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "골드 데코 많음",
-            "조립 난이도 중상",
-            "완성 시 프리미엄 외관"
-        ],
-        "en": [
-            "Many gold decorations",
-            "Medium-high difficulty",
-            "Premium appearance when complete"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "mg-sinanju-verka",
+    "baseProductId":  "sinanju",
+    "name":  {
+                 "ko":  "시난주 Ver.Ka",
+                 "en":  "Sinanju Ver.Ka"
+             },
+    "modelNumber":  "MSN-06S",
+    "series":  "unicorn",
+    "pilot":  {
+                  "ko":  "풀 프론탈",
+                  "en":  "Full Frontal"
+              },
+    "grade":  "MG",
+    "scale":  "1/100",
+    "releaseYear":  2012,
+    "releaseMonth":  11,
+    "price":  8800,
+    "height":  "22cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "로켓 바주카",
+                               "빔 액스",
+                               "빔 사벨 x2",
+                               "실드",
+                               "그레네이드 런처"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "Rocket Bazooka",
+                               "Beam Axe",
+                               "Beam Saber x2",
+                               "Shield",
+                               "Grenade Launcher"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "Ver.Ka 마킹 데칼",
+                                   "골드 파츠",
+                                   "교체용 손 파츠 x6"
+                               ],
+                        "en":  [
+                                   "Ver.Ka Marking Decals",
+                                   "Gold Parts",
+                                   "Replacement Hand Parts x6"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "Ver.Ka 컬렉터",
+                                                         "UC 팬",
+                                                         "화려한 디스플레이 선호자"
+                                                     ],
+                                              "en":  [
+                                                         "Ver.Ka collectors",
+                                                         "UC fans",
+                                                         "Flashy display enthusiasts"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "골드 데코 많음",
+                                    "조립 난이도 중상",
+                                    "완성 시 프리미엄 외관"
+                                ],
+                         "en":  [
+                                    "Many gold decorations",
+                                    "Medium-high difficulty",
+                                    "Premium appearance when complete"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  true,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/mg-sinanju-verka"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  20,
+                      "paintSuitability":  "partial",
+                      "partCount":  400,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

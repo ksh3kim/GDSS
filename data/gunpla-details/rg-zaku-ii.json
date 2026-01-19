@@ -1,73 +1,131 @@
 ﻿{
-    "id": "rg-zaku-ii",
-    "baseProductId": "zaku-ii",
-    "name": {
-        "ko": "자쿠 II",
-        "en": "Zaku II"
-    },
-    "modelNumber": "MS-06F",
-    "series": "first_gundam",
-    "pilot": {
-        "ko": "지온 병사",
-        "en": "Zeon Soldier"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2011,
-    "releaseMonth": 4,
-    "price": 2750,
-    "height": "12.5cm",
-    "weapons": {
-        "ko": [
-            "자쿠 머신건",
-            "히트 호크",
-            "자쿠 바주카",
-            "크래커 x4"
-        ],
-        "en": [
-            "Zaku Machine Gun",
-            "Heat Hawk",
-            "Zaku Bazooka",
-            "Cracker x4"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "리얼리스틱 데칼",
-            "교체용 손 파츠 x4",
-            "모노아이 가동"
-        ],
-        "en": [
-            "Realistic Decals",
-            "Replacement Hand Parts x4",
-            "Movable Mono-Eye"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "RG 입문자",
-                "지온 팬",
-                "디테일 중시"
-            ],
-            "en": [
-                "RG beginners",
-                "Zeon fans",
-                "Detail-oriented"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "모노아이 움직임 가능",
-            "외장 파이프 주의",
-            "RG 초기작이지만 퀄리티 좋음"
-        ],
-        "en": [
-            "Mono-eye is movable",
-            "Watch exterior pipes",
-            "Early RG but good quality"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "rg-zaku-ii",
+    "baseProductId":  "zaku-ii",
+    "name":  {
+                 "ko":  "자쿠 II",
+                 "en":  "Zaku II"
+             },
+    "modelNumber":  "MS-06F",
+    "series":  "first_gundam",
+    "pilot":  {
+                  "ko":  "지온 병사",
+                  "en":  "Zeon Soldier"
+              },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2011,
+    "releaseMonth":  4,
+    "price":  2750,
+    "height":  "12.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "자쿠 머신건",
+                               "히트 호크",
+                               "자쿠 바주카",
+                               "크래커 x4"
+                           ],
+                    "en":  [
+                               "Zaku Machine Gun",
+                               "Heat Hawk",
+                               "Zaku Bazooka",
+                               "Cracker x4"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "리얼리스틱 데칼",
+                                   "교체용 손 파츠 x4",
+                                   "모노아이 가동"
+                               ],
+                        "en":  [
+                                   "Realistic Decals",
+                                   "Replacement Hand Parts x4",
+                                   "Movable Mono-Eye"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "RG 입문자",
+                                                         "지온 팬",
+                                                         "디테일 중시"
+                                                     ],
+                                              "en":  [
+                                                         "RG beginners",
+                                                         "Zeon fans",
+                                                         "Detail-oriented"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "모노아이 움직임 가능",
+                                    "외장 파이프 주의",
+                                    "RG 초기작이지만 퀄리티 좋음"
+                                ],
+                         "en":  [
+                                    "Mono-eye is movable",
+                                    "Watch exterior pipes",
+                                    "Early RG but good quality"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-zaku-ii"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

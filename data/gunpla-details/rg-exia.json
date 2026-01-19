@@ -1,77 +1,135 @@
 ﻿{
-    "id": "rg-exia",
-    "baseProductId": "exia",
-    "name": {
-        "ko": "건담 엑시아",
-        "en": "Gundam Exia"
-    },
-    "modelNumber": "GN-001",
-    "series": "00",
-    "pilot": {
-        "ko": "세츠나 F. 세이에이",
-        "en": "Setsuna F. Seiei"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2013,
-    "releaseMonth": 9,
-    "price": 2750,
-    "height": "13cm",
-    "weapons": {
-        "ko": [
-            "GN 소드",
-            "GN 롱 블레이드",
-            "GN 숏 블레이드",
-            "GN 빔 사벨 x2",
-            "GN 빔 대거 x2",
-            "GN 실드"
-        ],
-        "en": [
-            "GN Sword",
-            "GN Long Blade",
-            "GN Short Blade",
-            "GN Beam Saber x2",
-            "GN Beam Dagger x2",
-            "GN Shield"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "리얼리스틱 데칼",
-            "교체용 손 파츠 x4",
-            "GN 드라이브 발광 재현 파츠"
-        ],
-        "en": [
-            "Realistic Decals",
-            "Replacement Hand Parts x4",
-            "GN Drive Glow Effect Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "디테일 중시",
-                "00 팬",
-                "포징 애호가"
-            ],
-            "en": [
-                "Detail-oriented",
-                "00 fans",
-                "Posing enthusiasts"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "GN 소드 변형 가능",
-            "관절 우수",
-            "세븐 소드 스타일 재현"
-        ],
-        "en": [
-            "GN Sword can transform",
-            "Excellent joints",
-            "Can recreate Seven Sword style"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "rg-exia",
+    "baseProductId":  "exia",
+    "name":  {
+                 "ko":  "건담 엑시아",
+                 "en":  "Gundam Exia"
+             },
+    "modelNumber":  "GN-001",
+    "series":  "00",
+    "pilot":  {
+                  "ko":  "세츠나 F. 세이에이",
+                  "en":  "Setsuna F. Seiei"
+              },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2013,
+    "releaseMonth":  9,
+    "price":  2750,
+    "height":  "13cm",
+    "weapons":  {
+                    "ko":  [
+                               "GN 소드",
+                               "GN 롱 블레이드",
+                               "GN 숏 블레이드",
+                               "GN 빔 사벨 x2",
+                               "GN 빔 대거 x2",
+                               "GN 실드"
+                           ],
+                    "en":  [
+                               "GN Sword",
+                               "GN Long Blade",
+                               "GN Short Blade",
+                               "GN Beam Saber x2",
+                               "GN Beam Dagger x2",
+                               "GN Shield"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "리얼리스틱 데칼",
+                                   "교체용 손 파츠 x4",
+                                   "GN 드라이브 발광 재현 파츠"
+                               ],
+                        "en":  [
+                                   "Realistic Decals",
+                                   "Replacement Hand Parts x4",
+                                   "GN Drive Glow Effect Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "디테일 중시",
+                                                         "00 팬",
+                                                         "포징 애호가"
+                                                     ],
+                                              "en":  [
+                                                         "Detail-oriented",
+                                                         "00 fans",
+                                                         "Posing enthusiasts"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "GN 소드 변형 가능",
+                                    "관절 우수",
+                                    "세븐 소드 스타일 재현"
+                                ],
+                         "en":  [
+                                    "GN Sword can transform",
+                                    "Excellent joints",
+                                    "Can recreate Seven Sword style"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-exia"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

@@ -1,75 +1,133 @@
 ﻿{
-    "id": "hg-rising-freedom",
-    "baseProductId": "rising-freedom",
-    "name": {
-        "ko": "라이징 프리덤 건담",
-        "en": "Rising Freedom Gundam"
-    },
-    "modelNumber": "STTS-909",
-    "series": "seed_freedom",
-    "pilot": {
-        "ko": "키라 야마토",
-        "en": "Kira Yamato"
-    },
-    "grade": "HGCE",
-    "scale": "1/144",
-    "releaseYear": 2024,
-    "releaseMonth": 1,
-    "price": 2200,
-    "height": "13.5cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "빔 사벨 x2",
-            "라이징 실드",
-            "레일건",
-            "빔 캐논"
-        ],
-        "en": [
-            "Beam Rifle",
-            "Beam Saber x2",
-            "Rising Shield",
-            "Railgun",
-            "Beam Cannon"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "윙 전개 파츠",
-            "교체용 손 파츠",
-            "마킹 스티커"
-        ],
-        "en": [
-            "Wing Deployment Parts",
-            "Replacement Hand Parts",
-            "Marking Stickers"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "극장판 SEED Freedom 팬",
-                "최신 작품 팬",
-                "키라 팬"
-            ],
-            "en": [
-                "SEED Freedom movie fans",
-                "Latest series fans",
-                "Kira fans"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "기존 프리덤과 다른 신규 조형",
-            "씰 부착 필요",
-            "극장판 연출 재현 가능"
-        ],
-        "en": [
-            "New sculpt different from original Freedom",
-            "Sticker application needed",
-            "Can recreate movie scenes"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "hg-rising-freedom",
+    "baseProductId":  "rising-freedom",
+    "name":  {
+                 "ko":  "라이징 프리덤 건담",
+                 "en":  "Rising Freedom Gundam"
+             },
+    "modelNumber":  "STTS-909",
+    "series":  "seed_freedom",
+    "pilot":  {
+                  "ko":  "키라 야마토",
+                  "en":  "Kira Yamato"
+              },
+    "grade":  "HGCE",
+    "scale":  "1/144",
+    "releaseYear":  2024,
+    "releaseMonth":  1,
+    "price":  2200,
+    "height":  "13.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "빔 사벨 x2",
+                               "라이징 실드",
+                               "레일건",
+                               "빔 캐논"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "Beam Saber x2",
+                               "Rising Shield",
+                               "Railgun",
+                               "Beam Cannon"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "윙 전개 파츠",
+                                   "교체용 손 파츠",
+                                   "마킹 스티커"
+                               ],
+                        "en":  [
+                                   "Wing Deployment Parts",
+                                   "Replacement Hand Parts",
+                                   "Marking Stickers"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "극장판 SEED Freedom 팬",
+                                                         "최신 작품 팬",
+                                                         "키라 팬"
+                                                     ],
+                                              "en":  [
+                                                         "SEED Freedom movie fans",
+                                                         "Latest series fans",
+                                                         "Kira fans"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "기존 프리덤과 다른 신규 조형",
+                                    "씰 부착 필요",
+                                    "극장판 연출 재현 가능"
+                                ],
+                         "en":  [
+                                    "New sculpt different from original Freedom",
+                                    "Sticker application needed",
+                                    "Can recreate movie scenes"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/hg-rising-freedom"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "beginner",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  8,
+                      "paintSuitability":  "partial",
+                      "partCount":  150,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "partial",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  4,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

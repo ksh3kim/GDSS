@@ -1,75 +1,133 @@
 ﻿{
-    "id": "rg-strike-freedom",
-    "baseProductId": "strike-freedom",
-    "name": {
-        "ko": "스트라이크 프리덤 건담",
-        "en": "Strike Freedom Gundam"
-    },
-    "modelNumber": "ZGMF-X20A",
-    "series": "seed_destiny",
-    "pilot": {
-        "ko": "키라 야마토",
-        "en": "Kira Yamato"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2016,
-    "releaseMonth": 7,
-    "price": 3300,
-    "height": "14cm",
-    "weapons": {
-        "ko": [
-            "MA-M21KF 고에너지 빔 라이플 x2",
-            "MGX-2235 칼리두스 복합 상부 포",
-            "MA-M02G 슈퍼 라케르타 빔 사벨 x2",
-            "MX2200 빔 실드 발생기"
-        ],
-        "en": [
-            "MA-M21KF High Energy Beam Rifle x2",
-            "MGX-2235 Callidus Multi-Phase Beam Cannon",
-            "MA-M02G Super Lacerta Beam Saber x2",
-            "MX2200 Beam Shield Generator"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "슈퍼 드라군 x8",
-            "풀 버스트 모드 이펙트",
-            "리얼리스틱 데칼",
-            "교체용 손 파츠"
-        ],
-        "en": [
-            "Super DRAGOON x8",
-            "Full Burst Mode Effects",
-            "Realistic Decals",
-            "Replacement Hand Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "디테일 중시 모델러",
-                "RG 컬렉터",
-                "SEED 팬"
-            ],
-            "en": [
-                "Detail-oriented modelers",
-                "RG collectors",
-                "SEED fans"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "드라군 조립 복잡",
-            "데칼 많음",
-            "풀 버스트 재현 가능"
-        ],
-        "en": [
-            "DRAGOON assembly is complex",
-            "Many decals",
-            "Can recreate Full Burst"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "rg-strike-freedom",
+    "baseProductId":  "strike-freedom",
+    "name":  {
+                 "ko":  "스트라이크 프리덤 건담",
+                 "en":  "Strike Freedom Gundam"
+             },
+    "modelNumber":  "ZGMF-X20A",
+    "series":  "seed_destiny",
+    "pilot":  {
+                  "ko":  "키라 야마토",
+                  "en":  "Kira Yamato"
+              },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2016,
+    "releaseMonth":  7,
+    "price":  3300,
+    "height":  "14cm",
+    "weapons":  {
+                    "ko":  [
+                               "MA-M21KF 고에너지 빔 라이플 x2",
+                               "MGX-2235 칼리두스 복합 상부 포",
+                               "MA-M02G 슈퍼 라케르타 빔 사벨 x2",
+                               "MX2200 빔 실드 발생기"
+                           ],
+                    "en":  [
+                               "MA-M21KF High Energy Beam Rifle x2",
+                               "MGX-2235 Callidus Multi-Phase Beam Cannon",
+                               "MA-M02G Super Lacerta Beam Saber x2",
+                               "MX2200 Beam Shield Generator"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "슈퍼 드라군 x8",
+                                   "풀 버스트 모드 이펙트",
+                                   "리얼리스틱 데칼",
+                                   "교체용 손 파츠"
+                               ],
+                        "en":  [
+                                   "Super DRAGOON x8",
+                                   "Full Burst Mode Effects",
+                                   "Realistic Decals",
+                                   "Replacement Hand Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "디테일 중시 모델러",
+                                                         "RG 컬렉터",
+                                                         "SEED 팬"
+                                                     ],
+                                              "en":  [
+                                                         "Detail-oriented modelers",
+                                                         "RG collectors",
+                                                         "SEED fans"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "드라군 조립 복잡",
+                                    "데칼 많음",
+                                    "풀 버스트 재현 가능"
+                                ],
+                         "en":  [
+                                    "DRAGOON assembly is complex",
+                                    "Many decals",
+                                    "Can recreate Full Burst"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-strike-freedom"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

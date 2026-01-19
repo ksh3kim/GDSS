@@ -1,73 +1,131 @@
 ﻿{
-    "id": "rg-00-raiser",
-    "baseProductId": "00-raiser",
-    "name": {
-        "ko": "더블오 라이저",
-        "en": "00 Raiser"
-    },
-    "modelNumber": "GN-0000+GNR-010",
-    "series": "00",
-    "pilot": {
-        "ko": "세츠나 F. 세이에이",
-        "en": "Setsuna F. Seiei"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2019,
-    "releaseMonth": 8,
-    "price": 4400,
-    "height": "14.5cm",
-    "weapons": {
-        "ko": [
-            "GN 소드 III x2",
-            "GN 빔 사벨 x2",
-            "GN 실드 x2"
-        ],
-        "en": [
-            "GN Sword III x2",
-            "GN Beam Saber x2",
-            "GN Shield x2"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "오 라이저 풀 세트",
-            "리얼리스틱 데칼",
-            "다양한 손 파츠",
-            "트랜잠 이펙트 재현 파츠"
-        ],
-        "en": [
-            "O Raiser Full Set",
-            "Realistic Decals",
-            "Various Hand Parts",
-            "Trans-Am Effect Parts"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "RG 컬렉터",
-                "디테일 중시",
-                "00 팬"
-            ],
-            "en": [
-                "RG collectors",
-                "Detail-oriented",
-                "00 fans"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "조립 난이도 중상",
-            "합체/분리 자유로움",
-            "데칼 많음"
-        ],
-        "en": [
-            "Medium-high difficulty",
-            "Free combination/separation",
-            "Many decals"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "rg-00-raiser",
+    "baseProductId":  "00-raiser",
+    "name":  {
+                 "ko":  "더블오 라이저",
+                 "en":  "00 Raiser"
+             },
+    "modelNumber":  "GN-0000+GNR-010",
+    "series":  "00",
+    "pilot":  {
+                  "ko":  "세츠나 F. 세이에이",
+                  "en":  "Setsuna F. Seiei"
+              },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2019,
+    "releaseMonth":  8,
+    "price":  4400,
+    "height":  "14.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "GN 소드 III x2",
+                               "GN 빔 사벨 x2",
+                               "GN 실드 x2"
+                           ],
+                    "en":  [
+                               "GN Sword III x2",
+                               "GN Beam Saber x2",
+                               "GN Shield x2"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "오 라이저 풀 세트",
+                                   "리얼리스틱 데칼",
+                                   "다양한 손 파츠",
+                                   "트랜잠 이펙트 재현 파츠"
+                               ],
+                        "en":  [
+                                   "O Raiser Full Set",
+                                   "Realistic Decals",
+                                   "Various Hand Parts",
+                                   "Trans-Am Effect Parts"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "RG 컬렉터",
+                                                         "디테일 중시",
+                                                         "00 팬"
+                                                     ],
+                                              "en":  [
+                                                         "RG collectors",
+                                                         "Detail-oriented",
+                                                         "00 fans"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "조립 난이도 중상",
+                                    "합체/분리 자유로움",
+                                    "데칼 많음"
+                                ],
+                         "en":  [
+                                    "Medium-high difficulty",
+                                    "Free combination/separation",
+                                    "Many decals"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-00-raiser"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }

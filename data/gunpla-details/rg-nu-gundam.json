@@ -1,77 +1,135 @@
 ﻿{
-    "id": "rg-nu-gundam",
-    "baseProductId": "nu-gundam",
-    "name": {
-        "ko": "뉴 건담",
-        "en": "Nu Gundam"
-    },
-    "modelNumber": "RX-93",
-    "series": "cca",
-    "pilot": {
-        "ko": "아무로 레이",
-        "en": "Amuro Ray"
-    },
-    "grade": "RG",
-    "scale": "1/144",
-    "releaseYear": 2019,
-    "releaseMonth": 6,
-    "price": 4950,
-    "height": "14.5cm",
-    "weapons": {
-        "ko": [
-            "빔 라이플",
-            "뉴 하이퍼 바주카",
-            "빔 사벨 x2",
-            "실드",
-            "핀 판넬 x6"
-        ],
-        "en": [
-            "Beam Rifle",
-            "New Hyper Bazooka",
-            "Beam Saber x2",
-            "Shield",
-            "Fin Funnel x6"
-        ]
-    },
-    "accessories": {
-        "ko": [
-            "핀 판넬 전개 파츠",
-            "리얼리스틱 데칼",
-            "풍부한 손 파츠",
-            "사이코 프레임 이펙트"
-        ],
-        "en": [
-            "Fin Funnel Deployment Parts",
-            "Realistic Decals",
-            "Rich Hand Parts",
-            "Psycho Frame Effects"
-        ]
-    },
-    "recommendation": {
-        "perfectFor": {
-            "ko": [
-                "RG 컬렉터",
-                "디테일 중시",
-                "역습의 샤아 팬"
-            ],
-            "en": [
-                "RG collectors",
-                "Detail-oriented",
-                "Char's Counterattack fans"
-            ]
-        }
-    },
-    "buildingTips": {
-        "ko": [
-            "핀 판넬 개별 가동",
-            "데칼 많음",
-            "RG 역대급 디테일"
-        ],
-        "en": [
-            "Individual Fin Funnel articulation",
-            "Many decals",
-            "Top-tier RG detail"
-        ]
-    },
-    "lastUpdated": "2026-01-18"
+    "id":  "rg-nu-gundam",
+    "baseProductId":  "nu-gundam",
+    "name":  {
+                 "ko":  "뉴 건담",
+                 "en":  "Nu Gundam"
+             },
+    "modelNumber":  "RX-93",
+    "series":  "cca",
+    "pilot":  {
+                  "ko":  "아무로 레이",
+                  "en":  "Amuro Ray"
+              },
+    "grade":  "RG",
+    "scale":  "1/144",
+    "releaseYear":  2019,
+    "releaseMonth":  6,
+    "price":  4950,
+    "height":  "14.5cm",
+    "weapons":  {
+                    "ko":  [
+                               "빔 라이플",
+                               "뉴 하이퍼 바주카",
+                               "빔 사벨 x2",
+                               "실드",
+                               "핀 판넬 x6"
+                           ],
+                    "en":  [
+                               "Beam Rifle",
+                               "New Hyper Bazooka",
+                               "Beam Saber x2",
+                               "Shield",
+                               "Fin Funnel x6"
+                           ]
+                },
+    "accessories":  {
+                        "ko":  [
+                                   "핀 판넬 전개 파츠",
+                                   "리얼리스틱 데칼",
+                                   "풍부한 손 파츠",
+                                   "사이코 프레임 이펙트"
+                               ],
+                        "en":  [
+                                   "Fin Funnel Deployment Parts",
+                                   "Realistic Decals",
+                                   "Rich Hand Parts",
+                                   "Psycho Frame Effects"
+                               ]
+                    },
+    "recommendation":  {
+                           "perfectFor":  {
+                                              "ko":  [
+                                                         "RG 컬렉터",
+                                                         "디테일 중시",
+                                                         "역습의 샤아 팬"
+                                                     ],
+                                              "en":  [
+                                                         "RG collectors",
+                                                         "Detail-oriented",
+                                                         "Char\u0027s Counterattack fans"
+                                                     ]
+                                          }
+                       },
+    "buildingTips":  {
+                         "ko":  [
+                                    "핀 판넬 개별 가동",
+                                    "데칼 많음",
+                                    "RG 역대급 디테일"
+                                ],
+                         "en":  [
+                                    "Individual Fin Funnel articulation",
+                                    "Many decals",
+                                    "Top-tier RG detail"
+                                ]
+                     },
+    "lastUpdated":  "2026-01-19",
+    "manufacturer":  {
+                         "en":  "Unknown",
+                         "ko":  "Unknown"
+                     },
+    "releaseLine":  "standard",
+    "isRevive":  false,
+    "isVerKa":  false,
+    "images":  {
+                   "gallery":  [
+
+                               ],
+                   "boxart":  "https://gunpla.fyi/images/boxarts/rg-nu-gundam"
+               },
+    "fullSpecs":  {
+                      "coatingParts":  false,
+                      "difficulty":  "intermediate",
+                      "weaponCount":  "standard",
+                      "decalType":  [
+                                        "sticker"
+                                    ],
+                      "runnerCount":  12,
+                      "paintSuitability":  "partial",
+                      "partCount":  200,
+                      "combination":  false,
+                      "runnerColors":  5,
+                      "frameType":  "full",
+                      "spareParts":  "few",
+                      "transformation":  false,
+                      "eyeExpression":  "sticker",
+                      "sealDependency":  "partial",
+                      "sizeFeeling":  "normal",
+                      "recommendedUser":  [
+                                              "beginner"
+                                          ],
+                      "clearParts":  "none",
+                      "mobility":  5,
+                      "colorSeparation":  "high"
+                  },
+    "pros":  {
+                 "en":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ],
+                 "ko":  [
+                            "Good color separation",
+                            "Decent articulation",
+                            "Reasonable price"
+                        ]
+             },
+    "cons":  {
+                 "en":  [
+                            "Some sticker dependency"
+                        ],
+                 "ko":  [
+                            "Some sticker dependency"
+                        ]
+             }
 }
