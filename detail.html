@@ -20,6 +20,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/styles-base.css">
+    <link rel="stylesheet" href="css/styles-themes.css">
     <link rel="stylesheet" href="css/styles-components.css">
 </head>
 
@@ -56,11 +57,17 @@
                         </svg>
                     </button>
                     <div class="theme-dropdown-menu" id="themeMenu">
+                        <div class="theme-divider">기본</div>
                         <button class="theme-option" data-theme="dark">🌙 다크</button>
                         <button class="theme-option" data-theme="light">☀️ 라이트</button>
+                        <button class="theme-option" data-theme="trueblack">⚫ 트루 블랙</button>
+                        <div class="theme-divider">건담 에디션</div>
                         <button class="theme-option" data-theme="rx78">🔵 RX-78</button>
                         <button class="theme-option" data-theme="char">🔴 샤아 전용</button>
                         <button class="theme-option" data-theme="zeon">🟢 지온</button>
+                        <button class="theme-option" data-theme="unicorn">🦄 유니콘</button>
+                        <div class="theme-divider">특별 에디션</div>
+                        <button class="theme-option" data-theme="eva">💜 에반게리온</button>
                     </div>
                 </div>
                 <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
@@ -86,6 +93,19 @@
                 <a href="#" class="mobile-nav-item" data-page="favorites" data-i18n="nav.favorites">즐겨찾기</a>
                 <a href="#" class="mobile-nav-item" data-page="compare" data-i18n="nav.compare">비교함</a>
             </nav>
+            <div class="mobile-theme-section">
+                <span class="mobile-section-label">테마</span>
+                <div class="mobile-theme-grid" id="mobileThemeGrid">
+                    <button class="mobile-theme-btn" data-theme="dark" title="다크">🌙</button>
+                    <button class="mobile-theme-btn" data-theme="light" title="라이트">☀️</button>
+                    <button class="mobile-theme-btn" data-theme="trueblack" title="트루 블랙">⚫</button>
+                    <button class="mobile-theme-btn" data-theme="rx78" title="RX-78">🔵</button>
+                    <button class="mobile-theme-btn" data-theme="char" title="샤아 전용">🔴</button>
+                    <button class="mobile-theme-btn" data-theme="zeon" title="지온">🟢</button>
+                    <button class="mobile-theme-btn" data-theme="unicorn" title="유니콘">🦄</button>
+                    <button class="mobile-theme-btn" data-theme="eva" title="에반게리온">💜</button>
+                </div>
+            </div>
             <button class="mobile-lang-toggle" id="mobileLangToggle">
                 <span>한국어 / English</span>
             </button>

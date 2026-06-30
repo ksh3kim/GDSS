@@ -173,7 +173,7 @@ const I18n = (function () {
     // ===== Theme Management =====
     const THEME_KEY = 'gunpla-theme';
     const DEFAULT_THEME = 'dark';
-    const VALID_THEMES = ['dark', 'light', 'rx78', 'char', 'zeon'];
+    const VALID_THEMES = ['dark', 'light', 'trueblack', 'rx78', 'char', 'zeon', 'unicorn', 'eva'];
 
     /**
      * Get current theme from localStorage
@@ -211,6 +211,9 @@ const I18n = (function () {
         document.querySelectorAll('.theme-option').forEach(opt => {
             opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
         });
+
+        // Dispatch theme change event for cross-page sync
+        document.dispatchEvent(new CustomEvent('themeChange', { detail: { theme } }));
     }
 
     /**
@@ -244,6 +247,33 @@ const I18n = (function () {
                 });
             });
         }
+
+        // Setup mobile theme grid
+        const mobileThemeGrid = document.getElementById('mobileThemeGrid');
+        if (mobileThemeGrid) {
+            mobileThemeGrid.querySelectorAll('.mobile-theme-btn').forEach(btn => {
+                // Set initial active state
+                btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+                btn.addEventListener('click', () => {
+                    const newTheme = btn.getAttribute('data-theme');
+                    setTheme(newTheme);
+                    // Update mobile buttons active state
+                    mobileThemeGrid.querySelectorAll('.mobile-theme-btn').forEach(b => {
+                        b.classList.toggle('active', b.getAttribute('data-theme') === newTheme);
+                    });
+                });
+            });
+        }
+
+        // Sync mobile buttons when theme changes from desktop dropdown
+        document.addEventListener('themeChange', (e) => {
+            const grid = document.getElementById('mobileThemeGrid');
+            if (grid) {
+                grid.querySelectorAll('.mobile-theme-btn').forEach(b => {
+                    b.classList.toggle('active', b.getAttribute('data-theme') === e.detail.theme);
+                });
+            }
+        });
     }
 
     // Public API
