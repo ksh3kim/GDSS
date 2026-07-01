@@ -172,8 +172,105 @@ const I18n = (function () {
 
     // ===== Theme Management =====
     const THEME_KEY = 'gunpla-theme';
+    const CUSTOM_KEY = 'gunpla-theme-custom';
     const DEFAULT_THEME = 'dark';
-    const VALID_THEMES = ['dark', 'light', 'trueblack', 'rx78', 'char', 'zeon', 'unicorn', 'eva'];
+    const VALID_THEMES = ['dark', 'light', 'trueblack', 'rx78', 'char', 'zeon', 'unicorn', 'eva', 'custom'];
+
+    // Default custom palette (based on the default dark theme)
+    const DEFAULT_CUSTOM = {
+        primary: '#E31837',
+        accent: '#FBBF24',
+        bg: '#0D1117',
+        surface: '#161B22',
+        text: '#C9D1D9'
+    };
+
+    /**
+     * Lighten (p>0) or darken (p<0) a hex color. p in range -1..1
+     */
+    function shade(hex, p) {
+        let h = String(hex || '').replace('#', '');
+        if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+        const num = parseInt(h, 16);
+        if (isNaN(num)) return hex;
+        let r = (num >> 16) & 255, g = (num >> 8) & 255, b = num & 255;
+        const t = p < 0 ? 0 : 255, a = Math.abs(p);
+        r = Math.round((t - r) * a) + r;
+        g = Math.round((t - g) * a) + g;
+        b = Math.round((t - b) * a) + b;
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    /**
+     * Build the full CSS variable map for a custom palette
+     */
+    function customVars(c) {
+        return {
+            '--color-primary': c.primary,
+            '--color-primary-dark': shade(c.primary, -0.2),
+            '--color-primary-light': shade(c.primary, 0.2),
+            '--color-accent': c.accent,
+            '--color-accent-dark': shade(c.accent, -0.2),
+            '--theme-bg': c.bg,
+            '--color-dark-bg': c.bg,
+            '--theme-surface': c.surface,
+            '--color-dark-surface': c.surface,
+            '--theme-card-bg': c.surface,
+            '--theme-border': shade(c.surface, 0.12),
+            '--color-dark-border': shade(c.surface, 0.12),
+            '--theme-text': c.text,
+            '--color-dark-text': c.text
+        };
+    }
+
+    /**
+     * Get saved custom palette merged with defaults
+     */
+    function getCustomColors() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(CUSTOM_KEY) || 'null');
+            return Object.assign({}, DEFAULT_CUSTOM, saved || {});
+        } catch (e) {
+            return Object.assign({}, DEFAULT_CUSTOM);
+        }
+    }
+
+    /**
+     * Persist custom palette
+     */
+    function saveCustomColors(colors) {
+        try {
+            localStorage.setItem(CUSTOM_KEY, JSON.stringify(colors));
+        } catch (e) {
+            console.warn('Failed to save custom colors:', e);
+        }
+    }
+
+    /**
+     * Apply custom palette as inline CSS variables on <html>
+     */
+    function applyCustomColors(colors) {
+        const s = document.documentElement.style;
+        const map = customVars(colors);
+        Object.keys(map).forEach(k => { if (map[k]) s.setProperty(k, map[k]); });
+    }
+
+    /**
+     * Remove all inline custom CSS variables from <html>
+     */
+    function clearCustomColors() {
+        const s = document.documentElement.style;
+        Object.keys(customVars(DEFAULT_CUSTOM)).forEach(k => s.removeProperty(k));
+    }
+
+    /**
+     * Toggle visibility of the custom color panel(s)
+     */
+    function updateCustomizerVisibility(theme) {
+        document.querySelectorAll('.theme-customizer').forEach(p => {
+            p.classList.toggle('active', theme === 'custom');
+        });
+    }
 
     /**
      * Get current theme from localStorage
@@ -199,6 +296,14 @@ const I18n = (function () {
         } else {
             document.documentElement.setAttribute('data-theme', theme);
         }
+
+        // Apply or clear custom inline colors
+        if (theme === 'custom') {
+            applyCustomColors(getCustomColors());
+        } else {
+            clearCustomColors();
+        }
+        updateCustomizerVisibility(theme);
 
         // Save to localStorage
         try {
@@ -243,10 +348,46 @@ const I18n = (function () {
                 opt.addEventListener('click', () => {
                     const newTheme = opt.getAttribute('data-theme');
                     setTheme(newTheme);
-                    dropdown.classList.remove('active');
+                    // Keep the dropdown open on custom so colors can be edited
+                    if (newTheme !== 'custom') {
+                        dropdown.classList.remove('active');
+                    }
                 });
             });
         }
+
+        // Setup custom color pickers (desktop + mobile share the wiring)
+        const customInputs = document.querySelectorAll('[data-custom]');
+        if (customInputs.length) {
+            const cc = getCustomColors();
+            customInputs.forEach(inp => {
+                const key = inp.getAttribute('data-custom');
+                inp.value = cc[key] || DEFAULT_CUSTOM[key];
+                inp.addEventListener('input', () => {
+                    const colors = getCustomColors();
+                    colors[key] = inp.value;
+                    saveCustomColors(colors);
+                    // Ensure custom theme is active and reflect changes live
+                    if (getTheme() !== 'custom') {
+                        setTheme('custom');
+                    } else {
+                        applyCustomColors(colors);
+                    }
+                    // Sync sibling inputs with the same key
+                    document.querySelectorAll('[data-custom="' + key + '"]').forEach(o => {
+                        if (o !== inp) o.value = inp.value;
+                    });
+                });
+            });
+        }
+
+        // Reflect initial custom-panel visibility
+        updateCustomizerVisibility(theme);
+
+        // Prevent clicks inside the customizer from closing the dropdown
+        document.querySelectorAll('.theme-customizer').forEach(panel => {
+            panel.addEventListener('click', e => e.stopPropagation());
+        });
 
         // Setup mobile theme grid
         const mobileThemeGrid = document.getElementById('mobileThemeGrid');

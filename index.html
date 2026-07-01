@@ -24,6 +24,42 @@
     <link rel="stylesheet" href="css/styles-base.css">
     <link rel="stylesheet" href="css/styles-themes.css">
     <link rel="stylesheet" href="css/styles-components.css">
+
+    <!-- Apply saved theme before paint to avoid flash (FOUC) -->
+    <script>
+        (function () {
+            try {
+                var valid = ['dark', 'light', 'trueblack', 'rx78', 'char', 'zeon', 'unicorn', 'eva', 'custom'];
+                var t = localStorage.getItem('gunpla-theme');
+                if (valid.indexOf(t) === -1) t = 'dark';
+                if (t !== 'dark') document.documentElement.setAttribute('data-theme', t);
+                if (t === 'custom') {
+                    var c = JSON.parse(localStorage.getItem('gunpla-theme-custom') || 'null');
+                    if (c) {
+                        var shade = function (hex, p) {
+                            var h = String(hex || '').replace('#', '');
+                            if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+                            var n = parseInt(h, 16); if (isNaN(n)) return hex;
+                            var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+                            var tt = p < 0 ? 0 : 255, a = Math.abs(p);
+                            r = Math.round((tt - r) * a) + r; g = Math.round((tt - g) * a) + g; b = Math.round((tt - b) * a) + b;
+                            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+                        };
+                        var s = document.documentElement.style;
+                        var m = {
+                            '--color-primary': c.primary, '--color-primary-dark': shade(c.primary, -0.2), '--color-primary-light': shade(c.primary, 0.2),
+                            '--color-accent': c.accent, '--color-accent-dark': shade(c.accent, -0.2),
+                            '--theme-bg': c.bg, '--color-dark-bg': c.bg,
+                            '--theme-surface': c.surface, '--color-dark-surface': c.surface, '--theme-card-bg': c.surface,
+                            '--theme-border': shade(c.surface, 0.12), '--color-dark-border': shade(c.surface, 0.12),
+                            '--theme-text': c.text, '--color-dark-text': c.text
+                        };
+                        for (var k in m) { if (m[k]) s.setProperty(k, m[k]); }
+                    }
+                }
+            } catch (e) { }
+        })();
+    </script>
 </head>
 
 <body>
@@ -87,6 +123,15 @@
                         <button class="theme-option" data-theme="unicorn">🦄 유니콘</button>
                         <div class="theme-divider">특별 에디션</div>
                         <button class="theme-option" data-theme="eva">💜 에반게리온</button>
+                        <div class="theme-divider">커스텀</div>
+                        <button class="theme-option" data-theme="custom">🎨 커스텀</button>
+                        <div class="theme-customizer" id="themeCustomizer">
+                            <label class="tc-row"><span>포인트</span><input type="color" data-custom="primary"></label>
+                            <label class="tc-row"><span>강조</span><input type="color" data-custom="accent"></label>
+                            <label class="tc-row"><span>배경</span><input type="color" data-custom="bg"></label>
+                            <label class="tc-row"><span>카드</span><input type="color" data-custom="surface"></label>
+                            <label class="tc-row"><span>텍스트</span><input type="color" data-custom="text"></label>
+                        </div>
                     </div>
                 </div>
                 <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
@@ -127,6 +172,14 @@
                     <button class="mobile-theme-btn" data-theme="zeon" title="지온">🟢</button>
                     <button class="mobile-theme-btn" data-theme="unicorn" title="유니콘">🦄</button>
                     <button class="mobile-theme-btn" data-theme="eva" title="에반게리온">💜</button>
+                    <button class="mobile-theme-btn" data-theme="custom" title="커스텀">🎨</button>
+                </div>
+                <div class="theme-customizer" id="mobileThemeCustomizer">
+                    <label class="tc-row"><span>포인트</span><input type="color" data-custom="primary"></label>
+                    <label class="tc-row"><span>강조</span><input type="color" data-custom="accent"></label>
+                    <label class="tc-row"><span>배경</span><input type="color" data-custom="bg"></label>
+                    <label class="tc-row"><span>카드</span><input type="color" data-custom="surface"></label>
+                    <label class="tc-row"><span>텍스트</span><input type="color" data-custom="text"></label>
                 </div>
             </div>
             <button class="mobile-lang-toggle" id="mobileLangToggle">
