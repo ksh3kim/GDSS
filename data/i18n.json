@@ -102,7 +102,9 @@
                 "copyright": "© 2026 건프라 가이드. 건프라는 반다이 남코의 등록상표입니다.",
                 "disclaimer": "본 사이트는 팬 제작 비공식 사이트입니다.",
                 "contact": "문의하기",
-                "privacy": "개인정보처리방침"
+                "privacy": "개인정보처리방침",
+                "clearFavorites": "즐겨찾기 비우기",
+                "clearCompare": "비교함 비우기"
             },
             "compare": {
                 "title": "제품 비교",
@@ -110,6 +112,10 @@
                 "maxItems": "최대 4개까지 비교 가능합니다",
                 "clearAll": "모두 지우기",
                 "noItems": "비교할 제품을 추가해주세요"
+            },
+            "notif": {
+                "title": "신제품 · 소식",
+                "empty": "불러올 소식이 없습니다."
             },
             "favorites": {
                 "title": "즐겨찾기",
@@ -217,7 +223,9 @@
                 "copyright": "© 2026 Gunpla Guide. Gunpla is a registered trademark of Bandai Namco.",
                 "disclaimer": "This is an unofficial fan-made website.",
                 "contact": "Contact",
-                "privacy": "Privacy Policy"
+                "privacy": "Privacy Policy",
+                "clearFavorites": "Clear favorites",
+                "clearCompare": "Clear compare"
             },
             "compare": {
                 "title": "Compare Products",
@@ -225,6 +233,10 @@
                 "maxItems": "You can compare up to 4 items",
                 "clearAll": "Clear All",
                 "noItems": "Add products to compare"
+            },
+            "notif": {
+                "title": "New Products · News",
+                "empty": "No news available."
             },
             "favorites": {
                 "title": "Favorites",

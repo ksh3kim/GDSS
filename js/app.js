@@ -18,6 +18,7 @@ const GunplaApp = (function () {
     let favorites = [];
     let compareList = [];
     const MAX_COMPARE = 4;
+    let detailActionsWired = false; // guard so detail buttons are wired only once
 
     // Recently Viewed
     const RECENT_KEY = 'gunpla-recent-viewed';
@@ -363,8 +364,11 @@ const GunplaApp = (function () {
         // Link
         card.querySelector('.product-card-link').href = `detail.html?id=${product.id}`;
 
-        // Action buttons
+        // Action buttons. data-id lets toggleFavorite/toggleCompare keep the
+        // active state in sync everywhere (this card, other cards, cross-tab),
+        // so the click handler must NOT toggle the class itself (double toggle).
         const favoriteBtn = card.querySelector('.favorite-btn');
+        favoriteBtn.setAttribute('data-id', product.id);
         if (favorites.includes(product.id)) {
             favoriteBtn.classList.add('active');
         }
@@ -372,10 +376,10 @@ const GunplaApp = (function () {
             e.preventDefault();
             e.stopPropagation();
             toggleFavorite(product.id);
-            favoriteBtn.classList.toggle('active');
         });
 
         const compareBtn = card.querySelector('.compare-btn');
+        compareBtn.setAttribute('data-id', product.id);
         if (compareList.includes(product.id)) {
             compareBtn.classList.add('active');
         }
@@ -383,7 +387,6 @@ const GunplaApp = (function () {
             e.preventDefault();
             e.stopPropagation();
             toggleCompare(product.id);
-            compareBtn.classList.toggle('active');
         });
 
         return card;
@@ -496,6 +499,72 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Clear all favorites (with confirmation)
+     */
+    function clearAllFavorites() {
+        if (favorites.length === 0) {
+            alert(I18n.getLang() === 'ko' ? '즐겨찾기가 이미 비어있습니다.' : 'Favorites are already empty.');
+            return;
+        }
+        const msg = I18n.getLang() === 'ko'
+            ? '즐겨찾기를 모두 비우시겠습니까?'
+            : 'Clear all favorites?';
+        if (!confirm(msg)) return;
+
+        favorites = [];
+        saveFavorites();
+        updateBadges();
+
+        // Clear active states across the DOM
+        document.querySelectorAll('.favorite-btn.active').forEach(b => b.classList.remove('active'));
+        document.getElementById('detailFavoriteBtn')?.classList.remove('active');
+
+        // Refresh the favorites view if it is currently active
+        if (document.getElementById('favoritesNav')?.classList.contains('active')) {
+            showFavoritesView();
+        }
+    }
+
+    /**
+     * Clear all compare items (with confirmation)
+     */
+    function clearAllCompare() {
+        if (compareList.length === 0) {
+            alert(I18n.getLang() === 'ko' ? '비교함이 이미 비어있습니다.' : 'Compare list is already empty.');
+            return;
+        }
+        const msg = I18n.getLang() === 'ko'
+            ? '비교함을 모두 비우시겠습니까?'
+            : 'Clear all compare items?';
+        if (!confirm(msg)) return;
+
+        compareList = [];
+        saveCompareList();
+        updateBadges();
+        updateCompareDrawer();
+
+        // Clear active states across the DOM
+        document.querySelectorAll('.compare-btn.active').forEach(b => b.classList.remove('active'));
+        document.getElementById('detailCompareBtn')?.classList.remove('active');
+
+        // Refresh the compare view if it is currently active
+        if (document.getElementById('compareNav')?.classList.contains('active')) {
+            showCompareView();
+        }
+    }
+
+    /**
+     * Wire the inconspicuous footer reset buttons (works on all pages)
+     */
+    function setupResetButtons() {
+        const favReset = document.getElementById('clearFavoritesBtn');
+        if (favReset) favReset.addEventListener('click', clearAllFavorites);
+
+        const compReset = document.getElementById('clearCompareBtn');
+        if (compReset) compReset.addEventListener('click', clearAllCompare);
+    }
+
+    /**
      * Update nav badges
      */
     function updateBadges() {
@@ -504,6 +573,52 @@ const GunplaApp = (function () {
 
         const compBadge = document.getElementById('compareBadge');
         if (compBadge) compBadge.textContent = compareList.length || '';
+    }
+
+    /**
+     * Sync every favorite/compare UI element to the current in-memory state.
+     * Used after a cross-tab storage change so the whole page reflects reality.
+     */
+    function refreshFavCompareUI() {
+        updateBadges();
+
+        document.querySelectorAll('.favorite-btn[data-id]').forEach(btn => {
+            btn.classList.toggle('active', favorites.includes(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.compare-btn[data-id]').forEach(btn => {
+            btn.classList.toggle('active', compareList.includes(btn.getAttribute('data-id')));
+        });
+
+        if (currentProduct) {
+            document.getElementById('detailFavoriteBtn')
+                ?.classList.toggle('active', favorites.includes(currentProduct.id));
+            document.getElementById('detailCompareBtn')
+                ?.classList.toggle('active', compareList.includes(currentProduct.id));
+        }
+
+        updateCompareDrawer();
+    }
+
+    /**
+     * Keep favorites/compare in sync across browser tabs via the storage event.
+     * (Fires only in OTHER tabs than the one that made the change.)
+     */
+    function setupStorageSync() {
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'gunpla-favorites') {
+                try { favorites = JSON.parse(e.newValue) || []; } catch (err) { favorites = []; }
+                refreshFavCompareUI();
+                if (document.getElementById('favoritesNav')?.classList.contains('active')) {
+                    showFavoritesView();
+                }
+            } else if (e.key === 'gunpla-compare') {
+                try { compareList = JSON.parse(e.newValue) || []; } catch (err) { compareList = []; }
+                refreshFavCompareUI();
+                if (document.getElementById('compareNav')?.classList.contains('active')) {
+                    showCompareView();
+                }
+            }
+        });
     }
 
     /**
@@ -538,7 +653,7 @@ const GunplaApp = (function () {
     }
 
     /**
-     * Render compare spec table
+     * Render compare spec table (detailed, grouped, localized)
      */
     function renderCompareTable(compProducts) {
         const section = document.getElementById('compareTableSection');
@@ -549,67 +664,129 @@ const GunplaApp = (function () {
             return;
         }
 
-        // Spec rows to compare
-        const specs = [
-            { key: 'grade', label: '그레이드', getValue: p => p.grade || '-' },
-            { key: 'scale', label: '스케일', getValue: p => p.scale || '-' },
-            { key: 'price', label: '가격', getValue: p => p.price ? `¥${p.price.toLocaleString()}` : '-', numeric: true },
-            { key: 'releaseYear', label: '출시연도', getValue: p => p.releaseYear || '-' },
-            { key: 'height', label: '높이', getValue: p => p.height ? `${p.height}mm` : '-', numeric: true },
-            { key: 'difficulty', label: '난이도', getValue: p => I18n.getDifficultyText(p.difficulty) || '-', rating: p => p.difficulty },
-            { key: 'mobility', label: '가동성', getValue: p => I18n.getMobilityText(p.mobility) || '-', rating: p => p.mobility },
-            { key: 'model', label: '형식번호', getValue: p => p.modelNumber || '-' },
-            { key: 'series', label: '시리즈', getValue: p => p.series || '-' }
+        const lang = I18n.getLang();
+        const L = (ko, en) => (lang === 'ko' ? ko : en);
+        const tax = (typeof Filter !== 'undefined' && Filter.getTaxonomy) ? Filter.getTaxonomy() : null;
+        const fd = p => p.filterData || {};
+
+        // Resolve a localized label for a taxonomy category value
+        const taxLabel = (catId, value) => {
+            if (value === undefined || value === null || value === '') return '-';
+            const cat = tax?.categories?.find(c => c.id === catId);
+            const opt = cat?.options?.find(o => String(o.value) === String(value));
+            return opt ? I18n.getName(opt.label) : String(value);
+        };
+
+        // Spec rows grouped into sections.
+        // num: numeric accessor for best/worst highlight; better: 'high' | 'low'
+        // rating: 1-5 accessor rendered as a bar (higher = better)
+        const groups = [
+            {
+                title: L('기본 정보', 'Basics'),
+                rows: [
+                    { label: L('그레이드', 'Grade'), get: p => taxLabel('grade', p.grade) },
+                    { label: L('스케일', 'Scale'), get: p => taxLabel('scale', p.scale) },
+                    { label: L('시리즈', 'Series'), get: p => taxLabel('series', p.series) },
+                    { label: L('형식번호', 'Model No.'), get: p => p.modelNumber || '-' },
+                    { label: L('출시 연도', 'Release Year'), get: p => p.releaseYear || '-', num: p => p.releaseYear, better: 'high' },
+                    { label: L('가격', 'Price'), get: p => I18n.formatPrice(p.price), num: p => p.price, better: 'low' },
+                    { label: L('높이', 'Height'), get: p => p.height || '-' }
+                ]
+            },
+            {
+                title: L('조립 정보', 'Build'),
+                rows: [
+                    { label: L('난이도', 'Difficulty'), get: p => taxLabel('difficulty', fd(p).difficulty) },
+                    { label: L('부품 수', 'Part Count'), get: p => fd(p).partCount ?? '-', num: p => fd(p).partCount, better: 'high' },
+                    { label: L('러너 수', 'Runners'), get: p => fd(p).runnerCount ?? '-', num: p => fd(p).runnerCount, better: 'high' },
+                    { label: L('프레임', 'Frame'), get: p => taxLabel('frameType', fd(p).frameType) },
+                    { label: L('씰 의존도', 'Sticker Dependency'), get: p => taxLabel('sealDependency', fd(p).sealDependency) },
+                    { label: L('색분할', 'Color Separation'), get: p => taxLabel('colorSeparation', fd(p).colorSeparation) }
+                ]
+            },
+            {
+                title: L('특성', 'Features'),
+                rows: [
+                    { label: L('가동성', 'Articulation'), get: p => fd(p).mobility ?? '-', rating: p => fd(p).mobility },
+                    { label: L('무장', 'Weapons'), get: p => taxLabel('weaponCount', fd(p).weaponCount) },
+                    { label: L('변형/합체', 'Transformation'), get: p => taxLabel('transformation', fd(p).transformation) },
+                    { label: L('클리어 파츠', 'Clear Parts'), get: p => taxLabel('clearParts', fd(p).clearParts) },
+                    { label: L('코팅 파츠', 'Coating Parts'), get: p => taxLabel('coatingParts', fd(p).coatingParts) },
+                    { label: L('크기 체감', 'Size'), get: p => taxLabel('sizeFeeling', fd(p).sizeFeeling) }
+                ]
+            }
         ];
 
-        // Build table HTML
-        let html = '<thead><tr><th></th>';
+        const colCount = compProducts.length + 1;
+        const multi = compProducts.length > 1;
+
+        // Header row: empty corner + one column per product
+        let html = '<thead><tr><th class="corner"></th>';
         compProducts.forEach(p => {
             html += `
                 <td class="product-header">
-                    <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}" 
-                         onerror="this.src='images/placeholder.png'">
-                    <span class="product-name">${I18n.getName(p.name)}</span>
-                </td>
-            `;
+                    <button class="compare-remove" data-id="${p.id}" title="${L('비교함에서 제거', 'Remove from compare')}" aria-label="Remove">×</button>
+                    <a href="detail.html?id=${p.id}" class="compare-product-link">
+                        <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}"
+                             onerror="this.src='images/placeholder.png'">
+                        <span class="product-name">${I18n.getName(p.name)}</span>
+                    </a>
+                </td>`;
         });
         html += '</tr></thead><tbody>';
 
-        // Add spec rows
-        specs.forEach(spec => {
-            html += `<tr><th>${spec.label}</th>`;
+        groups.forEach(group => {
+            html += `<tr class="group-row"><th colspan="${colCount}">${group.title}</th></tr>`;
 
-            // Get values and find best for numeric comparison
-            const values = compProducts.map(p => ({
-                display: spec.getValue(p),
-                raw: spec.numeric ? (p[spec.key] || 0) : (spec.rating ? spec.rating(p) || 0 : null)
-            }));
+            group.rows.forEach(spec => {
+                html += `<tr><th>${spec.label}</th>`;
 
-            const maxVal = spec.numeric || spec.rating ? Math.max(...values.map(v => v.raw || 0)) : null;
-            const minVal = spec.numeric || spec.rating ? Math.min(...values.filter(v => v.raw > 0).map(v => v.raw)) : null;
+                // Raw numeric values for highlighting
+                const raws = compProducts.map(p => {
+                    const src = spec.num || spec.rating;
+                    if (!src) return null;
+                    const n = Number(src(p));
+                    return isNaN(n) ? null : n;
+                });
+                const valid = raws.filter(n => n !== null && n > 0);
+                const maxVal = valid.length ? Math.max(...valid) : null;
+                const minVal = valid.length ? Math.min(...valid) : null;
 
-            values.forEach((v, i) => {
-                let cellClass = '';
-                if ((spec.numeric || spec.rating) && v.raw > 0) {
-                    if (v.raw === maxVal && compProducts.length > 1) cellClass = 'highlight-best';
-                    else if (v.raw === minVal && maxVal !== minVal && compProducts.length > 1) cellClass = 'highlight-worst';
-                }
+                compProducts.forEach((p, i) => {
+                    let cellClass = '';
+                    const raw = raws[i];
 
-                let barHtml = '';
-                if (spec.rating && v.raw > 0) {
-                    const percent = (v.raw / 5) * 100;
-                    barHtml = `<div class="compare-bar"><div class="compare-bar-fill" style="width: ${percent}%"></div></div>`;
-                }
+                    if (multi && (spec.num || spec.rating) && raw !== null && raw > 0 && maxVal !== minVal) {
+                        const bestVal = spec.better === 'low' ? minVal : maxVal;
+                        const worstVal = spec.better === 'low' ? maxVal : minVal;
+                        if (raw === bestVal) cellClass = 'highlight-best';
+                        else if (raw === worstVal) cellClass = 'highlight-worst';
+                    }
 
-                html += `<td class="${cellClass}">${v.display}${barHtml}</td>`;
+                    let barHtml = '';
+                    if (spec.rating && raw !== null && raw > 0) {
+                        const percent = Math.min(100, (raw / 5) * 100);
+                        barHtml = `<div class="compare-bar"><div class="compare-bar-fill" style="width: ${percent}%"></div></div>`;
+                    }
+
+                    html += `<td class="${cellClass}"><span class="cell-value">${spec.get(p)}</span>${barHtml}</td>`;
+                });
+
+                html += '</tr>';
             });
-
-            html += '</tr>';
         });
 
         html += '</tbody>';
         table.innerHTML = html;
         section.style.display = 'block';
+
+        // Wire per-column remove buttons
+        table.querySelectorAll('.compare-remove').forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleCompare(btn.getAttribute('data-id'));
+                showCompareView();
+            });
+        });
     }
 
     /**
@@ -921,20 +1098,26 @@ const GunplaApp = (function () {
         const compBtn = document.getElementById('detailCompareBtn');
         const manualBtn = document.getElementById('detailManualBtn');
 
-        if (favBtn) {
-            if (favorites.includes(product.id)) favBtn.classList.add('active');
-            favBtn.addEventListener('click', () => {
-                toggleFavorite(product.id);
-                favBtn.classList.toggle('active');
-            });
-        }
+        // Reflect current state on every render (safe to run repeatedly)
+        if (favBtn) favBtn.classList.toggle('active', favorites.includes(product.id));
+        if (compBtn) compBtn.classList.toggle('active', compareList.includes(product.id));
 
-        if (compBtn) {
-            if (compareList.includes(product.id)) compBtn.classList.add('active');
-            compBtn.addEventListener('click', () => {
-                toggleCompare(product.id);
-                compBtn.classList.toggle('active');
-            });
+        // Attach click handlers only ONCE — renderProductDetail can run again
+        // (e.g. on language change), so guarding prevents listener stacking and
+        // the resulting multi-toggle bug. Handlers read currentProduct at click
+        // time; toggleFavorite/toggleCompare already update the button's state.
+        if (!detailActionsWired) {
+            if (favBtn) {
+                favBtn.addEventListener('click', () => {
+                    if (currentProduct) toggleFavorite(currentProduct.id);
+                });
+            }
+            if (compBtn) {
+                compBtn.addEventListener('click', () => {
+                    if (currentProduct) toggleCompare(currentProduct.id);
+                });
+            }
+            detailActionsWired = true;
         }
 
         // Bandai manual link
@@ -1007,9 +1190,15 @@ const GunplaApp = (function () {
             if (document.body.classList.contains('detail-page')) {
                 if (currentProduct) renderProductDetail(currentProduct);
             } else {
-                displayedCount = 0; // Reset to force full re-render
-                renderProducts();
-                updateRecommendationPanel(Filter.getActiveFilters());
+                const tableSection = document.getElementById('compareTableSection');
+                if (tableSection && tableSection.style.display !== 'none') {
+                    // Compare view is active — re-render the spec table in the new language
+                    showCompareView();
+                } else {
+                    displayedCount = 0; // Reset to force full re-render
+                    renderProducts();
+                    updateRecommendationPanel(Filter.getActiveFilters());
+                }
             }
             updateCompareDrawer(); // Also update compare drawer names
         });
@@ -1118,6 +1307,12 @@ const GunplaApp = (function () {
             clearRecentBtn.addEventListener('click', clearRecentProducts);
         }
 
+        // Inconspicuous footer reset buttons (favorites / compare)
+        setupResetButtons();
+
+        // Cross-tab favorites/compare synchronization
+        setupStorageSync();
+
         // Navigation tabs - Favorites and Compare
         const favoritesNav = document.getElementById('favoritesNav');
         if (favoritesNav) {
@@ -1151,6 +1346,9 @@ const GunplaApp = (function () {
         // Update nav active state
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById('favoritesNav')?.classList.add('active');
+
+        // Restore normal grid layout (in case we came from compare view)
+        exitCompareLayout();
 
         // Filter to show only favorites
         const favProducts = products.filter(p => favorites.includes(p.id));
@@ -1190,8 +1388,6 @@ const GunplaApp = (function () {
 
         // Filter to show only compare items
         const compProducts = products.filter(p => compareList.includes(p.id));
-        filteredProducts = compProducts;
-        displayedCount = 0;
 
         // Hide recommendation panel
         showRecommendationPanel(false);
@@ -1200,25 +1396,39 @@ const GunplaApp = (function () {
         const countEl = document.getElementById('resultCount');
         if (countEl) countEl.textContent = compProducts.length;
 
-        // Render
         const grid = document.getElementById('productGrid');
         const noResults = document.getElementById('noResults');
         const loadMoreContainer = document.getElementById('loadMoreContainer');
+        const controlGroup = document.querySelector('.control-group');
+        const tableSection = document.getElementById('compareTableSection');
+
+        // Compare view shows ONLY the spec table — not the main-page product cards
+        if (grid) { grid.innerHTML = ''; grid.style.display = 'none'; }
+        if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+        if (controlGroup) controlGroup.style.display = 'none';
 
         if (compProducts.length === 0) {
-            grid.innerHTML = '';
-            noResults.style.display = 'flex';
-            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '비교함이 비어있습니다' : 'Compare list is empty';
-            loadMoreContainer.style.display = 'none';
-            // Hide compare table
-            const tableSection = document.getElementById('compareTableSection');
+            if (noResults) {
+                noResults.style.display = 'flex';
+                noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '비교함이 비어있습니다' : 'Compare list is empty';
+            }
             if (tableSection) tableSection.style.display = 'none';
         } else {
-            noResults.style.display = 'none';
-            renderProducts();
-            // Render spec comparison table
+            if (noResults) noResults.style.display = 'none';
             renderCompareTable(compProducts);
         }
+    }
+
+    /**
+     * Restore the normal grid layout when leaving compare view
+     */
+    function exitCompareLayout() {
+        const grid = document.getElementById('productGrid');
+        const controlGroup = document.querySelector('.control-group');
+        const tableSection = document.getElementById('compareTableSection');
+        if (grid) grid.style.display = '';
+        if (controlGroup) controlGroup.style.display = '';
+        if (tableSection) tableSection.style.display = 'none';
     }
 
     /**
@@ -1235,9 +1445,8 @@ const GunplaApp = (function () {
             noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '검색 결과가 없습니다' : 'No results found';
         }
 
-        // Hide compare table
-        const tableSection = document.getElementById('compareTableSection');
-        if (tableSection) tableSection.style.display = 'none';
+        // Restore normal grid layout (in case we came from compare view)
+        exitCompareLayout();
 
         // Re-apply filters and render
         applyFiltersAndRender();
@@ -1257,6 +1466,10 @@ const GunplaApp = (function () {
         loadProducts,
         renderRecentProducts,
         clearRecentProducts,
+        clearAllFavorites,
+        clearAllCompare,
+        setupResetButtons,
+        setupStorageSync,
         updateBadges
     };
 })();
@@ -1315,6 +1528,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (clearRecentBtn) {
                 clearRecentBtn.addEventListener('click', GunplaApp.clearRecentProducts);
             }
+
+            // Wire the inconspicuous footer reset buttons on the detail page
+            GunplaApp.setupResetButtons();
+
+            // Cross-tab favorites/compare synchronization
+            GunplaApp.setupStorageSync();
 
             // Setup tabs immediately (don't depend on data load)
             GunplaApp.setupDetailTabs();
