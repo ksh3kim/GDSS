@@ -286,11 +286,12 @@ const GunplaApp = (function () {
         const template = document.getElementById('productCardTemplate');
         if (!template) return;
 
-        // Render items
+        // Render items into a fragment first, then insert once (one reflow)
+        const fragment = document.createDocumentFragment();
         itemsToRender.forEach(product => {
-            const card = createProductCard(product, template);
-            grid.appendChild(card);
+            fragment.appendChild(createProductCard(product, template));
         });
+        grid.appendChild(fragment);
 
         displayedCount = endIndex;
 
@@ -333,8 +334,7 @@ const GunplaApp = (function () {
 
         card.querySelector('.product-card-name').textContent = I18n.getName(product.name);
 
-        const taxonomy = Filter.getTaxonomy();
-        const seriesOption = taxonomy?.categories?.find(c => c.id === 'series')?.options?.find(o => o.value === product.series);
+        const seriesOption = Filter.getCategory('series')?.options?.find(o => o.value === product.series);
         card.querySelector('.product-card-series').textContent = seriesOption ? I18n.getName(seriesOption.label) : product.series;
 
         card.querySelector('.product-price').textContent = I18n.formatPrice(product.price);
@@ -676,13 +676,12 @@ const GunplaApp = (function () {
 
         const lang = I18n.getLang();
         const L = (ko, en) => (lang === 'ko' ? ko : en);
-        const tax = (typeof Filter !== 'undefined' && Filter.getTaxonomy) ? Filter.getTaxonomy() : null;
         const fd = p => p.filterData || {};
 
-        // Resolve a localized label for a taxonomy category value
+        // Resolve a localized label for a taxonomy category value (O(1) category lookup)
         const taxLabel = (catId, value) => {
             if (value === undefined || value === null || value === '') return '-';
-            const cat = tax?.categories?.find(c => c.id === catId);
+            const cat = Filter.getCategory(catId);
             const opt = cat?.options?.find(o => String(o.value) === String(value));
             return opt ? I18n.getName(opt.label) : String(value);
         };
@@ -919,8 +918,7 @@ const GunplaApp = (function () {
         // Header info
         document.getElementById('detailName').textContent = I18n.getName(product.name);
 
-        const taxonomy = Filter.getTaxonomy();
-        const seriesOption = taxonomy?.categories?.find(c => c.id === 'series')?.options?.find(o => o.value === product.series);
+        const seriesOption = Filter.getCategory('series')?.options?.find(o => o.value === product.series);
         document.getElementById('detailSeries').textContent = seriesOption ? I18n.getName(seriesOption.label) : product.series;
 
         document.getElementById('detailModel').textContent = `${I18n.t('product.modelNumber')}: ${product.modelNumber || '-'}`;
@@ -992,7 +990,6 @@ const GunplaApp = (function () {
         if (!grid) return;
 
         const specs = product.fullSpecs || product.filterData || {};
-        const taxonomy = Filter.getTaxonomy();
 
         const specItems = [
             { key: 'partCount', label: I18n.t('product.partCount') },
@@ -1016,8 +1013,8 @@ const GunplaApp = (function () {
                 value = `${value}/5`;
             } else if (typeof value === 'boolean') {
                 value = value ? (I18n.getLang() === 'ko' ? '있음' : 'Yes') : (I18n.getLang() === 'ko' ? '없음' : 'No');
-            } else if (taxonomy) {
-                const category = taxonomy.categories.find(c => c.id === key);
+            } else {
+                const category = Filter.getCategory(key);
                 const option = category?.options?.find(o => o.value === value);
                 if (option) value = I18n.getName(option.label);
             }

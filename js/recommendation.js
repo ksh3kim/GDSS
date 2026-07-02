@@ -300,7 +300,7 @@ const Recommendation = (function () {
         const items = [];
 
         for (const [categoryId, values] of Object.entries(filters)) {
-            const category = Filter.getTaxonomy()?.categories?.find(c => c.id === categoryId);
+            const category = Filter.getCategory(categoryId);
             if (!category) continue;
 
             let label = I18n.getName(category.label);

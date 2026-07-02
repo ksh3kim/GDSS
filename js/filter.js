@@ -5,6 +5,7 @@
 
 const Filter = (function () {
     let taxonomy = null;
+    let categoryMap = null; // id -> category, for O(1) lookups on hot paths
     let activeFilters = {};
     let searchQuery = '';
 
@@ -70,6 +71,11 @@ const Filter = (function () {
             const response = await fetch('data/taxonomy.json');
             taxonomy = await response.json();
 
+            // Index categories by id for O(1) lookups (avoids repeated linear
+            // scans of taxonomy.categories on hot paths like matchesFilters)
+            categoryMap = new Map();
+            (taxonomy.categories || []).forEach(c => categoryMap.set(c.id, c));
+
             // Restore filters from URL
             restoreFromURL();
 
@@ -89,6 +95,14 @@ const Filter = (function () {
      */
     function getTaxonomy() {
         return taxonomy;
+    }
+
+    /**
+     * Get a taxonomy category by id (O(1) via the prebuilt map)
+     */
+    function getCategory(id) {
+        if (categoryMap) return categoryMap.get(id);
+        return taxonomy?.categories?.find(c => c.id === id);
     }
 
     /**
@@ -312,7 +326,7 @@ const Filter = (function () {
 
         // Filter matching
         for (const [categoryId, values] of Object.entries(activeFilters)) {
-            const category = taxonomy?.categories?.find(c => c.id === categoryId);
+            const category = getCategory(categoryId);
             if (!category) continue;
 
             let productValue = product[categoryId] ?? product.filterData?.[categoryId];
@@ -477,7 +491,7 @@ const Filter = (function () {
         }
 
         for (const [categoryId, values] of Object.entries(activeFilters)) {
-            const category = taxonomy?.categories?.find(c => c.id === categoryId);
+            const category = getCategory(categoryId);
             if (!category) continue;
 
             if (Array.isArray(values)) {
@@ -544,7 +558,7 @@ const Filter = (function () {
         });
 
         // Search in series (from taxonomy)
-        const seriesCategory = taxonomy?.categories?.find(c => c.id === 'series');
+        const seriesCategory = getCategory('series');
         if (seriesCategory) {
             seriesCategory.options.forEach(opt => {
                 const labelKo = opt.label?.ko || '';
@@ -819,7 +833,7 @@ const Filter = (function () {
         params.forEach((value, key) => {
             if (key === 'q') return;
 
-            const category = taxonomy?.categories?.find(c => c.id === key);
+            const category = getCategory(key);
             if (!category) return;
 
             if (category.type === 'range' && value.includes('-')) {
@@ -860,6 +874,7 @@ const Filter = (function () {
     return {
         init,
         getTaxonomy,
+        getCategory,
         getActiveFilters,
         getSearchQuery,
         setSearchQuery,
