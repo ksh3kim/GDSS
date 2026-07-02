@@ -1960,3 +1960,83 @@ textarea {
         padding: var(--space-6) var(--space-4);
     }
 }
+
+/* =============================================
+   shadcn/ui-inspired Refinement Layer
+   Consistent focus rings, tactile press feedback,
+   refined inputs/selects, disabled + selection states.
+   Applied on top of every theme (uses --color-primary).
+   ============================================= */
+
+/* Accessible, consistent focus ring — only for keyboard / programmatic focus,
+   so mouse clicks stay clean (shadcn behavior). */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+[role="button"],
+[tabindex] {
+    outline-color: var(--color-primary);
+}
+
+/* Elements that render their own ring shouldn't also draw the outline */
+.search-box input:focus-visible {
+    outline: none;
+}
+
+/* Tactile press feedback (subtle scale-down on active) */
+button:not(:disabled):active,
+.action-btn:not(:disabled):active,
+.action-btn-large:not(:disabled):active,
+.view-btn:not(:disabled):active,
+.theme-toggle-btn:not(:disabled):active,
+.notif-toggle-btn:not(:disabled):active,
+.lang-toggle:not(:disabled):active,
+.filter-reset-btn:not(:disabled):active {
+    transform: scale(0.97);
+}
+
+/* Refined select focus/hover to match text inputs */
+select {
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+select:hover {
+    border-color: var(--color-gray-500);
+}
+
+select:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+/* Range number inputs pick up the same refined focus */
+.filter-range-inputs input:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+/* Consistent disabled treatment (shadcn) */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+.action-btn:disabled,
+.action-btn-large:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Themed text selection */
+::selection {
+    background: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    color: inherit;
+}
