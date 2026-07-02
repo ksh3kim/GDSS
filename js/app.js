@@ -1131,32 +1131,31 @@ const GunplaApp = (function () {
             detailActionsWired = true;
         }
 
-        // Bandai manual link
+        // Bandai official manual link.
+        // NOTE: the boxart/thumbnail number is a gunpla.fyi image id, NOT a Bandai
+        // manual id, so it must NOT be used for /menus/detail/{id}. A real manual id
+        // is only used when explicitly present in the data; otherwise we link to the
+        // official manual KEYWORD SEARCH, which always resolves to a valid page.
         if (manualBtn) {
-            let manualId = product.gunplaFyiId || product.manualId;
-
-            // Try to extract ID from thumbnail URL if not available
-            if (!manualId && product.thumbnail) {
-                // Match patterns like /boxarts/196 or /boxarts/196.jpeg
-                const match = product.thumbnail.match(/boxarts\/(\d+)/);
-                if (match) manualId = match[1];
-            }
+            const manualId = product.bandaiManualId || product.manualId;
 
             if (manualId) {
-                // Direct manual link
+                // Direct manual page (only when a verified Bandai manual id exists)
                 manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${manualId}`;
-                manualBtn.style.display = 'flex';
+                manualBtn.removeAttribute('title');
             } else {
-                // Fallback: search by product name on manual site
-                const searchName = encodeURIComponent(I18n.getName(product.name) || product.modelNumber || '');
-                if (searchName) {
-                    manualBtn.href = `https://manual.bandai-hobby.net/?q=${searchName}`;
-                    manualBtn.style.display = 'flex';
-                    manualBtn.title = '설명서 검색 (정확한 링크 없음)';
-                } else {
-                    manualBtn.style.display = 'none';
-                }
+                // Search the official manual site by grade + model number / name
+                const keyword = [product.grade, product.modelNumber || I18n.getName(product.name)]
+                    .filter(Boolean)
+                    .map(s => encodeURIComponent(String(s).trim()))
+                    .join('+');
+                manualBtn.href = `https://manual.bandai-hobby.net/menus?keyword=${keyword}`;
+                manualBtn.title = I18n.getLang() === 'ko'
+                    ? '공식 설명서 검색 결과로 이동합니다'
+                    : 'Opens the official manual search results';
             }
+
+            manualBtn.style.display = 'flex';
         }
     }
 
