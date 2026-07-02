@@ -1254,6 +1254,9 @@ const GunplaApp = (function () {
         setCompareList: (list) => { compareList = list; },
         getProducts: () => products,
         addToRecent,
+        loadProducts,
+        renderRecentProducts,
+        clearRecentProducts,
         updateBadges
     };
 })();
@@ -1268,7 +1271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         GunplaApp.init();
     } else {
         // Detail page - init modules and setup language toggle
-        I18n.init().then(() => {
+        I18n.init().then(async () => {
             I18n.initTheme(); // Apply saved theme
             Filter.init();
 
@@ -1293,13 +1296,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update nav badges with loaded data
             GunplaApp.updateBadges();
 
+            // Load the product index so the recent-viewed strip can render thumbnails
+            await GunplaApp.loadProducts();
+
             // Load product from URL parameter
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             if (productId) {
                 GunplaApp.loadProductDetail(productId);
-                // Track as recently viewed
+                // Track as recently viewed (also renders the strip)
                 GunplaApp.addToRecent(productId);
+            } else {
+                GunplaApp.renderRecentProducts();
+            }
+
+            // Wire the "clear recent" button on the detail page
+            const clearRecentBtn = document.getElementById('clearRecentBtn');
+            if (clearRecentBtn) {
+                clearRecentBtn.addEventListener('click', GunplaApp.clearRecentProducts);
             }
 
             // Setup tabs immediately (don't depend on data load)

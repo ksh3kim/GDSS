@@ -1174,26 +1174,25 @@ textarea {
 
 /* Recently Viewed Products */
 .recent-products-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     margin-bottom: var(--space-4);
     background: var(--color-dark-surface);
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-3);
+    padding: var(--space-2) var(--space-3);
 }
 
-.recent-products-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--space-2);
-}
-
-.recent-products-label {
-    font-size: var(--text-sm);
-    color: var(--color-gray-400);
+.recent-products-icon {
+    flex-shrink: 0;
+    font-size: var(--text-base);
+    line-height: 1;
+    opacity: 0.7;
 }
 
 .recent-products-clear {
+    flex-shrink: 0;
     background: transparent;
     border: none;
     color: var(--color-gray-500);
@@ -1210,9 +1209,11 @@ textarea {
 
 .recent-products-list {
     display: flex;
+    flex: 1;
+    min-width: 0;
     gap: var(--space-2);
     overflow-x: auto;
-    padding-bottom: var(--space-2);
+    padding-bottom: var(--space-1);
     scrollbar-width: thin;
     scrollbar-color: var(--color-dark-border) transparent;
 }
