@@ -464,6 +464,11 @@ const GunplaApp = (function () {
         if (detailFavBtn) {
             detailFavBtn.classList.toggle('active', isNowFavorite);
         }
+
+        // If the Favorites tab is open, immediately drop the deselected item
+        if (document.getElementById('favoritesNav')?.classList.contains('active')) {
+            showFavoritesView();
+        }
     }
 
     /**
@@ -495,6 +500,11 @@ const GunplaApp = (function () {
         const detailCompBtn = document.getElementById('detailCompareBtn');
         if (detailCompBtn) {
             detailCompBtn.classList.toggle('active', isNowInCompare);
+        }
+
+        // If the Compare tab is open, immediately reflect the change in the table
+        if (document.getElementById('compareNav')?.classList.contains('active')) {
+            showCompareView();
         }
     }
 
@@ -780,11 +790,12 @@ const GunplaApp = (function () {
         table.innerHTML = html;
         section.style.display = 'block';
 
-        // Wire per-column remove buttons
+        // Wire per-column remove buttons.
+        // toggleCompare re-renders the compare view itself when it is active,
+        // so no explicit re-render is needed here.
         table.querySelectorAll('.compare-remove').forEach(btn => {
             btn.addEventListener('click', () => {
                 toggleCompare(btn.getAttribute('data-id'));
-                showCompareView();
             });
         });
     }
@@ -1298,6 +1309,10 @@ const GunplaApp = (function () {
                 updateBadges();
                 updateCompareDrawer();
                 document.querySelectorAll('.compare-btn.active').forEach(b => b.classList.remove('active'));
+                // Reflect immediately if the Compare tab is open
+                if (document.getElementById('compareNav')?.classList.contains('active')) {
+                    showCompareView();
+                }
             });
         }
 
