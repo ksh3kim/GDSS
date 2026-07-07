@@ -1398,3 +1398,15 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+/* Variant/related-grade entries without a detail page (rendered as non-links) */
+.variant-card.unavailable,
+.related-grade-item.unavailable {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.variant-card.unavailable:hover,
+.related-grade-item.unavailable:hover {
+    transform: none;
+    border-color: var(--color-dark-border);
+}

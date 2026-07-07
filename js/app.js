@@ -24,6 +24,12 @@ const GunplaApp = (function () {
     const RECENT_KEY = 'gunpla-recent-viewed';
     const MAX_RECENT = 10;
 
+    // Detail page image gallery
+    let galleryImages = [];
+    let galleryIndex = 0;
+    let galleryWired = false;    // guard so prev/next are wired only once
+    let detailTabsWired = false; // guard so tab buttons are wired only once
+
     /**
      * Initialize the application
      */
@@ -50,6 +56,11 @@ const GunplaApp = (function () {
             applyFiltersAndRender();
             renderRecentProducts();
 
+            // Deep-link view (e.g. detail page nav links to index.html?view=favorites)
+            const view = new URLSearchParams(window.location.search).get('view');
+            if (view === 'favorites') showFavoritesView();
+            else if (view === 'compare') showCompareView();
+
             showLoading(false);
 
         } catch (error) {
@@ -64,12 +75,26 @@ const GunplaApp = (function () {
     async function loadProducts() {
         try {
             const response = await fetch('data/gunpla-index.json');
+            if (!response.ok) throw new Error(`Failed to load index (${response.status})`);
             const data = await response.json();
             products = data.products || [];
         } catch (error) {
             console.error('Failed to load products:', error);
             products = [];
         }
+    }
+
+    /**
+     * Normalize a gunpla.fyi boxart URL: add the missing .jpeg extension.
+     * Non-gunpla.fyi URLs are returned unchanged; falsy input returns ''.
+     */
+    function normalizeImageUrl(url) {
+        if (!url) return '';
+        if (url.includes('gunpla.fyi/images/boxarts/')
+            && !url.endsWith('.jpeg') && !url.endsWith('.jpg') && !url.endsWith('.png')) {
+            return url + '.jpeg';
+        }
+        return url;
     }
 
     /**
@@ -85,18 +110,7 @@ const GunplaApp = (function () {
 
         // If thumbnail URL is provided
         if (product.thumbnail) {
-            let url = product.thumbnail;
-
-            // Check if it's a gunpla.fyi URL
-            if (url.includes('gunpla.fyi/images/boxarts/')) {
-                // Add .jpeg extension if missing
-                if (!url.endsWith('.jpeg') && !url.endsWith('.jpg') && !url.endsWith('.png')) {
-                    url = url + '.jpeg';
-                }
-                return url;
-            }
-
-            return url;
+            return normalizeImageUrl(product.thumbnail);
         }
 
         return 'images/placeholder.png';
@@ -179,7 +193,7 @@ const GunplaApp = (function () {
         list.innerHTML = recentProducts.map(p => `
             <a href="detail.html?id=${p.id}" class="recent-product-thumb" title="${I18n.getName(p.name)}">
                 <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}" 
-                     onerror="this.src='images/placeholder.png'">
+                     onerror="this.onerror=null;this.src='images/placeholder.png'">
             </a>
         `).join('');
 
@@ -313,7 +327,7 @@ const GunplaApp = (function () {
         const img = card.querySelector('.product-card-image img');
         img.src = getThumbnailUrl(product);
         img.alt = I18n.getName(product.name);
-        img.onerror = function () { this.src = 'images/placeholder.png'; };
+        img.onerror = function () { this.onerror = null; this.src = 'images/placeholder.png'; };
 
         // Badges
         const badges = card.querySelector('.product-card-badges');
@@ -650,8 +664,8 @@ const GunplaApp = (function () {
                 return `
                     <div class="compare-item" data-id="${id}">
                         <div class="compare-item-image">
-                            <img src="${product.thumbnail}" alt="${I18n.getName(product.name)}" 
-                                 onerror="this.src='images/placeholder.png'">
+                            <img src="${getThumbnailUrl(product)}" alt="${I18n.getName(product.name)}"
+                                 onerror="this.onerror=null;this.src='images/placeholder.png'">
                         </div>
                         <span class="compare-item-name">${I18n.getName(product.name)}</span>
                     </div>
@@ -737,7 +751,7 @@ const GunplaApp = (function () {
                     <button class="compare-remove" data-id="${p.id}" title="${L('비교함에서 제거', 'Remove from compare')}" aria-label="Remove">×</button>
                     <a href="detail.html?id=${p.id}" class="compare-product-link">
                         <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}"
-                             onerror="this.src='images/placeholder.png'">
+                             onerror="this.onerror=null;this.src='images/placeholder.png'">
                         <span class="product-name">${I18n.getName(p.name)}</span>
                     </a>
                 </td>`;
@@ -819,8 +833,8 @@ const GunplaApp = (function () {
 
         content.innerHTML = `
             <div class="quick-view-image">
-                <img src="${product.thumbnail}" alt="${I18n.getName(product.name)}"
-                     onerror="this.src='images/placeholder.png'">
+                <img src="${getThumbnailUrl(product)}" alt="${I18n.getName(product.name)}"
+                     onerror="this.onerror=null;this.src='images/placeholder.png'">
             </div>
             <div class="quick-view-info">
                 <span class="product-card-grade ${product.grade}">${product.grade}</span>
@@ -870,6 +884,7 @@ const GunplaApp = (function () {
             let product;
             try {
                 const response = await fetch(`data/gunpla-details/${productId}.json`);
+                if (!response.ok) throw new Error(`Detail not found (${response.status})`);
                 product = await response.json();
             } catch {
                 // Fallback to index data
@@ -903,11 +918,8 @@ const GunplaApp = (function () {
         document.getElementById('breadcrumbGrade').textContent = product.grade;
         document.getElementById('breadcrumbCurrent').textContent = I18n.getName(product.name);
 
-        // Main image - use same logic as main page for consistency
-        const mainImage = document.getElementById('mainImage');
-        mainImage.src = product.images?.boxart || getThumbnailUrl(product);
-        mainImage.alt = I18n.getName(product.name);
-        mainImage.onerror = function () { this.src = 'images/placeholder.png'; };
+        // Image gallery (main image + thumbnails + prev/next navigation)
+        renderGallery(product);
 
         // Badges
         const badges = document.getElementById('detailBadges');
@@ -983,6 +995,71 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Render the detail-page image gallery: main image, thumbnails, prev/next.
+     * Falls back to the index thumbnail when no gallery data exists.
+     */
+    function renderGallery(product) {
+        const mainImage = document.getElementById('mainImage');
+        if (!mainImage) return;
+
+        const images = [product.images?.boxart, ...(product.images?.gallery || [])]
+            .filter(Boolean)
+            .map(normalizeImageUrl);
+        if (images.length === 0) images.push(getThumbnailUrl(product));
+
+        galleryImages = images;
+        mainImage.alt = I18n.getName(product.name);
+        setGalleryImage(0);
+
+        // Hide navigation when there is nothing to navigate
+        const multiple = images.length > 1;
+        const prevBtn = document.getElementById('galleryPrev');
+        const nextBtn = document.getElementById('galleryNext');
+        if (prevBtn) prevBtn.style.display = multiple ? '' : 'none';
+        if (nextBtn) nextBtn.style.display = multiple ? '' : 'none';
+
+        const thumbs = document.getElementById('galleryThumbnails');
+        if (thumbs) {
+            thumbs.innerHTML = multiple ? images.map((src, i) => `
+                <button type="button" class="gallery-thumbnail${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Image ${i + 1}">
+                    <img src="${src}" alt="" loading="lazy"
+                         onerror="this.onerror=null;this.src='images/placeholder.png'">
+                </button>
+            `).join('') : '';
+            thumbs.querySelectorAll('.gallery-thumbnail').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setGalleryImage(Number(btn.getAttribute('data-index')));
+                });
+            });
+        }
+
+        // Wire prev/next only once (renderProductDetail re-runs on language change)
+        if (!galleryWired && (prevBtn || nextBtn)) {
+            if (prevBtn) prevBtn.addEventListener('click', () => setGalleryImage(galleryIndex - 1));
+            if (nextBtn) nextBtn.addEventListener('click', () => setGalleryImage(galleryIndex + 1));
+            galleryWired = true;
+        }
+    }
+
+    /**
+     * Show gallery image at index (wraps around) and sync thumbnail states
+     */
+    function setGalleryImage(index) {
+        const mainImage = document.getElementById('mainImage');
+        if (!mainImage || galleryImages.length === 0) return;
+
+        galleryIndex = ((index % galleryImages.length) + galleryImages.length) % galleryImages.length;
+
+        // Re-arm the fallback each swap (onerror clears itself after firing)
+        mainImage.onerror = function () { this.onerror = null; this.src = 'images/placeholder.png'; };
+        mainImage.src = galleryImages[galleryIndex];
+
+        document.querySelectorAll('#galleryThumbnails .gallery-thumbnail').forEach((t, i) => {
+            t.classList.toggle('active', i === galleryIndex);
+        });
+    }
+
+    /**
      * Render specs grid
      */
     function renderSpecs(product) {
@@ -1053,29 +1130,41 @@ const GunplaApp = (function () {
         const variantsGrid = document.getElementById('variantsGrid');
         const relatedGrades = document.getElementById('relatedGrades');
 
-        // Color/Config variants
+        // Color/Config variants — resolve the real thumbnail from the product
+        // index (the previous random gunpla.fyi id showed unrelated boxarts).
+        // Items whose id is not in the index have no detail page, so they are
+        // rendered as non-clickable cards instead of broken links.
         if (variantsGrid && product.variants) {
-            variantsGrid.innerHTML = product.variants.map(v => `
-                <a href="detail.html?id=${v.id}" class="variant-card ${v.id === product.id ? 'current' : ''}" data-id="${v.id}">
-                    <img src="https://gunpla.fyi/images/boxarts/${Math.floor(Math.random() * 500)}" 
+            variantsGrid.innerHTML = product.variants.map(v => {
+                const variantProduct = products.find(p => p.id === v.id);
+                const imgSrc = variantProduct ? getThumbnailUrl(variantProduct) : 'images/placeholder.png';
+                const inner = `
+                    <img src="${imgSrc}"
                          alt="${I18n.getName(v.name)}" class="variant-image"
-                         onerror="this.src='images/placeholder.png'">
+                         onerror="this.onerror=null;this.src='images/placeholder.png'">
                     <div class="variant-info">
                         <span class="variant-type">${v.variantType}</span>
                         <span class="variant-name">${I18n.getName(v.name)}</span>
-                    </div>
-                </a>
-            `).join('');
+                    </div>`;
+                if (!variantProduct) {
+                    return `<div class="variant-card unavailable" data-id="${v.id}" title="${I18n.getLang() === 'ko' ? '상세 정보 미등록' : 'Details not available'}">${inner}</div>`;
+                }
+                return `<a href="detail.html?id=${v.id}" class="variant-card ${v.id === product.id ? 'current' : ''}" data-id="${v.id}">${inner}</a>`;
+            }).join('');
         }
 
         // Related grades (different grade same MS)
         if (relatedGrades && product.relatedGrades) {
-            relatedGrades.innerHTML = product.relatedGrades.map(r => `
-                <a href="detail.html?id=${r.id}" class="related-grade-item" data-id="${r.id}">
+            relatedGrades.innerHTML = product.relatedGrades.map(r => {
+                const exists = products.some(p => p.id === r.id);
+                const inner = `
                     <span class="grade-badge product-card-grade ${r.grade}">${r.grade}</span>
-                    <span class="grade-name">${I18n.getName(r.name)}</span>
-                </a>
-            `).join('');
+                    <span class="grade-name">${I18n.getName(r.name)}</span>`;
+                if (!exists) {
+                    return `<div class="related-grade-item unavailable" data-id="${r.id}" title="${I18n.getLang() === 'ko' ? '상세 정보 미등록' : 'Details not available'}">${inner}</div>`;
+                }
+                return `<a href="detail.html?id=${r.id}" class="related-grade-item" data-id="${r.id}">${inner}</a>`;
+            }).join('');
         }
     }
 
@@ -1083,6 +1172,11 @@ const GunplaApp = (function () {
      * Setup detail page tabs
      */
     function setupDetailTabs() {
+        // Wire only once — renderProductDetail re-runs on every language
+        // change and would otherwise stack duplicate click listeners
+        if (detailTabsWired) return;
+        detailTabsWired = true;
+
         const tabs = document.querySelectorAll('.tab-btn');
         const contents = document.querySelectorAll('.tab-content');
 
@@ -1348,6 +1442,19 @@ const GunplaApp = (function () {
                 showHomeView();
             });
         });
+
+        // Mobile menu navigation (home / favorites / compare) — closes the menu
+        document.querySelectorAll('.mobile-nav-item[data-page]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = item.getAttribute('data-page');
+                if (page === 'favorites') showFavoritesView();
+                else if (page === 'compare') showCompareView();
+                else showHomeView();
+                document.getElementById('mobileMenuOverlay')?.classList.remove('active');
+                document.getElementById('mobileMenuBtn')?.classList.remove('active');
+            });
+        });
     }
 
     /**
@@ -1497,7 +1604,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Detail page - init modules and setup language toggle
         I18n.init().then(async () => {
             I18n.initTheme(); // Apply saved theme
-            Filter.init();
+            // Await: renderProductDetail resolves labels via Filter.getCategory,
+            // so the taxonomy must be loaded before the product renders
+            await Filter.init();
 
             // Load saved favorites and compare data
             const savedFavorites = localStorage.getItem('gunpla-favorites');

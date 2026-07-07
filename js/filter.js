@@ -16,6 +16,15 @@ const Filter = (function () {
     const CHOSEONG_BASE = 588; // 21 * 28
 
     /**
+     * Escape HTML special characters before inserting user/URL data via innerHTML
+     */
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    /**
      * Check if character is a Korean consonant (초성)
      */
     function isChoseong(char) {
@@ -81,6 +90,12 @@ const Filter = (function () {
 
             // Build filter UI
             buildFilterUI();
+
+            // Reflect URL-restored filters in the sidebar UI
+            // (checkbox selection, category counts, active-filter chips, reset button)
+            restoreFilterUIState();
+            updateActiveFiltersUI();
+            updateQuickResetVisibility();
 
             // Setup event listeners
             setupEventListeners();
@@ -304,8 +319,11 @@ const Filter = (function () {
         // Search query matching
         if (searchQuery) {
             const searchLower = searchQuery.toLowerCase();
+            // Include BOTH language names: autocomplete suggests ko/en names
+            // regardless of the current UI language, so both must be searchable
             const searchFields = [
-                I18n.getName(product.name),
+                product.name?.ko || '',
+                product.name?.en || '',
                 product.id,
                 product.modelNumber || '',
                 product.grade,
@@ -341,10 +359,10 @@ const Filter = (function () {
                 continue;
             }
 
-            // Handle boolean filters
+            // Handle boolean filters (multi-select aware: selecting both
+            // true and false must match every product, not just values[0])
             if (category.type === 'boolean') {
-                const filterValue = values[0];
-                if (filterValue !== undefined && productValue !== filterValue) {
+                if (Array.isArray(values) && values.length > 0 && !values.includes(productValue)) {
                     return false;
                 }
                 continue;
@@ -501,9 +519,10 @@ const Filter = (function () {
 
                     const tag = document.createElement('span');
                     tag.className = 'filter-tag';
+                    // Escape: `value`/`label` can originate from the URL query string
                     tag.innerHTML = `
-                        ${label}
-                        <button class="filter-tag-remove" data-category="${categoryId}" data-value="${value}">×</button>
+                        ${escapeHtml(label)}
+                        <button class="filter-tag-remove" data-category="${escapeHtml(categoryId)}" data-value="${escapeHtml(value)}">×</button>
                     `;
                     container.appendChild(tag);
                 });
@@ -514,7 +533,9 @@ const Filter = (function () {
         container.querySelectorAll('.filter-tag-remove').forEach(btn => {
             btn.addEventListener('click', () => {
                 const catId = btn.getAttribute('data-category');
-                const val = btn.getAttribute('data-value');
+                let val = btn.getAttribute('data-value');
+                // data-* attributes are strings; boolean filters store real booleans
+                if (getCategory(catId)?.type === 'boolean') val = (val === 'true');
                 removeFilter(catId, val);
 
                 // Update checkbox UI
@@ -602,12 +623,12 @@ const Filter = (function () {
             }
         }
 
-        // Render suggestions
+        // Render suggestions (escape: history entries are raw user input)
         container.innerHTML = finalSuggestions.map(s => `
-            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" data-value="${s.value}" data-type="${s.type}">
+            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" data-value="${escapeHtml(s.value)}" data-type="${s.type}">
                 <span class="autocomplete-item-type ${s.type}">${s.type === 'product' ? '제품' : s.type === 'series' ? '시리즈' : s.type === 'model' ? '형식' : '🕒'}</span>
-                <span class="autocomplete-item-text">${s.match ? highlightMatch(s.text, s.match) : s.text}</span>
-                ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + s.value + '">×</button>' : ''}
+                <span class="autocomplete-item-text">${s.match ? highlightMatch(s.text, s.match) : escapeHtml(s.text)}</span>
+                ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + escapeHtml(s.value) + '">×</button>' : ''}
             </div>
         `).join('');
 
@@ -645,12 +666,15 @@ const Filter = (function () {
     }
 
     /**
-     * Highlight matching text
+     * Highlight matching text (escapes both sides so raw text is never
+     * injected as HTML; escaping is applied consistently, so indexOf still works)
      */
     function highlightMatch(text, match) {
-        const index = text.toLowerCase().indexOf(match.toLowerCase());
-        if (index === -1) return text;
-        return text.slice(0, index) + '<mark>' + text.slice(index, index + match.length) + '</mark>' + text.slice(index + match.length);
+        const safeText = escapeHtml(text);
+        const safeMatch = escapeHtml(match);
+        const index = safeText.toLowerCase().indexOf(safeMatch.toLowerCase());
+        if (index === -1) return safeText;
+        return safeText.slice(0, index) + '<mark>' + safeText.slice(index, index + safeMatch.length) + '</mark>' + safeText.slice(index + safeMatch.length);
     }
 
     /**
@@ -733,6 +757,16 @@ const Filter = (function () {
                 if (query.length >= 1 && autocomplete) {
                     showAutocompleteSuggestions(query, autocomplete);
                 }
+            });
+        }
+
+        // Search button (magnifier icon) — triggers an immediate search
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => {
+                const input = document.getElementById('searchInput');
+                if (input) setSearchQuery(input.value);
+                if (autocomplete) autocomplete.classList.remove('active');
             });
         }
 
@@ -839,6 +873,10 @@ const Filter = (function () {
             if (category.type === 'range' && value.includes('-')) {
                 const [min, max] = value.split('-').map(Number);
                 activeFilters[key] = { min, max };
+            } else if (category.type === 'boolean') {
+                // URL params are strings; convert back to real booleans so they
+                // compare correctly against product data (true !== "true")
+                activeFilters[key] = value.split(',').map(v => v === 'true');
             } else {
                 activeFilters[key] = value.split(',');
             }

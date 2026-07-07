@@ -175,8 +175,8 @@ const Recommendation = (function () {
                 }
             },
             transformation: {
-                ko: true ? '변형 기믹 탑재' : null,
-                en: true ? 'Transformation gimmick' : null
+                ko: val => (val ? '변형 기믹 탑재' : null),
+                en: val => (val ? 'Transformation gimmick' : null)
             },
             colorSeparation: {
                 ko: {
