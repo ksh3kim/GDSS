@@ -1,6 +1,8 @@
 /**
  * Gunpla Guide - Notifications Module
- * Monitors Bandai Hobby / Gundam.info RSS feeds for new product & news alerts.
+ * Fetches Bandai Hobby / Gundam.info RSS feeds for new product & news items.
+ * Fetching happens on page load (when the cached copy is older than TTL) and
+ * on manual refresh only — there is NO continuous polling and NO push.
  *
  * Two-tier fetch strategy (backend-ish work lives in a separate serverless layer):
  *   1) Self-hosted serverless API (serverless/worker.js) when API_BASE is set —
