@@ -2,9 +2,13 @@
  * Gunpla Guide - Notifications Module
  * Monitors Bandai Hobby / Gundam.info RSS feeds for new product & news alerts.
  *
- * Because this is a static site (no backend), feeds are fetched through public
- * CORS proxies and cached in localStorage. The system degrades gracefully:
- * if every proxy/feed fails, the cached items (or an empty state) are shown.
+ * Two-tier fetch strategy (backend-ish work lives in a separate serverless layer):
+ *   1) Self-hosted serverless API (serverless/worker.js) when API_BASE is set —
+ *      feeds are fetched, parsed, merged and edge-cached server-side.
+ *   2) Zero-config fallback for pure static hosting: public CORS proxies with
+ *      client-side XML parsing.
+ * Results are cached in localStorage either way; if every source fails, the
+ * cached items (or an empty state) are shown.
  */
 
 const Notifications = (function () {
@@ -20,10 +24,17 @@ const Notifications = (function () {
     ];
 
     // Public CORS proxies, tried in order until one returns usable content
+    // (fallback path only — prefer deploying the serverless API below)
     const PROXIES = [
         u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
         u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`
     ];
+
+    // Self-hosted serverless API base URL (recommended; see serverless/README.md),
+    // e.g. 'https://gunpla-guide-api.YOUR-SUBDOMAIN.workers.dev'.
+    // Can also be provided without editing this file via window.GUNPLA_API_BASE.
+    // Leave empty to go straight to the public CORS proxy fallback.
+    const API_BASE = (typeof window !== 'undefined' && window.GUNPLA_API_BASE) || '';
 
     let items = [];
 
@@ -64,6 +75,37 @@ const Notifications = (function () {
     }
 
     // ---- feed fetching / parsing ----
+
+    /**
+     * Fetch merged news from the self-hosted serverless API.
+     * Returns a validated items array, or null (API unset / unreachable /
+     * invalid payload) so the caller can fall back to the CORS-proxy path.
+     */
+    async function fetchFromApi() {
+        if (!API_BASE) return null;
+        try {
+            const base = API_BASE.replace(/\/+$/, '');
+            const res = await fetch(`${base}/api/news?limit=${MAX_ITEMS}`, { cache: 'no-store' });
+            if (!res.ok) return null;
+            const data = await res.json();
+            if (!data || data.ok !== true || !Array.isArray(data.items)) return null;
+
+            const valid = data.items
+                .filter(i => i && i.title && typeof i.link === 'string' && /^https?:\/\//i.test(i.link))
+                .map(i => ({
+                    title: String(i.title),
+                    link: i.link,
+                    ts: Number(i.ts) || 0,
+                    source: String(i.source || ''),
+                    icon: i.icon || '📰',
+                    img: typeof i.img === 'string' ? i.img : ''
+                }));
+            return valid.length ? valid : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
     async function fetchFeed(feed) {
         for (const proxy of PROXIES) {
             try {
@@ -215,8 +257,12 @@ const Notifications = (function () {
 
         setLoading(true);
         try {
-            const results = await Promise.all(FEEDS.map(fetchFeed));
-            let merged = [].concat(...results);
+            // Prefer the serverless API; fall back to public CORS proxies
+            let merged = await fetchFromApi();
+            if (!merged) {
+                const results = await Promise.all(FEEDS.map(fetchFeed));
+                merged = [].concat(...results);
+            }
 
             if (merged.length) {
                 merged.sort((a, b) => b.ts - a.ts);

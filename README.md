@@ -35,7 +35,7 @@
 - 헤더 상단 **알림 벨** + 읽지 않음 배지
 - **RSS 모니터링**: Bandai Hobby / GUNDAM.INFO 피드에서 신제품·소식 수집
 - 신규 항목 하이라이트, 상대 시각 표시, 30분 캐시
-- 정적 사이트 특성상 공개 CORS 프록시 경유 + 실패 시 우아하게 degrade
+- **2단 수집 구조**: 자체 서버리스 API(`serverless/`) 우선 → 미배포 시 공개 CORS 프록시 폴백 → 전체 실패 시 캐시 표시
 
 ### 🌐 다국어 & 접근성
 - **한국어 / 영어** 실시간 전환(`data/i18n.json`)
@@ -66,8 +66,30 @@ GunList/
 │   ├── gunpla-details/     # 제품별 상세 데이터
 │   ├── taxonomy.json       # 분류 카테고리/라벨(ko/en)
 │   └── i18n.json           # UI 번역
-└── scripts/                # 데이터 유지보수 스크립트
+├── scripts/                # 데이터 유지보수 스크립트 (빌드 타임)
+└── serverless/             # 서버리스 API 계층 — RSS 수집·캐시 (Cloudflare Worker)
 ```
+
+## 아키텍처: 백엔드성 기능 분리
+
+정적 웹앱을 유지하면서, 백엔드성 처리는 성격에 따라 다음 계층으로 분리되어 있습니다.
+
+| 기능 | 계층 | 위치 |
+|------|------|------|
+| RSS 신제품/소식 수집·파싱·캐시 갱신 | **서버리스 API** (런타임) | `serverless/worker.js` — `GET /api/news` |
+| 반다이 매뉴얼 검색 | 공식 사이트 아웃바운드 링크 (서버 불필요) | `js/app.js` |
+| 데이터 검증·ID 매핑 | 빌드 타임 스크립트 (유지보수자 실행) | `scripts/` |
+
+### 서버리스 API 배포 (선택·권장)
+
+API를 배포하지 않아도 앱은 공개 CORS 프록시 폴백으로 동작합니다. 다만 안정적인 알림(프록시 다운·속도 제한·응답 변조 위험 제거)을 위해 자체 API 배포를 권장합니다.
+
+```bash
+cd serverless
+npx wrangler deploy   # Cloudflare 계정 필요 (무료 플랜 가능)
+```
+
+배포 후 발급 URL을 `js/notifications.js`의 `API_BASE`에 입력하거나, HTML에서 스크립트 로드 전에 `window.GUNPLA_API_BASE`로 지정하면 알림 모듈이 자동으로 API를 우선 사용합니다. 상세: [serverless/README.md](serverless/README.md)
 
 ## 실행 방법
 
