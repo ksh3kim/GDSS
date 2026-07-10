@@ -428,6 +428,8 @@ const GunplaApp = (function () {
 
     /**
      * Show/hide recommendation panel
+     * NOTE: currently dormant — index.html has no #recommendationPanel markup,
+     * so this is a no-op. Implement-or-remove decision pending (task #52).
      */
     function showRecommendationPanel(show) {
         const panel = document.getElementById('recommendationPanel');
@@ -815,6 +817,9 @@ const GunplaApp = (function () {
 
     /**
      * Open quick view modal
+     * NOTE: currently dormant — there is no #quickViewModal markup or entry
+     * button in the HTML, so this never runs. Implement-or-remove decision
+     * pending (task #53); the modal / quick-view CSS blocks belong to it too.
      */
     function openQuickView(productId) {
         const modal = document.getElementById('quickViewModal');

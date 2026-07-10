@@ -68,6 +68,8 @@ const Recommendation = (function () {
 
     /**
      * Generate recommendation explanation for a product
+     * NOTE: currently dormant — exported but has no caller (the recommendation
+     * panel UI does not exist). Implement-or-remove decision pending (task #52).
      * @param {Object} product - Product data
      * @param {Object} filters - Active filters
      * @returns {Object} Explanation object with tags and text

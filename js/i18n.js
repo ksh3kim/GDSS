@@ -110,11 +110,9 @@ const I18n = (function () {
             el.placeholder = t(key);
         });
 
-        // Update page title
-        const titleKey = document.body.classList.contains('detail-page')
-            ? 'site.title'
-            : 'site.title';
-        document.title = t(titleKey);
+        // Update page title (detail pages re-set it with the product name
+        // in renderProductDetail after this runs)
+        document.title = t('site.title');
     }
 
     /**
@@ -161,13 +159,6 @@ const I18n = (function () {
             'advanced': { ko: '상급', en: 'Advanced' }
         };
         return difficultyMap[difficulty]?.[currentLang] || difficulty;
-    }
-
-    /**
-     * Get mobility text
-     */
-    function getMobilityText(level) {
-        return t(`mobility.${level}`);
     }
 
     // ===== Theme Management =====
@@ -429,7 +420,6 @@ const I18n = (function () {
         formatPrice,
         formatDate,
         getDifficultyText,
-        getMobilityText,
         getTheme,
         setTheme,
         initTheme

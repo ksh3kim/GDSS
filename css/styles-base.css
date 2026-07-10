@@ -919,8 +919,7 @@ textarea {
     border-radius: 0;
 }
 
-.badge:empty,
-.badge[data-count="0"] {
+.badge:empty {
     display: none;
 }
 

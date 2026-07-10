@@ -127,13 +127,6 @@ const Filter = (function () {
         return { ...activeFilters };
     }
 
-    /**
-     * Get search query
-     */
-    function getSearchQuery() {
-        return searchQuery;
-    }
-
     // Search History constants
     const SEARCH_HISTORY_KEY = 'gunpla-search-history';
     const MAX_HISTORY_ITEMS = 10;
@@ -893,36 +886,21 @@ const Filter = (function () {
         }));
     }
 
-    /**
-     * Get active filter count
-     */
-    function getActiveFilterCount() {
-        let count = 0;
-        for (const values of Object.values(activeFilters)) {
-            if (Array.isArray(values)) {
-                count += values.length;
-            } else {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
     // Public API
+    // NOTE: setRangeFilter has no caller yet — the range-filter UI is rendered
+    // but not wired (pending task #34). Kept intentionally.
     return {
         init,
         getTaxonomy,
         getCategory,
         getActiveFilters,
-        getSearchQuery,
         setSearchQuery,
         setFilter,
         toggleFilter,
         setRangeFilter,
         removeFilter,
         clearAllFilters,
-        matchesFilters,
-        getActiveFilterCount
+        matchesFilters
     };
 })();
 
