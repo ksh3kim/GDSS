@@ -197,7 +197,8 @@ const GunplaApp = (function () {
             </a>
         `).join('');
 
-        section.style.display = 'block';
+        // 'flex', not 'block' — the strip is a single row (icon | thumbs | ×)
+        section.style.display = 'flex';
     }
 
     /**
@@ -643,6 +644,9 @@ const GunplaApp = (function () {
                 if (document.getElementById('compareNav')?.classList.contains('active')) {
                     showCompareView();
                 }
+            } else if (e.key === RECENT_KEY) {
+                // Keep the recently-viewed strip in sync across tabs too
+                renderRecentProducts();
             }
         });
     }
