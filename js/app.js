@@ -12,13 +12,16 @@ const GunplaApp = (function () {
     let currentSort = 'releaseDate';
     let sortOrder = 'desc'; // 'desc' = descending (newest first), 'asc' = ascending
     let currentProduct = null; // For detail page language switching
+    let currentPage = 'home';  // 'home' | 'favorites' | 'compare' (main page view)
     const ITEMS_PER_PAGE = 24;
+    const VIEWS = ['home', 'favorites', 'compare'];
 
     // Favorites and Compare
     let favorites = [];
     let compareList = [];
     const MAX_COMPARE = 4;
     let detailActionsWired = false; // guard so detail buttons are wired only once
+    let compareDrawerDismissed = false; // user closed the drawer; reopens on the next compare change
 
     // Recently Viewed
     const RECENT_KEY = 'gunpla-recent-viewed';
@@ -29,6 +32,15 @@ const GunplaApp = (function () {
     let galleryIndex = 0;
     let galleryWired = false;    // guard so prev/next are wired only once
     let detailTabsWired = false; // guard so tab buttons are wired only once
+
+    /**
+     * Escape text before interpolating it into innerHTML templates
+     */
+    function escapeHtml(s) {
+        return String(s ?? '')
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
 
     /**
      * Initialize the application
@@ -44,7 +56,7 @@ const GunplaApp = (function () {
             await Filter.init();
 
             // Load product data
-            await loadProducts();
+            const loaded = await loadProducts();
 
             // Setup event listeners
             setupEventListeners();
@@ -52,14 +64,14 @@ const GunplaApp = (function () {
             // Load saved data
             loadSavedData();
 
-            // Initial render
-            applyFiltersAndRender();
+            // Initial render — the view comes from the URL so reload, deep
+            // links (detail page → index.html?view=favorites) and back/forward
+            // all land on the same screen
+            renderView(getViewFromURL());
             renderRecentProducts();
 
-            // Deep-link view (e.g. detail page nav links to index.html?view=favorites)
-            const view = new URLSearchParams(window.location.search).get('view');
-            if (view === 'favorites') showFavoritesView();
-            else if (view === 'compare') showCompareView();
+            // Data failed to load: say so instead of "no search results"
+            if (!loaded) setEmptyState('common.error', null);
 
             showLoading(false);
 
@@ -70,7 +82,7 @@ const GunplaApp = (function () {
     }
 
     /**
-     * Load products from JSON
+     * Load products from JSON. Resolves to false when the index could not be loaded.
      */
     async function loadProducts() {
         try {
@@ -78,9 +90,11 @@ const GunplaApp = (function () {
             if (!response.ok) throw new Error(`Failed to load index (${response.status})`);
             const data = await response.json();
             products = data.products || [];
+            return true;
         } catch (error) {
             console.error('Failed to load products:', error);
             products = [];
+            return false;
         }
     }
 
@@ -98,6 +112,16 @@ const GunplaApp = (function () {
     }
 
     /**
+     * gunpla.fyi boxarts are addressed by a numeric id. Several detail files
+     * still carry a product slug there (…/boxarts/rg-rx-78-2), which 404s —
+     * treat those as missing so the page falls back to the index thumbnail.
+     */
+    function isUsableImageUrl(url) {
+        const m = /gunpla\.fyi\/images\/boxarts\/([^/?#.]+)/.exec(url || '');
+        return !m || /^\d+$/.test(m[1]);
+    }
+
+    /**
      * Get properly formatted thumbnail URL from gunpla.fyi
      * Supports both old format (without .jpeg) and new format (with .jpeg)
      * Also supports gunplaFyiId field for direct ID mapping
@@ -109,7 +133,7 @@ const GunplaApp = (function () {
         }
 
         // If thumbnail URL is provided
-        if (product.thumbnail) {
+        if (product.thumbnail && isUsableImageUrl(product.thumbnail)) {
             return normalizeImageUrl(product.thumbnail);
         }
 
@@ -121,8 +145,8 @@ const GunplaApp = (function () {
      */
     function getRecentProducts() {
         try {
-            const data = localStorage.getItem(RECENT_KEY);
-            return data ? JSON.parse(data) : [];
+            const data = JSON.parse(localStorage.getItem(RECENT_KEY));
+            return Array.isArray(data) ? data : [];
         } catch (e) {
             return [];
         }
@@ -158,10 +182,10 @@ const GunplaApp = (function () {
     function clearRecentProducts() {
         try {
             localStorage.removeItem(RECENT_KEY);
-            renderRecentProducts();
         } catch (e) {
             console.warn('Failed to clear recent products:', e);
         }
+        renderRecentProducts();
     }
 
     /**
@@ -191,8 +215,8 @@ const GunplaApp = (function () {
         }
 
         list.innerHTML = recentProducts.map(p => `
-            <a href="detail.html?id=${p.id}" class="recent-product-thumb" title="${I18n.getName(p.name)}">
-                <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}" 
+            <a href="detail.html?id=${encodeURIComponent(p.id)}" class="recent-product-thumb" title="${escapeHtml(I18n.getName(p.name))}">
+                <img src="${getThumbnailUrl(p)}" alt="${escapeHtml(I18n.getName(p.name))}"
                      onerror="this.onerror=null;this.src='images/placeholder.png'">
             </a>
         `).join('');
@@ -217,9 +241,10 @@ const GunplaApp = (function () {
             updateRecommendationPanel(filters);
         } else {
             showRecommendationPanel(false);
-            // Apply regular sorting
-            sortProducts();
         }
+
+        // The chosen sort always applies (match score only ranks ahead of it)
+        sortProducts();
 
         // Reset display
         displayedCount = 0;
@@ -233,15 +258,17 @@ const GunplaApp = (function () {
      * Sort products
      */
     function sortProducts() {
-        const filters = Filter.getActiveFilters();
-
-        // If filters active, keep score-based sorting
-        if (Object.keys(filters).length > 0) return;
-
         // multiplier: 1 for asc, -1 for desc
         const multiplier = sortOrder === 'asc' ? 1 : -1;
+        const diffOrder = { beginner: 1, intermediate: 2, advanced: 3 };
 
         filteredProducts.sort((a, b) => {
+            // With filters active, better matches stay first; the selected
+            // sort orders products that share a match score
+            if (a.matchScore !== undefined && b.matchScore !== undefined && a.matchScore !== b.matchScore) {
+                return b.matchScore - a.matchScore;
+            }
+
             let result = 0;
             switch (currentSort) {
                 case 'releaseDate':
@@ -254,7 +281,6 @@ const GunplaApp = (function () {
                     result = (a.price || 0) - (b.price || 0);
                     break;
                 case 'difficulty':
-                    const diffOrder = { beginner: 1, intermediate: 2, advanced: 3 };
                     result = (diffOrder[a.filterData?.difficulty] || 0) - (diffOrder[b.filterData?.difficulty] || 0);
                     break;
                 case 'partCount':
@@ -268,9 +294,9 @@ const GunplaApp = (function () {
     }
 
     /**
-     * Render products to grid
+     * Render the next `count` products into the grid (from displayedCount)
      */
-    function renderProducts() {
+    function renderProducts(count = ITEMS_PER_PAGE) {
         const grid = document.getElementById('productGrid');
         const noResults = document.getElementById('noResults');
         const loadMoreContainer = document.getElementById('loadMoreContainer');
@@ -280,6 +306,7 @@ const GunplaApp = (function () {
         // Check no results
         if (filteredProducts.length === 0) {
             grid.innerHTML = '';
+            renderEmptyState();
             noResults.style.display = 'flex';
             loadMoreContainer.style.display = 'none';
             return;
@@ -289,7 +316,7 @@ const GunplaApp = (function () {
 
         // Get items to display
         const startIndex = displayedCount;
-        const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredProducts.length);
+        const endIndex = Math.min(startIndex + count, filteredProducts.length);
         const itemsToRender = filteredProducts.slice(startIndex, endIndex);
 
         // Clear grid if starting fresh
@@ -315,14 +342,29 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Re-render the grid in place (language change) without collapsing the
+     * products the user already revealed with "load more"
+     */
+    function rerenderGrid() {
+        const keep = Math.max(displayedCount, ITEMS_PER_PAGE);
+        if (currentSort === 'name') sortProducts(); // name order depends on language
+        displayedCount = 0;
+        renderProducts(keep);
+    }
+
+    /**
      * Create product card element
      */
     function createProductCard(product, template) {
         const clone = template.content.cloneNode(true);
         const card = clone.querySelector('.product-card');
 
-
         card.setAttribute('data-id', product.id);
+
+        // Template text is static markup — translate it for the current language
+        card.querySelectorAll('[data-i18n]').forEach(el => {
+            el.textContent = I18n.t(el.getAttribute('data-i18n'));
+        });
 
         // Image - get proper gunpla.fyi URL
         const img = card.querySelector('.product-card-image img');
@@ -375,18 +417,17 @@ const GunplaApp = (function () {
         const mobilityBar = card.querySelector('.stat-bar-fill.mobility');
         const mobility = product.filterData?.mobility || 3;
         mobilityBar.style.width = `${(mobility / 5) * 100}%`;
+        mobilityBar.parentElement.title = `${mobility}/5`;
 
         // Link
-        card.querySelector('.product-card-link').href = `detail.html?id=${product.id}`;
+        card.querySelector('.product-card-link').href = `detail.html?id=${encodeURIComponent(product.id)}`;
 
-        // Action buttons. data-id lets toggleFavorite/toggleCompare keep the
-        // active state in sync everywhere (this card, other cards, cross-tab),
+        // Action buttons. data-id lets refreshFavCompareUI keep the active
+        // state in sync everywhere (this card, other cards, cross-tab),
         // so the click handler must NOT toggle the class itself (double toggle).
         const favoriteBtn = card.querySelector('.favorite-btn');
         favoriteBtn.setAttribute('data-id', product.id);
-        if (favorites.includes(product.id)) {
-            favoriteBtn.classList.add('active');
-        }
+        setToggleState(favoriteBtn, favorites.includes(product.id), 'product.addToFavorites', 'product.removeFromFavorites');
         favoriteBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -395,9 +436,7 @@ const GunplaApp = (function () {
 
         const compareBtn = card.querySelector('.compare-btn');
         compareBtn.setAttribute('data-id', product.id);
-        if (compareList.includes(product.id)) {
-            compareBtn.classList.add('active');
-        }
+        setToggleState(compareBtn, compareList.includes(product.id), 'product.addToCompare', 'product.removeFromCompare');
         compareBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -408,6 +447,21 @@ const GunplaApp = (function () {
     }
 
     /**
+     * Reflect an on/off state on a favorite/compare button: active class,
+     * aria-pressed, and an "add"/"remove" label (visible text when the button
+     * has an .action-label, otherwise its accessible name)
+     */
+    function setToggleState(btn, active, addKey, removeKey) {
+        if (!btn) return;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
+        const label = I18n.t(active ? removeKey : addKey);
+        const text = btn.querySelector('.action-label');
+        if (text) text.textContent = label;
+        else btn.setAttribute('aria-label', label);
+    }
+
+    /**
      * Update result count display
      */
     function updateResultCount() {
@@ -415,6 +469,25 @@ const GunplaApp = (function () {
         if (countEl) {
             countEl.textContent = filteredProducts.length;
         }
+    }
+
+    /**
+     * Set the empty-state message (title + hint) from i18n keys
+     */
+    function setEmptyState(titleKey, hintKey) {
+        const title = document.getElementById('noResultsTitle');
+        const hint = document.getElementById('noResultsHint');
+        if (title) title.textContent = I18n.t(titleKey);
+        if (hint) hint.textContent = hintKey ? I18n.t(hintKey) : '';
+    }
+
+    /**
+     * Empty-state message for the current view
+     */
+    function renderEmptyState() {
+        if (currentPage === 'favorites') setEmptyState('favorites.empty', 'favorites.addFirst');
+        else if (currentPage === 'compare') setEmptyState('compare.empty', 'compare.noItems');
+        else setEmptyState('search.noResults', 'search.tryAgain');
     }
 
     /**
@@ -461,7 +534,6 @@ const GunplaApp = (function () {
      */
     function toggleFavorite(productId) {
         const index = favorites.indexOf(productId);
-        const isNowFavorite = index === -1;
 
         if (index > -1) {
             favorites.splice(index, 1);
@@ -469,21 +541,10 @@ const GunplaApp = (function () {
             favorites.push(productId);
         }
         saveFavorites();
-        updateBadges();
-
-        // Immediately update all matching buttons in the DOM
-        document.querySelectorAll(`.favorite-btn[data-id="${productId}"]`).forEach(btn => {
-            btn.classList.toggle('active', isNowFavorite);
-        });
-
-        // Also update detail page button if present
-        const detailFavBtn = document.getElementById('detailFavoriteBtn');
-        if (detailFavBtn) {
-            detailFavBtn.classList.toggle('active', isNowFavorite);
-        }
+        refreshFavCompareUI();
 
         // If the Favorites tab is open, immediately drop the deselected item
-        if (document.getElementById('favoritesNav')?.classList.contains('active')) {
+        if (currentPage === 'favorites' && isMainPage()) {
             showFavoritesView();
         }
     }
@@ -493,7 +554,6 @@ const GunplaApp = (function () {
      */
     function toggleCompare(productId) {
         const index = compareList.indexOf(productId);
-        const isNowInCompare = index === -1;
 
         if (index > -1) {
             compareList.splice(index, 1);
@@ -505,22 +565,11 @@ const GunplaApp = (function () {
             compareList.push(productId);
         }
         saveCompareList();
-        updateBadges();
-        updateCompareDrawer();
-
-        // Immediately update all matching buttons in the DOM
-        document.querySelectorAll(`.compare-btn[data-id="${productId}"]`).forEach(btn => {
-            btn.classList.toggle('active', isNowInCompare);
-        });
-
-        // Also update detail page button if present
-        const detailCompBtn = document.getElementById('detailCompareBtn');
-        if (detailCompBtn) {
-            detailCompBtn.classList.toggle('active', isNowInCompare);
-        }
+        compareDrawerDismissed = false; // a change brings the drawer back
+        refreshFavCompareUI();
 
         // If the Compare tab is open, immediately reflect the change in the table
-        if (document.getElementById('compareNav')?.classList.contains('active')) {
+        if (currentPage === 'compare' && isMainPage()) {
             showCompareView();
         }
     }
@@ -540,14 +589,10 @@ const GunplaApp = (function () {
 
         favorites = [];
         saveFavorites();
-        updateBadges();
-
-        // Clear active states across the DOM
-        document.querySelectorAll('.favorite-btn.active').forEach(b => b.classList.remove('active'));
-        document.getElementById('detailFavoriteBtn')?.classList.remove('active');
+        refreshFavCompareUI();
 
         // Refresh the favorites view if it is currently active
-        if (document.getElementById('favoritesNav')?.classList.contains('active')) {
+        if (currentPage === 'favorites' && isMainPage()) {
             showFavoritesView();
         }
     }
@@ -565,17 +610,19 @@ const GunplaApp = (function () {
             : 'Clear all compare items?';
         if (!confirm(msg)) return;
 
+        clearCompareList();
+    }
+
+    /**
+     * Empty the compare list and refresh every place that shows it
+     */
+    function clearCompareList() {
         compareList = [];
         saveCompareList();
-        updateBadges();
-        updateCompareDrawer();
-
-        // Clear active states across the DOM
-        document.querySelectorAll('.compare-btn.active').forEach(b => b.classList.remove('active'));
-        document.getElementById('detailCompareBtn')?.classList.remove('active');
+        refreshFavCompareUI();
 
         // Refresh the compare view if it is currently active
-        if (document.getElementById('compareNav')?.classList.contains('active')) {
+        if (currentPage === 'compare' && isMainPage()) {
             showCompareView();
         }
     }
@@ -604,26 +651,41 @@ const GunplaApp = (function () {
 
     /**
      * Sync every favorite/compare UI element to the current in-memory state.
-     * Used after a cross-tab storage change so the whole page reflects reality.
+     * Used after any change (this tab or another tab) so the whole page reflects reality.
      */
     function refreshFavCompareUI() {
         updateBadges();
 
         document.querySelectorAll('.favorite-btn[data-id]').forEach(btn => {
-            btn.classList.toggle('active', favorites.includes(btn.getAttribute('data-id')));
+            setToggleState(btn, favorites.includes(btn.getAttribute('data-id')), 'product.addToFavorites', 'product.removeFromFavorites');
         });
         document.querySelectorAll('.compare-btn[data-id]').forEach(btn => {
-            btn.classList.toggle('active', compareList.includes(btn.getAttribute('data-id')));
+            setToggleState(btn, compareList.includes(btn.getAttribute('data-id')), 'product.addToCompare', 'product.removeFromCompare');
         });
 
         if (currentProduct) {
-            document.getElementById('detailFavoriteBtn')
-                ?.classList.toggle('active', favorites.includes(currentProduct.id));
-            document.getElementById('detailCompareBtn')
-                ?.classList.toggle('active', compareList.includes(currentProduct.id));
+            setToggleState(document.getElementById('detailFavoriteBtn'),
+                favorites.includes(currentProduct.id), 'product.addToFavorites', 'product.removeFromFavorites');
+            setToggleState(document.getElementById('detailCompareBtn'),
+                compareList.includes(currentProduct.id), 'product.addToCompare', 'product.removeFromCompare');
         }
 
         updateCompareDrawer();
+    }
+
+    /**
+     * Read a stored id list defensively (corrupt or hand-edited storage
+     * must not break the page)
+     */
+    function readIdList(key, max) {
+        try {
+            const list = JSON.parse(localStorage.getItem(key));
+            if (!Array.isArray(list)) return [];
+            const ids = [...new Set(list.filter(id => typeof id === 'string'))];
+            return max ? ids.slice(0, max) : ids;
+        } catch (e) {
+            return [];
+        }
     }
 
     /**
@@ -632,19 +694,17 @@ const GunplaApp = (function () {
      */
     function setupStorageSync() {
         window.addEventListener('storage', (e) => {
-            if (e.key === 'gunpla-favorites') {
-                try { favorites = JSON.parse(e.newValue) || []; } catch (err) { favorites = []; }
+            if (e.key === 'gunpla-favorites' || e.key === null) {
+                favorites = readIdList('gunpla-favorites');
                 refreshFavCompareUI();
-                if (document.getElementById('favoritesNav')?.classList.contains('active')) {
-                    showFavoritesView();
-                }
-            } else if (e.key === 'gunpla-compare') {
-                try { compareList = JSON.parse(e.newValue) || []; } catch (err) { compareList = []; }
+                if (currentPage === 'favorites' && isMainPage()) showFavoritesView();
+            }
+            if (e.key === 'gunpla-compare' || e.key === null) {
+                compareList = readIdList('gunpla-compare', MAX_COMPARE);
                 refreshFavCompareUI();
-                if (document.getElementById('compareNav')?.classList.contains('active')) {
-                    showCompareView();
-                }
-            } else if (e.key === RECENT_KEY) {
+                if (currentPage === 'compare' && isMainPage()) showCompareView();
+            }
+            if (e.key === RECENT_KEY || e.key === null) {
                 // Keep the recently-viewed strip in sync across tabs too
                 renderRecentProducts();
             }
@@ -660,26 +720,37 @@ const GunplaApp = (function () {
 
         if (!drawer || !itemsContainer) return;
 
-        if (compareList.length > 0) {
-            drawer.classList.add('active');
+        // Hidden in the compare view itself (the table already shows the items)
+        const show = compareList.length > 0 && currentPage !== 'compare' && !compareDrawerDismissed;
 
-            itemsContainer.innerHTML = compareList.map(id => {
-                const product = products.find(p => p.id === id);
-                if (!product) return '';
+        itemsContainer.innerHTML = compareList.map(id => {
+            const product = products.find(p => p.id === id);
+            if (!product) return '';
+            const name = escapeHtml(I18n.getName(product.name));
 
-                return `
-                    <div class="compare-item" data-id="${id}">
-                        <div class="compare-item-image">
-                            <img src="${getThumbnailUrl(product)}" alt="${I18n.getName(product.name)}"
-                                 onerror="this.onerror=null;this.src='images/placeholder.png'">
-                        </div>
-                        <span class="compare-item-name">${I18n.getName(product.name)}</span>
+            return `
+                <div class="compare-item" data-id="${escapeHtml(id)}" title="${name}">
+                    <div class="compare-item-image">
+                        <img src="${getThumbnailUrl(product)}" alt="${name}"
+                             onerror="this.onerror=null;this.src='images/placeholder.png'">
                     </div>
-                `;
-            }).join('');
-        } else {
-            drawer.classList.remove('active');
-        }
+                    <span class="compare-item-name">${name}</span>
+                </div>
+            `;
+        }).join('');
+
+        drawer.classList.toggle('active', show);
+        syncCompareDrawerOffset();
+    }
+
+    /**
+     * Publish the open drawer's height as --compare-drawer-offset so the
+     * page bottom and the floating filter button stay clear of it
+     */
+    function syncCompareDrawerOffset() {
+        const drawer = document.getElementById('compareDrawer');
+        const h = drawer && drawer.classList.contains('active') ? drawer.offsetHeight : 0;
+        document.documentElement.style.setProperty('--compare-drawer-offset', `${h}px`);
     }
 
     /**
@@ -748,17 +819,19 @@ const GunplaApp = (function () {
 
         const colCount = compProducts.length + 1;
         const multi = compProducts.length > 1;
+        const removeLabel = escapeHtml(I18n.t('product.removeFromCompare'));
 
         // Header row: empty corner + one column per product
         let html = '<thead><tr><th class="corner"></th>';
         compProducts.forEach(p => {
+            const name = escapeHtml(I18n.getName(p.name));
             html += `
                 <td class="product-header">
-                    <button class="compare-remove" data-id="${p.id}" title="${L('비교함에서 제거', 'Remove from compare')}" aria-label="Remove">×</button>
-                    <a href="detail.html?id=${p.id}" class="compare-product-link">
-                        <img src="${getThumbnailUrl(p)}" alt="${I18n.getName(p.name)}"
+                    <button class="compare-remove" data-id="${escapeHtml(p.id)}" title="${removeLabel}" aria-label="${removeLabel}: ${name}">×</button>
+                    <a href="detail.html?id=${encodeURIComponent(p.id)}" class="compare-product-link">
+                        <img src="${getThumbnailUrl(p)}" alt="${name}"
                              onerror="this.onerror=null;this.src='images/placeholder.png'">
-                        <span class="product-name">${I18n.getName(p.name)}</span>
+                        <span class="product-name">${name}</span>
                     </a>
                 </td>`;
         });
@@ -798,7 +871,7 @@ const GunplaApp = (function () {
                         barHtml = `<div class="compare-bar"><div class="compare-bar-fill" style="width: ${percent}%"></div></div>`;
                     }
 
-                    html += `<td class="${cellClass}"><span class="cell-value">${spec.get(p)}</span>${barHtml}</td>`;
+                    html += `<td class="${cellClass}"><span class="cell-value">${escapeHtml(spec.get(p))}</span>${barHtml}</td>`;
                 });
 
                 html += '</tr>';
@@ -885,41 +958,65 @@ const GunplaApp = (function () {
     }
 
     /**
-     * Load product detail page
+     * Load product detail page. Resolves to true when the product was found.
      */
     async function loadProductDetail(productId) {
         try {
+            // Every indexed product has a detail file; an id that is not in the
+            // index is unknown — answer without requesting a file that would 404
+            if (products.length && !products.some(p => p.id === productId)) {
+                showDetailNotFound();
+                return false;
+            }
+
             // Try to load detailed data
             let product;
             try {
-                const response = await fetch(`data/gunpla-details/${productId}.json`);
+                const response = await fetch(`data/gunpla-details/${encodeURIComponent(productId)}.json`);
                 if (!response.ok) throw new Error(`Detail not found (${response.status})`);
                 product = await response.json();
             } catch {
-                // Fallback to index data
-                const indexResponse = await fetch('data/gunpla-index.json');
-                const indexData = await indexResponse.json();
-                product = indexData.products.find(p => p.id === productId);
+                // Fallback to index data (already loaded for the recent strip)
+                product = products.find(p => p.id === productId);
             }
 
             if (!product) {
-                console.error('Product not found:', productId);
-                return;
+                console.warn('Product not found:', productId);
+                showDetailNotFound();
+                return false;
             }
 
             // Store for language change re-rendering
             currentProduct = product;
             renderProductDetail(product);
+            return true;
 
         } catch (error) {
             console.error('Failed to load product detail:', error);
+            showDetailNotFound();
+            return false;
         }
+    }
+
+    /**
+     * Replace the detail layout with a "product not found" message
+     */
+    function showDetailNotFound() {
+        currentProduct = null;
+        document.getElementById('detailContainer')?.setAttribute('hidden', '');
+        document.getElementById('breadcrumb')?.setAttribute('hidden', '');
+        document.getElementById('detailNotFound')?.removeAttribute('hidden');
+        document.title = `${I18n.t('product.notFound')} | ${I18n.t('site.title')}`;
     }
 
     /**
      * Render product detail page
      */
     function renderProductDetail(product) {
+        document.getElementById('detailNotFound')?.setAttribute('hidden', '');
+        document.getElementById('detailContainer')?.removeAttribute('hidden');
+        document.getElementById('breadcrumb')?.removeAttribute('hidden');
+
         // Update page title
         document.title = `${I18n.getName(product.name)} | ${I18n.t('site.title')}`;
 
@@ -932,7 +1029,7 @@ const GunplaApp = (function () {
 
         // Badges
         const badges = document.getElementById('detailBadges');
-        badges.innerHTML = `<span class="product-card-grade ${product.grade}">${product.grade}</span>`;
+        badges.innerHTML = `<span class="product-card-grade ${escapeHtml(product.grade)}">${escapeHtml(product.grade)}</span>`;
         if (product.isVerKa) badges.innerHTML += '<span class="product-badge limited">Ver.Ka</span>';
         if (product.isRevive) badges.innerHTML += '<span class="product-badge new">Revive</span>';
 
@@ -967,33 +1064,30 @@ const GunplaApp = (function () {
         // Variants
         renderVariants(product);
 
+        const localized = obj => (obj ? (I18n.getLang() === 'ko' ? obj.ko : obj.en) || [] : []);
+
         // Weapons & Accessories
-        if (product.weapons) {
-            const weaponsList = document.getElementById('weaponsList');
-            if (weaponsList) {
-                const weapons = I18n.getLang() === 'ko' ? product.weapons.ko : product.weapons.en;
-                const accessories = product.accessories ? (I18n.getLang() === 'ko' ? product.accessories.ko : product.accessories.en) : [];
-                const allItems = [...(weapons || []), ...(accessories || [])];
-                weaponsList.innerHTML = allItems.map(w => `<span class="product-tag">${w}</span>`).join('') || '';
-            }
+        const weaponsList = document.getElementById('weaponsList');
+        if (weaponsList) {
+            const allItems = [...localized(product.weapons), ...localized(product.accessories)];
+            weaponsList.innerHTML = allItems.map(w => `<span class="product-tag">${escapeHtml(w)}</span>`).join('');
+            weaponsList.closest('.detail-weapons')?.toggleAttribute('hidden', allItems.length === 0);
         }
 
         // Recommended for
-        if (product.recommendation?.perfectFor) {
-            const list = document.getElementById('recommendedForList');
-            if (list) {
-                const items = I18n.getLang() === 'ko' ? product.recommendation.perfectFor.ko : product.recommendation.perfectFor.en;
-                list.innerHTML = items?.map(item => `<li>• ${item}</li>`).join('') || '';
-            }
+        const recList = document.getElementById('recommendedForList');
+        if (recList) {
+            const items = localized(product.recommendation?.perfectFor);
+            recList.innerHTML = items.map(item => `<li>• ${escapeHtml(item)}</li>`).join('');
+            recList.closest('.detail-recommended-for')?.toggleAttribute('hidden', items.length === 0);
         }
 
         // Building tips
-        if (product.buildingTips) {
-            const tipsList = document.getElementById('tipsList');
-            if (tipsList) {
-                const tips = I18n.getLang() === 'ko' ? product.buildingTips.ko : product.buildingTips.en;
-                tipsList.innerHTML = tips?.map(tip => `<li>💡 ${tip}</li>`).join('') || '';
-            }
+        const tipsList = document.getElementById('tipsList');
+        if (tipsList) {
+            const tips = localized(product.buildingTips);
+            tipsList.innerHTML = tips.map(tip => `<li>💡 ${escapeHtml(tip)}</li>`).join('');
+            document.getElementById('detailTips')?.toggleAttribute('hidden', tips.length === 0);
         }
 
         // Setup tabs
@@ -1005,16 +1099,20 @@ const GunplaApp = (function () {
 
     /**
      * Render the detail-page image gallery: main image, thumbnails, prev/next.
-     * Falls back to the index thumbnail when no gallery data exists.
+     * Falls back to the index thumbnail when no usable gallery data exists.
      */
     function renderGallery(product) {
         const mainImage = document.getElementById('mainImage');
         if (!mainImage) return;
 
         const images = [product.images?.boxart, ...(product.images?.gallery || [])]
-            .filter(Boolean)
+            .filter(url => url && isUsableImageUrl(url))
             .map(normalizeImageUrl);
-        if (images.length === 0) images.push(getThumbnailUrl(product));
+        if (images.length === 0) {
+            // Same image as the product card (index thumbnail), not a blank placeholder
+            const indexEntry = products.find(p => p.id === product.id) || product;
+            images.push(getThumbnailUrl(indexEntry));
+        }
 
         galleryImages = images;
         mainImage.alt = I18n.getName(product.name);
@@ -1030,8 +1128,8 @@ const GunplaApp = (function () {
         const thumbs = document.getElementById('galleryThumbnails');
         if (thumbs) {
             thumbs.innerHTML = multiple ? images.map((src, i) => `
-                <button type="button" class="gallery-thumbnail${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Image ${i + 1}">
-                    <img src="${src}" alt="" loading="lazy"
+                <button type="button" class="gallery-thumbnail${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="${i + 1} / ${images.length}">
+                    <img src="${escapeHtml(src)}" alt="" loading="lazy"
                          onerror="this.onerror=null;this.src='images/placeholder.png'">
                 </button>
             `).join('') : '';
@@ -1080,8 +1178,8 @@ const GunplaApp = (function () {
         const specItems = [
             { key: 'partCount', label: I18n.t('product.partCount') },
             { key: 'runnerCount', label: I18n.t('product.runnerCount') },
-            { key: 'difficulty', label: I18n.t('difficulty.beginner').replace('초보', '난이도').replace('Beginner', 'Difficulty') },
-            { key: 'mobility', label: I18n.getLang() === 'ko' ? '가동성' : 'Mobility' },
+            { key: 'difficulty', label: I18n.t('product.difficulty') },
+            { key: 'mobility', label: I18n.t('product.mobility') },
             { key: 'frameType', label: I18n.getLang() === 'ko' ? '프레임' : 'Frame' },
             { key: 'colorSeparation', label: I18n.getLang() === 'ko' ? '색분할' : 'Color Sep.' },
             { key: 'sealDependency', label: I18n.getLang() === 'ko' ? '씰 의존도' : 'Sticker Dep.' },
@@ -1107,8 +1205,8 @@ const GunplaApp = (function () {
 
             return `
                 <div class="spec-item">
-                    <span class="spec-label">${label}</span>
-                    <span class="spec-value">${value}</span>
+                    <span class="spec-label">${escapeHtml(label)}</span>
+                    <span class="spec-value">${escapeHtml(value)}</span>
                 </div>
             `;
         }).filter(Boolean).join('');
@@ -1138,43 +1236,73 @@ const GunplaApp = (function () {
     function renderVariants(product) {
         const variantsGrid = document.getElementById('variantsGrid');
         const relatedGrades = document.getElementById('relatedGrades');
+        const unavailableTitle = escapeHtml(I18n.t('product.detailsUnavailable'));
+        const variants = product.variants || [];
+        const related = product.relatedGrades || [];
 
         // Color/Config variants — resolve the real thumbnail from the product
         // index (the previous random gunpla.fyi id showed unrelated boxarts).
         // Items whose id is not in the index have no detail page, so they are
         // rendered as non-clickable cards instead of broken links.
-        if (variantsGrid && product.variants) {
-            variantsGrid.innerHTML = product.variants.map(v => {
+        if (variantsGrid) {
+            variantsGrid.innerHTML = variants.map(v => {
                 const variantProduct = products.find(p => p.id === v.id);
                 const imgSrc = variantProduct ? getThumbnailUrl(variantProduct) : 'images/placeholder.png';
+                const name = escapeHtml(I18n.getName(v.name));
                 const inner = `
                     <img src="${imgSrc}"
-                         alt="${I18n.getName(v.name)}" class="variant-image"
+                         alt="${name}" class="variant-image"
                          onerror="this.onerror=null;this.src='images/placeholder.png'">
                     <div class="variant-info">
-                        <span class="variant-type">${v.variantType}</span>
-                        <span class="variant-name">${I18n.getName(v.name)}</span>
+                        <span class="variant-type">${escapeHtml(v.variantType)}</span>
+                        <span class="variant-name">${name}</span>
                     </div>`;
                 if (!variantProduct) {
-                    return `<div class="variant-card unavailable" data-id="${v.id}" title="${I18n.getLang() === 'ko' ? '상세 정보 미등록' : 'Details not available'}">${inner}</div>`;
+                    return `<div class="variant-card unavailable" data-id="${escapeHtml(v.id)}" title="${unavailableTitle}">${inner}</div>`;
                 }
-                return `<a href="detail.html?id=${v.id}" class="variant-card ${v.id === product.id ? 'current' : ''}" data-id="${v.id}">${inner}</a>`;
+                return `<a href="detail.html?id=${encodeURIComponent(v.id)}" class="variant-card ${v.id === product.id ? 'current' : ''}" data-id="${escapeHtml(v.id)}">${inner}</a>`;
             }).join('');
+            variantsGrid.closest('.variants-section')?.toggleAttribute('hidden', variants.length === 0);
         }
 
         // Related grades (different grade same MS)
-        if (relatedGrades && product.relatedGrades) {
-            relatedGrades.innerHTML = product.relatedGrades.map(r => {
+        if (relatedGrades) {
+            relatedGrades.innerHTML = related.map(r => {
                 const exists = products.some(p => p.id === r.id);
                 const inner = `
-                    <span class="grade-badge product-card-grade ${r.grade}">${r.grade}</span>
-                    <span class="grade-name">${I18n.getName(r.name)}</span>`;
+                    <span class="grade-badge product-card-grade ${escapeHtml(r.grade)}">${escapeHtml(r.grade)}</span>
+                    <span class="grade-name">${escapeHtml(I18n.getName(r.name))}</span>`;
                 if (!exists) {
-                    return `<div class="related-grade-item unavailable" data-id="${r.id}" title="${I18n.getLang() === 'ko' ? '상세 정보 미등록' : 'Details not available'}">${inner}</div>`;
+                    return `<div class="related-grade-item unavailable" data-id="${escapeHtml(r.id)}" title="${unavailableTitle}">${inner}</div>`;
                 }
-                return `<a href="detail.html?id=${r.id}" class="related-grade-item" data-id="${r.id}">${inner}</a>`;
+                return `<a href="detail.html?id=${encodeURIComponent(r.id)}" class="related-grade-item" data-id="${escapeHtml(r.id)}">${inner}</a>`;
             }).join('');
+            relatedGrades.closest('.related-grades-section')?.toggleAttribute('hidden', related.length === 0);
         }
+
+        // No variant data at all → drop the tab instead of showing empty headings
+        const variantsTabBtn = document.querySelector('.tab-btn[data-tab="variants"]');
+        if (variantsTabBtn) {
+            const empty = variants.length === 0 && related.length === 0;
+            variantsTabBtn.toggleAttribute('hidden', empty);
+            if (empty && variantsTabBtn.classList.contains('active')) activateDetailTab('specs');
+        }
+    }
+
+    /**
+     * Switch the detail page to the given tab ('specs' | 'variants')
+     */
+    function activateDetailTab(tabId, focus = false) {
+        document.querySelectorAll('.tab-btn').forEach(t => {
+            const isActive = t.getAttribute('data-tab') === tabId;
+            t.classList.toggle('active', isActive);
+            t.setAttribute('aria-selected', String(isActive));
+            t.tabIndex = isActive ? 0 : -1;
+            if (isActive && focus) t.focus();
+        });
+        document.querySelectorAll('.tab-content').forEach(c => {
+            c.classList.toggle('active', c.id === `${tabId}Tab`);
+        });
     }
 
     /**
@@ -1186,17 +1314,18 @@ const GunplaApp = (function () {
         if (detailTabsWired) return;
         detailTabsWired = true;
 
-        const tabs = document.querySelectorAll('.tab-btn');
-        const contents = document.querySelectorAll('.tab-content');
+        const tabs = Array.from(document.querySelectorAll('.tab-btn'));
 
         tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
+            tab.addEventListener('click', () => activateDetailTab(tab.getAttribute('data-tab')));
 
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(`${tabId}Tab`)?.classList.add('active');
+            // Arrow keys move between visible tabs (WAI-ARIA tabs pattern)
+            tab.addEventListener('keydown', (e) => {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                const visible = tabs.filter(t => !t.hidden);
+                const i = visible.indexOf(tab);
+                const next = visible[(i + (e.key === 'ArrowRight' ? 1 : -1) + visible.length) % visible.length];
+                if (next) activateDetailTab(next.getAttribute('data-tab'), true);
             });
         });
     }
@@ -1209,9 +1338,9 @@ const GunplaApp = (function () {
         const compBtn = document.getElementById('detailCompareBtn');
         const manualBtn = document.getElementById('detailManualBtn');
 
-        // Reflect current state on every render (safe to run repeatedly)
-        if (favBtn) favBtn.classList.toggle('active', favorites.includes(product.id));
-        if (compBtn) compBtn.classList.toggle('active', compareList.includes(product.id));
+        // Reflect current state + localized labels on every render (safe to run repeatedly)
+        setToggleState(favBtn, favorites.includes(product.id), 'product.addToFavorites', 'product.removeFromFavorites');
+        setToggleState(compBtn, compareList.includes(product.id), 'product.addToCompare', 'product.removeFromCompare');
 
         // Attach click handlers only ONCE — renderProductDetail can run again
         // (e.g. on language change), so guarding prevents listener stacking and
@@ -1241,7 +1370,7 @@ const GunplaApp = (function () {
 
             if (manualId) {
                 // Direct manual page (only when a verified Bandai manual id exists)
-                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${manualId}`;
+                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${encodeURIComponent(manualId)}`;
                 manualBtn.removeAttribute('title');
             } else {
                 // Search the official manual site by grade + model number / name
@@ -1250,9 +1379,7 @@ const GunplaApp = (function () {
                     .map(s => encodeURIComponent(String(s).trim()))
                     .join('+');
                 manualBtn.href = `https://manual.bandai-hobby.net/menus?keyword=${keyword}`;
-                manualBtn.title = I18n.getLang() === 'ko'
-                    ? '공식 설명서 검색 결과로 이동합니다'
-                    : 'Opens the official manual search results';
+                manualBtn.title = I18n.t('product.manualSearchHint');
             }
 
             manualBtn.style.display = 'flex';
@@ -1263,54 +1390,173 @@ const GunplaApp = (function () {
      * Save favorites to localStorage
      */
     function saveFavorites() {
-        localStorage.setItem('gunpla-favorites', JSON.stringify(favorites));
+        try {
+            localStorage.setItem('gunpla-favorites', JSON.stringify(favorites));
+        } catch (e) {
+            console.warn('Failed to save favorites:', e);
+        }
     }
 
     /**
      * Save compare list to localStorage
      */
     function saveCompareList() {
-        localStorage.setItem('gunpla-compare', JSON.stringify(compareList));
+        try {
+            localStorage.setItem('gunpla-compare', JSON.stringify(compareList));
+        } catch (e) {
+            console.warn('Failed to save compare list:', e);
+        }
     }
 
     /**
      * Load saved data from localStorage
      */
     function loadSavedData() {
-        try {
-            favorites = JSON.parse(localStorage.getItem('gunpla-favorites')) || [];
-            compareList = JSON.parse(localStorage.getItem('gunpla-compare')) || [];
-            updateBadges();
-            updateCompareDrawer();
-        } catch {
-            favorites = [];
-            compareList = [];
+        favorites = readIdList('gunpla-favorites');
+        compareList = readIdList('gunpla-compare', MAX_COMPARE);
+        refreshFavCompareUI();
+    }
+
+    function isMainPage() {
+        return !document.body.classList.contains('detail-page');
+    }
+
+    // ===== Views (home / favorites / compare) and history =====
+
+    function getViewFromURL() {
+        const view = new URLSearchParams(window.location.search).get('view');
+        return VIEWS.includes(view) ? view : 'home';
+    }
+
+    /**
+     * User navigation to a view: adds a history entry (keeps the current
+     * filter/search params) so Back returns to the previous view
+     */
+    function navigateTo(view) {
+        if (!VIEWS.includes(view)) view = 'home';
+        if (view !== getViewFromURL()) {
+            const params = new URLSearchParams(window.location.search);
+            if (view === 'home') params.delete('view');
+            else params.set('view', view);
+            const qs = params.toString();
+            window.history.pushState({ view }, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
         }
+        renderView(view);
+    }
+
+    function renderView(view) {
+        if (view === 'favorites') showFavoritesView();
+        else if (view === 'compare') showCompareView();
+        else showHomeView();
+    }
+
+    /**
+     * Highlight the nav entry for the current view (desktop + mobile menu)
+     */
+    function setActiveNav(view) {
+        document.querySelectorAll('.nav-item[data-page], .mobile-nav-item[data-page]').forEach(n => {
+            const isActive = n.getAttribute('data-page') === view;
+            n.classList.toggle('active', isActive);
+            if (isActive) n.setAttribute('aria-current', 'page');
+            else n.removeAttribute('aria-current');
+        });
+    }
+
+    // ===== Off-canvas panels (mobile menu, filter sidebar) =====
+
+    function setMobileMenuOpen(open) {
+        const btn = document.getElementById('mobileMenuBtn');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        if (!btn || !overlay) return;
+        btn.classList.toggle('active', open);
+        overlay.classList.toggle('active', open);
+        btn.setAttribute('aria-expanded', String(open));
+        if (open) setFilterPanelOpen(false);
+    }
+
+    function setFilterPanelOpen(open) {
+        const sidebar = document.getElementById('filterSidebar');
+        const toggle = document.getElementById('mobileFilterBtn');
+        if (!sidebar || !toggle) return;
+        const wasOpen = sidebar.classList.contains('active');
+        sidebar.classList.toggle('active', open);
+        document.body.classList.toggle('filter-open', open);
+        const backdrop = document.getElementById('filterBackdrop');
+        if (backdrop) backdrop.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        if (open && !wasOpen) {
+            setMobileMenuOpen(false);
+            document.getElementById('filterCloseBtn')?.focus();
+        } else if (!open && wasOpen && sidebar.contains(document.activeElement)) {
+            toggle.focus();
+        }
+    }
+
+    /**
+     * Hamburger menu shared by both pages: toggle, backdrop click, Escape,
+     * and auto-close when the viewport grows past the hamburger breakpoint
+     */
+    function setupMobileMenu() {
+        const btn = document.getElementById('mobileMenuBtn');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        if (!btn || !overlay) return;
+
+        btn.addEventListener('click', () => setMobileMenuOpen(!overlay.classList.contains('active')));
+
+        // Tapping the dimmed area below the menu closes it
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) setMobileMenuOpen(false);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (overlay.classList.contains('active')) {
+                setMobileMenuOpen(false);
+                btn.focus();
+            }
+            if (document.getElementById('filterSidebar')?.classList.contains('active')) {
+                setFilterPanelOpen(false);
+            }
+        });
+
+        // Both panels only exist below 1024px; close them when leaving that
+        // range so a stale backdrop can't cover the desktop layout
+        const compact = window.matchMedia('(max-width: 1024px)');
+        compact.addEventListener('change', (e) => {
+            if (!e.matches) {
+                setMobileMenuOpen(false);
+                setFilterPanelOpen(false);
+            }
+        });
     }
 
     /**
      * Setup event listeners
      */
     function setupEventListeners() {
-        // Filter change
-        document.addEventListener('filterChange', applyFiltersAndRender);
+        // Filter / search change — always shows the filtered catalog.
+        // (Filter.updateURL has already dropped ?view= from the address.)
+        document.addEventListener('filterChange', () => {
+            if (currentPage !== 'home') showHomeView();
+            else applyFiltersAndRender();
+        });
 
-        // Language change - re-render all products with new language
+        // Back / forward between views: restore filters + view from the URL
+        window.addEventListener('popstate', () => {
+            Filter.syncFromURL();
+            renderView(getViewFromURL());
+        });
+
+        // Language change - re-render the current view in the new language
         document.addEventListener('langChange', () => {
-            if (document.body.classList.contains('detail-page')) {
-                if (currentProduct) renderProductDetail(currentProduct);
+            if (currentPage === 'compare') {
+                showCompareView();
             } else {
-                const tableSection = document.getElementById('compareTableSection');
-                if (tableSection && tableSection.style.display !== 'none') {
-                    // Compare view is active — re-render the spec table in the new language
-                    showCompareView();
-                } else {
-                    displayedCount = 0; // Reset to force full re-render
-                    renderProducts();
-                    updateRecommendationPanel(Filter.getActiveFilters());
-                }
+                rerenderGrid();
+                updateRecommendationPanel(Filter.getActiveFilters());
             }
-            updateCompareDrawer(); // Also update compare drawer names
+            renderRecentProducts();
+            refreshFavCompareUI(); // localized button labels + drawer names
         });
 
         // Language toggle
@@ -1319,23 +1565,14 @@ const GunplaApp = (function () {
         });
 
         // Mobile menu
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        if (mobileMenuBtn && mobileMenuOverlay) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenuBtn.classList.toggle('active');
-                mobileMenuOverlay.classList.toggle('active');
-            });
-        }
+        setupMobileMenu();
 
-        // Mobile filter
-        const mobileFilterBtn = document.getElementById('mobileFilterBtn');
-        const filterSidebar = document.getElementById('filterSidebar');
-        if (mobileFilterBtn && filterSidebar) {
-            mobileFilterBtn.addEventListener('click', () => {
-                filterSidebar.classList.toggle('active');
-            });
-        }
+        // Mobile filter panel
+        document.getElementById('mobileFilterBtn')?.addEventListener('click', () => {
+            setFilterPanelOpen(!document.getElementById('filterSidebar')?.classList.contains('active'));
+        });
+        document.getElementById('filterCloseBtn')?.addEventListener('click', () => setFilterPanelOpen(false));
+        document.getElementById('filterBackdrop')?.addEventListener('click', () => setFilterPanelOpen(false));
 
         // Sort
         const sortSelect = document.getElementById('sortSelect');
@@ -1367,17 +1604,19 @@ const GunplaApp = (function () {
         // View toggle
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                document.querySelectorAll('.view-btn').forEach(b => {
+                    b.classList.toggle('active', b === btn);
+                    b.setAttribute('aria-pressed', String(b === btn));
+                });
                 currentView = btn.getAttribute('data-view');
                 document.getElementById('productGrid')?.classList.toggle('list-view', currentView === 'list');
             });
         });
 
-        // Load more
+        // Load more (wrapped: the click event must not become the count argument)
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', renderProducts);
+            loadMoreBtn.addEventListener('click', () => renderProducts());
         }
 
         // Quick view close
@@ -1393,26 +1632,26 @@ const GunplaApp = (function () {
         }
 
         // Compare drawer
+        const compareDrawer = document.getElementById('compareDrawer');
         const compareDrawerClose = document.getElementById('compareDrawerClose');
         if (compareDrawerClose) {
             compareDrawerClose.addEventListener('click', () => {
-                document.getElementById('compareDrawer')?.classList.remove('active');
+                compareDrawerDismissed = true;
+                updateCompareDrawer();
             });
         }
 
-        const compareClearBtn = document.getElementById('compareClearBtn');
-        if (compareClearBtn) {
-            compareClearBtn.addEventListener('click', () => {
-                compareList = [];
-                saveCompareList();
-                updateBadges();
-                updateCompareDrawer();
-                document.querySelectorAll('.compare-btn.active').forEach(b => b.classList.remove('active'));
-                // Reflect immediately if the Compare tab is open
-                if (document.getElementById('compareNav')?.classList.contains('active')) {
-                    showCompareView();
-                }
-            });
+        // "Compare" opens the compare view (spec table)
+        document.getElementById('compareSubmitBtn')?.addEventListener('click', () => {
+            navigateTo('compare');
+            window.scrollTo({ top: 0 });
+        });
+
+        document.getElementById('compareClearBtn')?.addEventListener('click', clearCompareList);
+
+        // Drawer height changes with its content and the breakpoint
+        if (compareDrawer && 'ResizeObserver' in window) {
+            new ResizeObserver(syncCompareDrawerOffset).observe(compareDrawer);
         }
 
         // Clear recent products button
@@ -1427,41 +1666,15 @@ const GunplaApp = (function () {
         // Cross-tab favorites/compare synchronization
         setupStorageSync();
 
-        // Navigation tabs - Favorites and Compare
-        const favoritesNav = document.getElementById('favoritesNav');
-        if (favoritesNav) {
-            favoritesNav.addEventListener('click', (e) => {
-                e.preventDefault();
-                showFavoritesView();
-            });
-        }
-
-        const compareNav = document.getElementById('compareNav');
-        if (compareNav) {
-            compareNav.addEventListener('click', (e) => {
-                e.preventDefault();
-                showCompareView();
-            });
-        }
-
-        // Home navigation
-        document.querySelectorAll('.nav-item[data-page="home"]').forEach(item => {
+        // Navigation: desktop nav + mobile menu (home / favorites / compare).
+        // Links carry real hrefs (open-in-new-tab works); a plain click is
+        // handled in-page and recorded in history.
+        document.querySelectorAll('.nav-item[data-page], .mobile-nav-item[data-page]').forEach(item => {
             item.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
                 e.preventDefault();
-                showHomeView();
-            });
-        });
-
-        // Mobile menu navigation (home / favorites / compare) — closes the menu
-        document.querySelectorAll('.mobile-nav-item[data-page]').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = item.getAttribute('data-page');
-                if (page === 'favorites') showFavoritesView();
-                else if (page === 'compare') showCompareView();
-                else showHomeView();
-                document.getElementById('mobileMenuOverlay')?.classList.remove('active');
-                document.getElementById('mobileMenuBtn')?.classList.remove('active');
+                navigateTo(item.getAttribute('data-page'));
+                setMobileMenuOpen(false);
             });
         });
     }
@@ -1470,51 +1683,36 @@ const GunplaApp = (function () {
      * Show favorites view
      */
     function showFavoritesView() {
-        // Update nav active state
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById('favoritesNav')?.classList.add('active');
+        currentPage = 'favorites';
+        setActiveNav('favorites');
 
         // Restore normal grid layout (in case we came from compare view)
         exitCompareLayout();
 
-        // Filter to show only favorites
-        const favProducts = products.filter(p => favorites.includes(p.id));
-        filteredProducts = favProducts;
-        displayedCount = 0;
-
         // Hide recommendation panel
         showRecommendationPanel(false);
 
-        // Update result count
-        const countEl = document.getElementById('resultCount');
-        if (countEl) countEl.textContent = favProducts.length;
+        // Favorites in catalog order, then the selected sort
+        filteredProducts = products.filter(p => favorites.includes(p.id));
+        sortProducts();
+        displayedCount = 0;
 
-        // Render
-        const grid = document.getElementById('productGrid');
-        const noResults = document.getElementById('noResults');
-        const loadMoreContainer = document.getElementById('loadMoreContainer');
-
-        if (favProducts.length === 0) {
-            grid.innerHTML = '';
-            noResults.style.display = 'flex';
-            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '즐겨찾기가 없습니다' : 'No favorites yet';
-            loadMoreContainer.style.display = 'none';
-        } else {
-            noResults.style.display = 'none';
-            renderProducts();
-        }
+        updateResultCount();
+        renderProducts();
+        updateCompareDrawer();
     }
 
     /**
      * Show compare view
      */
     function showCompareView() {
-        // Update nav active state
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById('compareNav')?.classList.add('active');
+        currentPage = 'compare';
+        setActiveNav('compare');
 
-        // Filter to show only compare items
-        const compProducts = products.filter(p => compareList.includes(p.id));
+        // Filter to show only compare items (in the order they were added)
+        const compProducts = compareList
+            .map(id => products.find(p => p.id === id))
+            .filter(Boolean);
 
         // Hide recommendation panel
         showRecommendationPanel(false);
@@ -1536,14 +1734,17 @@ const GunplaApp = (function () {
 
         if (compProducts.length === 0) {
             if (noResults) {
+                renderEmptyState();
                 noResults.style.display = 'flex';
-                noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '비교함이 비어있습니다' : 'Compare list is empty';
             }
             if (tableSection) tableSection.style.display = 'none';
         } else {
             if (noResults) noResults.style.display = 'none';
             renderCompareTable(compProducts);
         }
+
+        // The drawer is redundant here — hide it
+        updateCompareDrawer();
     }
 
     /**
@@ -1562,32 +1763,78 @@ const GunplaApp = (function () {
      * Show home view (reset to normal)
      */
     function showHomeView() {
-        // Update nav active state
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector('.nav-item[data-page="home"]')?.classList.add('active');
-
-        // Reset no results text
-        const noResults = document.getElementById('noResults');
-        if (noResults) {
-            noResults.querySelector('h3').textContent = I18n.getLang() === 'ko' ? '검색 결과가 없습니다' : 'No results found';
-        }
+        currentPage = 'home';
+        setActiveNav('home');
 
         // Restore normal grid layout (in case we came from compare view)
         exitCompareLayout();
 
         // Re-apply filters and render
         applyFiltersAndRender();
+        updateCompareDrawer();
+    }
+
+    /**
+     * Initialize the detail page (detail.html?id=...)
+     */
+    async function initDetail() {
+        await I18n.init();
+        I18n.initTheme(); // Apply saved theme
+        // Await: renderProductDetail resolves labels via Filter.getCategory,
+        // so the taxonomy must be loaded before the product renders
+        await Filter.init();
+
+        // Load saved favorites and compare data (updates nav badges)
+        loadSavedData();
+
+        // Load the product index so the recent-viewed strip can render thumbnails
+        await loadProducts();
+
+        // Load product from URL parameter
+        const productId = new URLSearchParams(window.location.search).get('id');
+        const found = productId ? await loadProductDetail(productId) : false;
+        if (!productId) showDetailNotFound();
+
+        // Track as recently viewed only when the product exists (also renders the strip)
+        if (found) addToRecent(productId);
+        else renderRecentProducts();
+
+        // Re-render the product in the new language
+        document.addEventListener('langChange', () => {
+            if (currentProduct) renderProductDetail(currentProduct);
+            else showDetailNotFound();
+            renderRecentProducts();
+        });
+
+        // Wire the "clear recent" button on the detail page
+        document.getElementById('clearRecentBtn')?.addEventListener('click', clearRecentProducts);
+
+        // Wire the inconspicuous footer reset buttons on the detail page
+        setupResetButtons();
+
+        // Cross-tab favorites/compare synchronization
+        setupStorageSync();
+
+        // Setup tabs immediately (don't depend on data load)
+        setupDetailTabs();
+
+        // Language toggle
+        document.querySelectorAll('.lang-toggle, .mobile-lang-toggle').forEach(btn => {
+            btn.addEventListener('click', I18n.toggleLang);
+        });
+
+        // Mobile menu
+        setupMobileMenu();
     }
 
     // Public API
     return {
         init,
+        initDetail,
         loadProductDetail,
         toggleFavorite,
         toggleCompare,
         setupDetailTabs,
-        setFavorites: (list) => { favorites = list; },
-        setCompareList: (list) => { compareList = list; },
         getProducts: () => products,
         addToRecent,
         loadProducts,
@@ -1606,81 +1853,9 @@ window.GunplaApp = GunplaApp;
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Only init on main page
-    if (!document.body.classList.contains('detail-page')) {
-        GunplaApp.init();
+    if (document.body.classList.contains('detail-page')) {
+        GunplaApp.initDetail();
     } else {
-        // Detail page - init modules and setup language toggle
-        I18n.init().then(async () => {
-            I18n.initTheme(); // Apply saved theme
-            // Await: renderProductDetail resolves labels via Filter.getCategory,
-            // so the taxonomy must be loaded before the product renders
-            await Filter.init();
-
-            // Load saved favorites and compare data
-            const savedFavorites = localStorage.getItem('gunpla-favorites');
-            const savedCompare = localStorage.getItem('gunpla-compare');
-            if (savedFavorites) {
-                try {
-                    GunplaApp.setFavorites(JSON.parse(savedFavorites));
-                } catch (e) {
-                    GunplaApp.setFavorites([]);
-                }
-            }
-            if (savedCompare) {
-                try {
-                    GunplaApp.setCompareList(JSON.parse(savedCompare));
-                } catch (e) {
-                    GunplaApp.setCompareList([]);
-                }
-            }
-
-            // Update nav badges with loaded data
-            GunplaApp.updateBadges();
-
-            // Load the product index so the recent-viewed strip can render thumbnails
-            await GunplaApp.loadProducts();
-
-            // Load product from URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            if (productId) {
-                GunplaApp.loadProductDetail(productId);
-                // Track as recently viewed (also renders the strip)
-                GunplaApp.addToRecent(productId);
-            } else {
-                GunplaApp.renderRecentProducts();
-            }
-
-            // Wire the "clear recent" button on the detail page
-            const clearRecentBtn = document.getElementById('clearRecentBtn');
-            if (clearRecentBtn) {
-                clearRecentBtn.addEventListener('click', GunplaApp.clearRecentProducts);
-            }
-
-            // Wire the inconspicuous footer reset buttons on the detail page
-            GunplaApp.setupResetButtons();
-
-            // Cross-tab favorites/compare synchronization
-            GunplaApp.setupStorageSync();
-
-            // Setup tabs immediately (don't depend on data load)
-            GunplaApp.setupDetailTabs();
-
-            // Setup language toggle for detail page
-            document.querySelectorAll('.lang-toggle, .mobile-lang-toggle').forEach(btn => {
-                btn.addEventListener('click', I18n.toggleLang);
-            });
-
-            // Mobile menu toggle for detail page
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-            if (mobileMenuBtn && mobileMenuOverlay) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileMenuBtn.classList.toggle('active');
-                    mobileMenuOverlay.classList.toggle('active');
-                });
-            }
-        });
+        GunplaApp.init();
     }
 });

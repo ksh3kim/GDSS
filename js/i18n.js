@@ -4,6 +4,8 @@
  */
 
 const I18n = (function () {
+    const LANG_KEY = 'gunpla-lang';
+    const SUPPORTED_LANGS = ['ko', 'en'];
     let currentLang = 'ko';
     let translations = {};
 
@@ -18,17 +20,30 @@ const I18n = (function () {
             translations = data.translations;
 
             // Detect browser language or use saved preference
-            const savedLang = localStorage.getItem('gunpla-lang');
-            const browserLang = navigator.language.startsWith('ko') ? 'ko' : 'en';
-            currentLang = savedLang || browserLang;
+            // (an invalid stored value would make every t() return its key)
+            let savedLang = null;
+            try { savedLang = localStorage.getItem(LANG_KEY); } catch (e) { /* storage blocked */ }
+            const browserLang = (navigator.language || '').startsWith('ko') ? 'ko' : 'en';
+            currentLang = SUPPORTED_LANGS.includes(savedLang) ? savedLang : browserLang;
 
             // Apply translations
             applyTranslations();
             updateLangToggle();
 
+            // Modules that rendered text before the translations arrived
+            // (e.g. the news panel) re-render on this
+            document.dispatchEvent(new CustomEvent('i18nReady', { detail: { lang: currentLang } }));
+
         } catch (error) {
             console.error('Failed to load translations:', error);
         }
+
+        // Follow language changes made in other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === LANG_KEY && SUPPORTED_LANGS.includes(e.newValue) && e.newValue !== currentLang) {
+                setLang(e.newValue);
+            }
+        });
     }
 
     /**
@@ -42,10 +57,14 @@ const I18n = (function () {
      * Set language
      */
     function setLang(lang) {
-        if (lang !== 'ko' && lang !== 'en') return;
+        if (!SUPPORTED_LANGS.includes(lang)) return;
 
         currentLang = lang;
-        localStorage.setItem('gunpla-lang', lang);
+        try {
+            localStorage.setItem(LANG_KEY, lang);
+        } catch (e) {
+            console.warn('Failed to save language:', e);
+        }
         applyTranslations();
         updateLangToggle();
 
@@ -109,6 +128,17 @@ const I18n = (function () {
             const key = el.getAttribute('data-i18n-placeholder');
             el.placeholder = t(key);
         });
+
+        // Tooltips and accessible names
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            el.title = t(el.getAttribute('data-i18n-title'));
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+            el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label')));
+        });
+
+        // Screen readers pick pronunciation from the document language
+        document.documentElement.lang = currentLang;
 
         // Update page title (detail pages re-set it with the product name
         // in renderProductDetail after this runs)
@@ -210,7 +240,8 @@ const I18n = (function () {
             '--theme-border': shade(c.surface, 0.12),
             '--color-dark-border': shade(c.surface, 0.12),
             '--theme-text': c.text,
-            '--color-dark-text': c.text
+            '--color-dark-text': c.text,
+            '--theme-heading': c.text
         };
     }
 
@@ -303,9 +334,11 @@ const I18n = (function () {
             console.warn('Failed to save theme:', e);
         }
 
-        // Update active state in menu
-        document.querySelectorAll('.theme-option').forEach(opt => {
-            opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
+        // Update active state in the desktop menu and the mobile grid
+        document.querySelectorAll('.theme-option, .mobile-theme-btn').forEach(opt => {
+            const isActive = opt.getAttribute('data-theme') === theme;
+            opt.classList.toggle('active', isActive);
+            opt.setAttribute('aria-pressed', String(isActive));
         });
 
         // Dispatch theme change event for cross-page sync
@@ -324,14 +357,30 @@ const I18n = (function () {
         const dropdown = toggleBtn?.closest('.theme-dropdown');
 
         if (toggleBtn && dropdown) {
+            const setOpen = (open) => {
+                dropdown.classList.toggle('active', open);
+                toggleBtn.setAttribute('aria-expanded', String(open));
+            };
+
             toggleBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                dropdown.classList.toggle('active');
+                const willOpen = !dropdown.classList.contains('active');
+                setOpen(willOpen);
+                // Only one header popup at a time (the news panel closes itself)
+                if (willOpen) document.dispatchEvent(new CustomEvent('dropdownOpen', { detail: { id: 'theme' } }));
             });
 
-            // Close on outside click
-            document.addEventListener('click', () => {
-                dropdown.classList.remove('active');
+            document.addEventListener('dropdownOpen', (e) => {
+                if (e.detail?.id !== 'theme') setOpen(false);
+            });
+
+            // Close on outside click / Escape
+            document.addEventListener('click', () => setOpen(false));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && dropdown.classList.contains('active')) {
+                    setOpen(false);
+                    toggleBtn.focus();
+                }
             });
 
             // Theme option clicks
@@ -340,9 +389,7 @@ const I18n = (function () {
                     const newTheme = opt.getAttribute('data-theme');
                     setTheme(newTheme);
                     // Keep the dropdown open on custom so colors can be edited
-                    if (newTheme !== 'custom') {
-                        dropdown.classList.remove('active');
-                    }
+                    if (newTheme !== 'custom') setOpen(false);
                 });
             });
         }
@@ -380,30 +427,25 @@ const I18n = (function () {
             panel.addEventListener('click', e => e.stopPropagation());
         });
 
-        // Setup mobile theme grid
+        // Setup mobile theme grid (active state is kept in sync by setTheme)
         const mobileThemeGrid = document.getElementById('mobileThemeGrid');
         if (mobileThemeGrid) {
             mobileThemeGrid.querySelectorAll('.mobile-theme-btn').forEach(btn => {
-                // Set initial active state
-                btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
-                btn.addEventListener('click', () => {
-                    const newTheme = btn.getAttribute('data-theme');
-                    setTheme(newTheme);
-                    // Update mobile buttons active state
-                    mobileThemeGrid.querySelectorAll('.mobile-theme-btn').forEach(b => {
-                        b.classList.toggle('active', b.getAttribute('data-theme') === newTheme);
-                    });
-                });
+                btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme')));
             });
         }
 
-        // Sync mobile buttons when theme changes from desktop dropdown
-        document.addEventListener('themeChange', (e) => {
-            const grid = document.getElementById('mobileThemeGrid');
-            if (grid) {
-                grid.querySelectorAll('.mobile-theme-btn').forEach(b => {
-                    b.classList.toggle('active', b.getAttribute('data-theme') === e.detail.theme);
+        // Follow theme / custom-palette changes made in other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === THEME_KEY) {
+                setTheme(getTheme());
+            } else if (e.key === CUSTOM_KEY) {
+                const colors = getCustomColors();
+                customInputs.forEach(inp => {
+                    const key = inp.getAttribute('data-custom');
+                    inp.value = colors[key] || DEFAULT_CUSTOM[key];
                 });
+                if (getTheme() === 'custom') applyCustomColors(colors);
             }
         });
     }

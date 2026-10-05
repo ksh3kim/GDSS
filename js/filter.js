@@ -8,6 +8,7 @@ const Filter = (function () {
     let categoryMap = null; // id -> category, for O(1) lookups on hot paths
     let activeFilters = {};
     let searchQuery = '';
+    let searchDebounce = null; // pending debounced search from typing
 
     // Korean Choseong (초성) constants
     const CHOSEONG = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
@@ -78,6 +79,7 @@ const Filter = (function () {
         try {
             // Load taxonomy
             const response = await fetch('data/taxonomy.json');
+            if (!response.ok) throw new Error(`Failed to load taxonomy (${response.status})`);
             taxonomy = await response.json();
 
             // Index categories by id for O(1) lookups (avoids repeated linear
@@ -192,16 +194,40 @@ const Filter = (function () {
     }
 
     /**
-     * Set search query
+     * Mirror the query into the other search box (desktop header ↔ mobile menu).
+     * The box the user is typing in is left alone so its caret/spaces survive.
      */
-    function setSearchQuery(query) {
-        searchQuery = query.trim().toLowerCase();
+    function syncSearchInputs(value, source) {
+        ['searchInput', 'mobileSearchInput'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el !== source && el !== document.activeElement) el.value = value;
+        });
+    }
 
-        // Save to history if meaningful query
-        if (searchQuery.length >= 2) {
-            saveToHistory(query.trim());
+    /**
+     * Drop a debounced search that is still waiting, so it can't overwrite
+     * a query the user has just committed (suggestion click / Enter / button)
+     */
+    function cancelPendingSearch() {
+        clearTimeout(searchDebounce);
+        searchDebounce = null;
+    }
+
+    /**
+     * Set search query.
+     * commit: true when the user explicitly submits (Enter, search button,
+     * suggestion click) — only then is the query stored in search history,
+     * so partial words typed along the way don't pile up there.
+     */
+    function setSearchQuery(query, { commit = false, source = null } = {}) {
+        const raw = String(query || '').trim();
+        searchQuery = raw.toLowerCase();
+
+        if (commit && raw.length >= 2) {
+            saveToHistory(raw);
         }
 
+        syncSearchInputs(raw, source);
         updateURL();
         dispatchFilterChange();
     }
@@ -210,7 +236,7 @@ const Filter = (function () {
      * Set filter value
      */
     function setFilter(categoryId, value, isActive) {
-        if (!activeFilters[categoryId]) {
+        if (!Array.isArray(activeFilters[categoryId])) {
             activeFilters[categoryId] = [];
         }
 
@@ -266,6 +292,7 @@ const Filter = (function () {
      * Clear all filters
      */
     function clearAllFilters() {
+        cancelPendingSearch();
         activeFilters = {};
         searchQuery = '';
 
@@ -276,18 +303,8 @@ const Filter = (function () {
         const mobileSearchInput = document.getElementById('mobileSearchInput');
         if (mobileSearchInput) mobileSearchInput.value = '';
 
-        // Update filter UI
-        document.querySelectorAll('.filter-option.selected').forEach(el => {
-            el.classList.remove('selected');
-        });
-
-        document.querySelectorAll('.filter-category-count').forEach(el => {
-            el.textContent = '';
-        });
-
-        // Hide quick reset button
-        const quickResetBtn = document.getElementById('quickResetBtn');
-        if (quickResetBtn) quickResetBtn.style.display = 'none';
+        // Checkboxes, range inputs, counts
+        restoreFilterUIState();
 
         updateURL();
         updateActiveFiltersUI();
@@ -342,10 +359,10 @@ const Filter = (function () {
 
             let productValue = product[categoryId] ?? product.filterData?.[categoryId];
 
-            // Handle range filters
+            // Handle range filters (a product without the value can't be in range)
             if (category.type === 'range') {
-                if (typeof values === 'object' && values.min !== undefined) {
-                    if (productValue < values.min || productValue > values.max) {
+                if (values && typeof values === 'object' && values.min !== undefined) {
+                    if (productValue == null || productValue < values.min || productValue > values.max) {
                         return false;
                     }
                 }
@@ -380,11 +397,48 @@ const Filter = (function () {
     }
 
     /**
+     * Read a range category's min/max inputs and apply (or clear) the filter.
+     * Empty inputs fall back to the category bounds; both empty clears it.
+     */
+    function applyRangeInputs(category, minInput, maxInput) {
+        const parse = v => (v === '' ? null : Number(v));
+        let min = parse(minInput.value);
+        let max = parse(maxInput.value);
+
+        if ((min === null || isNaN(min)) && (max === null || isNaN(max))) {
+            minInput.value = '';
+            maxInput.value = '';
+            if (activeFilters[category.id]) removeFilter(category.id);
+            updateCategoryCount(category.id);
+            return;
+        }
+
+        const clamp = n => Math.min(category.max, Math.max(category.min, n));
+        const hasMin = min !== null && !isNaN(min);
+        const hasMax = max !== null && !isNaN(max);
+        min = hasMin ? clamp(min) : category.min;
+        max = hasMax ? clamp(max) : category.max;
+        if (min > max) [min, max] = [max, min];
+
+        // Echo clamped/swapped values into the boxes the user filled; an empty
+        // box stays empty (its placeholder already shows the open bound)
+        if (hasMin) minInput.value = min;
+        if (hasMax) maxInput.value = max;
+
+        setRangeFilter(category.id, min, max);
+        updateCategoryCount(category.id);
+    }
+
+    /**
      * Build filter UI from taxonomy
      */
     function buildFilterUI() {
         const container = document.getElementById('filterAccordion');
         if (!container || !taxonomy) return;
+
+        // Keep the open accordion open across rebuilds (language change)
+        const openIds = Array.from(container.querySelectorAll('.filter-category.active'))
+            .map(el => el.getAttribute('data-category'));
 
         container.innerHTML = '';
 
@@ -397,38 +451,51 @@ const Filter = (function () {
 
             categoryEl.setAttribute('data-category', category.id);
 
+            const categoryLabel = I18n.getName(category.label);
             const title = clone.querySelector('.filter-category-title');
-            title.textContent = I18n.getName(category.label);
+            title.textContent = categoryLabel;
 
             const content = clone.querySelector('.filter-options');
+            const contentId = `filter-content-${category.id}`;
+            clone.querySelector('.filter-category-content').id = contentId;
 
             if (category.type === 'range') {
-                // Range filter UI
+                // Range filter UI: min ~ max number inputs, applied on change
                 content.innerHTML = `
                     <div class="filter-range">
                         <div class="filter-range-inputs">
-                            <input type="number" class="range-min" placeholder="${category.min}" min="${category.min}" max="${category.max}">
-                            <span>~</span>
-                            <input type="number" class="range-max" placeholder="${category.max}" min="${category.min}" max="${category.max}">
+                            <input type="number" class="range-min" inputmode="numeric"
+                                placeholder="${category.min}" min="${category.min}" max="${category.max}" step="${category.step || 1}"
+                                aria-label="${escapeHtml(`${categoryLabel} ${I18n.t('filter.rangeMin')}`)}">
+                            <span aria-hidden="true">~</span>
+                            <input type="number" class="range-max" inputmode="numeric"
+                                placeholder="${category.max}" min="${category.min}" max="${category.max}" step="${category.step || 1}"
+                                aria-label="${escapeHtml(`${categoryLabel} ${I18n.t('filter.rangeMax')}`)}">
                         </div>
-                        <input type="range" class="filter-range-slider" min="${category.min}" max="${category.max}" step="${category.step || 1}">
                     </div>
                 `;
+                const minInput = content.querySelector('.range-min');
+                const maxInput = content.querySelector('.range-max');
+                [minInput, maxInput].forEach(inp => {
+                    inp.addEventListener('change', () => applyRangeInputs(category, minInput, maxInput));
+                });
             } else if (category.options) {
-                // Options filter UI
+                // Options filter UI (buttons so they are keyboard operable)
                 category.options.forEach(option => {
-                    const optionEl = document.createElement('div');
+                    const optionEl = document.createElement('button');
+                    optionEl.type = 'button';
                     optionEl.className = 'filter-option';
+                    optionEl.setAttribute('role', 'checkbox');
+                    optionEl.setAttribute('aria-checked', 'false');
                     optionEl.setAttribute('data-value', option.value);
                     optionEl.innerHTML = `
-                        <span class="filter-checkbox"></span>
-                        <span class="filter-option-label">${I18n.getName(option.label)}</span>
+                        <span class="filter-checkbox" aria-hidden="true"></span>
+                        <span class="filter-option-label">${escapeHtml(I18n.getName(option.label))}</span>
                     `;
 
                     optionEl.addEventListener('click', () => {
                         toggleFilter(category.id, option.value);
-                        optionEl.classList.toggle('selected');
-                        updateCategoryCount(category.id);
+                        syncCategoryUI(category.id);
                     });
 
                     content.appendChild(optionEl);
@@ -437,19 +504,27 @@ const Filter = (function () {
 
             // Accordion toggle - close others when opening new one
             const header = clone.querySelector('.filter-category-header');
+            header.setAttribute('aria-controls', contentId);
             header.addEventListener('click', () => {
                 const isCurrentlyActive = categoryEl.classList.contains('active');
 
                 // Close all other categories
                 document.querySelectorAll('.filter-category.active').forEach(cat => {
                     cat.classList.remove('active');
+                    cat.querySelector('.filter-category-header')?.setAttribute('aria-expanded', 'false');
                 });
 
                 // Toggle current category (if it was closed, open it)
                 if (!isCurrentlyActive) {
                     categoryEl.classList.add('active');
+                    header.setAttribute('aria-expanded', 'true');
                 }
             });
+
+            if (openIds.includes(category.id)) {
+                categoryEl.classList.add('active');
+                header.setAttribute('aria-expanded', 'true');
+            }
 
             container.appendChild(clone);
         });
@@ -459,14 +534,45 @@ const Filter = (function () {
      * Update category filter count badge
      */
     function updateCategoryCount(categoryId) {
-        const category = document.querySelector(`[data-category="${categoryId}"]`);
+        const category = document.querySelector(`.filter-category[data-category="${categoryId}"]`);
         if (!category) return;
 
-        const count = activeFilters[categoryId]?.length || 0;
+        const values = activeFilters[categoryId];
+        const count = Array.isArray(values) ? values.length : (values ? 1 : 0);
         const badge = category.querySelector('.filter-category-count');
         if (badge) {
             badge.textContent = count > 0 ? count : '';
         }
+    }
+
+    /**
+     * Make one category's controls (checkboxes or range inputs + count badge)
+     * reflect activeFilters
+     */
+    function syncCategoryUI(categoryId) {
+        const categoryEl = document.querySelector(`.filter-category[data-category="${categoryId}"]`);
+        if (!categoryEl) return;
+
+        const values = activeFilters[categoryId];
+
+        categoryEl.querySelectorAll('.filter-option').forEach(optionEl => {
+            const selected = Array.isArray(values) &&
+                values.some(v => String(v) === optionEl.getAttribute('data-value'));
+            optionEl.classList.toggle('selected', selected);
+            optionEl.setAttribute('aria-checked', String(selected));
+        });
+
+        const minInput = categoryEl.querySelector('.range-min');
+        const maxInput = categoryEl.querySelector('.range-max');
+        if (minInput && maxInput) {
+            // An open bound (equal to the category limit) is shown as empty
+            const category = getCategory(categoryId);
+            const isRange = values && !Array.isArray(values) && values.min !== undefined;
+            minInput.value = isRange && values.min !== category?.min ? values.min : '';
+            maxInput.value = isRange && values.max !== category?.max ? values.max : '';
+        }
+
+        updateCategoryCount(categoryId);
     }
 
     /**
@@ -501,6 +607,8 @@ const Filter = (function () {
             countEl.textContent = totalCount;
         }
 
+        const removeLabel = escapeHtml(I18n.t('filter.removeTag'));
+
         for (const [categoryId, values] of Object.entries(activeFilters)) {
             const category = getCategory(categoryId);
             if (!category) continue;
@@ -515,10 +623,19 @@ const Filter = (function () {
                     // Escape: `value`/`label` can originate from the URL query string
                     tag.innerHTML = `
                         ${escapeHtml(label)}
-                        <button class="filter-tag-remove" data-category="${escapeHtml(categoryId)}" data-value="${escapeHtml(value)}">×</button>
+                        <button class="filter-tag-remove" data-category="${escapeHtml(categoryId)}" data-value="${escapeHtml(value)}" aria-label="${removeLabel}">×</button>
                     `;
                     container.appendChild(tag);
                 });
+            } else if (values && values.min !== undefined) {
+                // Range filter chip: "Label: min ~ max"
+                const tag = document.createElement('span');
+                tag.className = 'filter-tag';
+                tag.innerHTML = `
+                    ${escapeHtml(`${I18n.getName(category.label)}: ${values.min} ~ ${values.max}`)}
+                    <button class="filter-tag-remove" data-category="${escapeHtml(categoryId)}" data-range="true" aria-label="${removeLabel}">×</button>
+                `;
+                container.appendChild(tag);
             }
         }
 
@@ -526,17 +643,30 @@ const Filter = (function () {
         container.querySelectorAll('.filter-tag-remove').forEach(btn => {
             btn.addEventListener('click', () => {
                 const catId = btn.getAttribute('data-category');
-                let val = btn.getAttribute('data-value');
-                // data-* attributes are strings; boolean filters store real booleans
-                if (getCategory(catId)?.type === 'boolean') val = (val === 'true');
-                removeFilter(catId, val);
-
-                // Update checkbox UI
-                const optionEl = document.querySelector(`[data-category="${catId}"] [data-value="${val}"]`);
-                if (optionEl) optionEl.classList.remove('selected');
-                updateCategoryCount(catId);
+                if (btn.hasAttribute('data-range')) {
+                    removeFilter(catId);
+                } else {
+                    let val = btn.getAttribute('data-value');
+                    // data-* attributes are strings; boolean filters store real booleans
+                    if (getCategory(catId)?.type === 'boolean') val = (val === 'true');
+                    removeFilter(catId, val);
+                }
+                syncCategoryUI(catId);
             });
         });
+    }
+
+    /**
+     * Open/close the autocomplete list and keep the combobox ARIA in sync
+     */
+    function setAutocompleteOpen(container, open) {
+        if (!container) return;
+        container.classList.toggle('active', open);
+        const input = document.getElementById('searchInput');
+        if (input) {
+            input.setAttribute('aria-expanded', String(open));
+            if (!open) input.removeAttribute('aria-activedescendant');
+        }
     }
 
     /**
@@ -602,7 +732,7 @@ const Filter = (function () {
         }
 
         if (suggestions.length === 0) {
-            container.classList.remove('active');
+            setAutocompleteOpen(container, false);
             return;
         }
 
@@ -616,12 +746,20 @@ const Filter = (function () {
             }
         }
 
+        const typeLabel = {
+            product: I18n.t('search.typeProduct'),
+            series: I18n.t('search.typeSeries'),
+            model: I18n.t('search.typeModel'),
+            history: '🕒'
+        };
+        const removeHistoryLabel = escapeHtml(I18n.t('search.removeHistory'));
+
         // Render suggestions (escape: history entries are raw user input)
-        container.innerHTML = finalSuggestions.map(s => `
-            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" data-value="${escapeHtml(s.value)}" data-type="${s.type}">
-                <span class="autocomplete-item-type ${s.type}">${s.type === 'product' ? '제품' : s.type === 'series' ? '시리즈' : s.type === 'model' ? '형식' : '🕒'}</span>
+        container.innerHTML = finalSuggestions.map((s, i) => `
+            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" id="ac-option-${i}" role="option" aria-selected="false" data-value="${escapeHtml(s.value)}" data-type="${s.type}">
+                <span class="autocomplete-item-type ${s.type}">${escapeHtml(typeLabel[s.type])}</span>
                 <span class="autocomplete-item-text">${s.match ? highlightMatch(s.text, s.match) : escapeHtml(s.text)}</span>
-                ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + escapeHtml(s.value) + '">×</button>' : ''}
+                ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + escapeHtml(s.value) + '" aria-label="' + removeHistoryLabel + '">×</button>' : ''}
             </div>
         `).join('');
 
@@ -633,11 +771,10 @@ const Filter = (function () {
 
                 const value = item.getAttribute('data-value');
                 const input = document.getElementById('searchInput');
-                if (input) {
-                    input.value = value;
-                    setSearchQuery(value);
-                }
-                container.classList.remove('active');
+                cancelPendingSearch();
+                if (input) input.value = value;
+                setSearchQuery(value, { commit: true, source: input });
+                setAutocompleteOpen(container, false);
             });
         });
 
@@ -655,7 +792,7 @@ const Filter = (function () {
             });
         });
 
-        container.classList.add('active');
+        setAutocompleteOpen(container, true);
     }
 
     /**
@@ -676,9 +813,12 @@ const Filter = (function () {
     function updateSelectedItem(items, index) {
         items.forEach((item, i) => {
             item.classList.toggle('selected', i === index);
+            item.setAttribute('aria-selected', String(i === index));
         });
+        const input = document.getElementById('searchInput');
         if (items[index]) {
             items[index].scrollIntoView({ block: 'nearest' });
+            input?.setAttribute('aria-activedescendant', items[index].id);
         }
     }
 
@@ -692,8 +832,6 @@ const Filter = (function () {
         let selectedIndex = -1;
 
         if (searchInput) {
-            let debounceTimer;
-
             // Input event - show autocomplete and filter
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.trim();
@@ -702,46 +840,49 @@ const Filter = (function () {
                 if (query.length >= 1 && autocomplete) {
                     showAutocompleteSuggestions(query, autocomplete);
                     selectedIndex = -1;
-                } else if (autocomplete) {
-                    autocomplete.classList.remove('active');
+                } else {
+                    setAutocompleteOpen(autocomplete, false);
                 }
 
-                // Debounced search
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                    setSearchQuery(query);
+                // Debounced search (not committed to history)
+                cancelPendingSearch();
+                searchDebounce = setTimeout(() => {
+                    setSearchQuery(query, { source: searchInput });
                 }, 300);
             });
 
-            // Keyboard navigation
+            // Keyboard: suggestion navigation, Enter to submit, Escape to close
             searchInput.addEventListener('keydown', (e) => {
-                if (!autocomplete || !autocomplete.classList.contains('active')) return;
+                const open = autocomplete?.classList.contains('active');
+                const items = open ? autocomplete.querySelectorAll('.autocomplete-item') : [];
 
-                const items = autocomplete.querySelectorAll('.autocomplete-item');
-                if (items.length === 0) return;
-
-                if (e.key === 'ArrowDown') {
+                if (e.key === 'ArrowDown' && items.length) {
                     e.preventDefault();
                     selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
                     updateSelectedItem(items, selectedIndex);
-                } else if (e.key === 'ArrowUp') {
+                } else if (e.key === 'ArrowUp' && items.length) {
                     e.preventDefault();
                     selectedIndex = Math.max(selectedIndex - 1, 0);
                     updateSelectedItem(items, selectedIndex);
-                } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                } else if (e.key === 'Enter') {
                     e.preventDefault();
-                    items[selectedIndex].click();
-                } else if (e.key === 'Escape') {
-                    autocomplete.classList.remove('active');
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        items[selectedIndex].click();
+                    } else {
+                        cancelPendingSearch();
+                        setSearchQuery(searchInput.value, { commit: true, source: searchInput });
+                        setAutocompleteOpen(autocomplete, false);
+                    }
+                    selectedIndex = -1;
+                } else if (e.key === 'Escape' && open) {
+                    setAutocompleteOpen(autocomplete, false);
                     selectedIndex = -1;
                 }
             });
 
             // Hide on blur (with delay for click)
             searchInput.addEventListener('blur', () => {
-                setTimeout(() => {
-                    if (autocomplete) autocomplete.classList.remove('active');
-                }, 200);
+                setTimeout(() => setAutocompleteOpen(autocomplete, false), 200);
             });
 
             // Show on focus if has value
@@ -758,20 +899,27 @@ const Filter = (function () {
         if (searchBtn) {
             searchBtn.addEventListener('click', () => {
                 const input = document.getElementById('searchInput');
-                if (input) setSearchQuery(input.value);
-                if (autocomplete) autocomplete.classList.remove('active');
+                cancelPendingSearch();
+                if (input) setSearchQuery(input.value, { commit: true, source: input });
+                setAutocompleteOpen(autocomplete, false);
             });
         }
 
-        // Mobile search
+        // Mobile search (no autocomplete; Enter submits)
         const mobileSearchInput = document.getElementById('mobileSearchInput');
         if (mobileSearchInput) {
-            let debounceTimer;
             mobileSearchInput.addEventListener('input', (e) => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                    setSearchQuery(e.target.value);
+                cancelPendingSearch();
+                searchDebounce = setTimeout(() => {
+                    setSearchQuery(e.target.value, { source: mobileSearchInput });
                 }, 300);
+            });
+            mobileSearchInput.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter') return;
+                e.preventDefault();
+                cancelPendingSearch();
+                setSearchQuery(mobileSearchInput.value, { commit: true, source: mobileSearchInput });
+                mobileSearchInput.blur(); // dismiss the on-screen keyboard
             });
         }
 
@@ -793,31 +941,26 @@ const Filter = (function () {
             activeFiltersSummary.addEventListener('click', () => {
                 const wrapper = document.getElementById('activeFiltersWrapper');
                 if (wrapper) {
-                    wrapper.classList.toggle('expanded');
+                    const expanded = wrapper.classList.toggle('expanded');
+                    activeFiltersSummary.setAttribute('aria-expanded', String(expanded));
                 }
             });
         }
 
-        // Language change - rebuild filter UI
+        // Language change - rebuild filter UI and localized chips
         document.addEventListener('langChange', () => {
             buildFilterUI();
             restoreFilterUIState();
+            updateActiveFiltersUI();
         });
     }
 
     /**
-     * Restore filter UI state after rebuild
+     * Make every category's controls reflect activeFilters
+     * (after a rebuild, a reset, or a URL change)
      */
     function restoreFilterUIState() {
-        for (const [categoryId, values] of Object.entries(activeFilters)) {
-            if (Array.isArray(values)) {
-                values.forEach(value => {
-                    const optionEl = document.querySelector(`[data-category="${categoryId}"] [data-value="${value}"]`);
-                    if (optionEl) optionEl.classList.add('selected');
-                });
-            }
-            updateCategoryCount(categoryId);
-        }
+        (taxonomy?.categories || []).forEach(c => syncCategoryUI(c.id));
     }
 
     /**
@@ -833,7 +976,7 @@ const Filter = (function () {
         for (const [key, values] of Object.entries(activeFilters)) {
             if (Array.isArray(values) && values.length > 0) {
                 params.set(key, values.join(','));
-            } else if (typeof values === 'object' && values.min !== undefined) {
+            } else if (values && typeof values === 'object' && values.min !== undefined) {
                 params.set(key, `${values.min}-${values.max}`);
             }
         }
@@ -852,10 +995,9 @@ const Filter = (function () {
         const params = new URLSearchParams(window.location.search);
 
         if (params.has('q')) {
-            searchQuery = params.get('q');
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) searchInput.value = searchQuery;
+            searchQuery = params.get('q').trim().toLowerCase();
         }
+        syncSearchInputs(searchQuery, null);
 
         params.forEach((value, key) => {
             if (key === 'q') return;
@@ -863,9 +1005,9 @@ const Filter = (function () {
             const category = getCategory(key);
             if (!category) return;
 
-            if (category.type === 'range' && value.includes('-')) {
+            if (category.type === 'range') {
                 const [min, max] = value.split('-').map(Number);
-                activeFilters[key] = { min, max };
+                if (!isNaN(min) && !isNaN(max)) activeFilters[key] = { min, max };
             } else if (category.type === 'boolean') {
                 // URL params are strings; convert back to real booleans so they
                 // compare correctly against product data (true !== "true")
@@ -874,6 +1016,21 @@ const Filter = (function () {
                 activeFilters[key] = value.split(',');
             }
         });
+    }
+
+    /**
+     * Re-read filters + search from the current URL and refresh the sidebar.
+     * Used on back/forward navigation; does not dispatch filterChange — the
+     * caller re-renders for the view it restores.
+     */
+    function syncFromURL() {
+        cancelPendingSearch();
+        activeFilters = {};
+        searchQuery = '';
+        restoreFromURL();
+        restoreFilterUIState();
+        updateActiveFiltersUI();
+        updateQuickResetVisibility();
     }
 
     /**
@@ -887,8 +1044,6 @@ const Filter = (function () {
     }
 
     // Public API
-    // NOTE: setRangeFilter has no caller yet — the range-filter UI is rendered
-    // but not wired (pending task #34). Kept intentionally.
     return {
         init,
         getTaxonomy,
@@ -900,7 +1055,8 @@ const Filter = (function () {
         setRangeFilter,
         removeFilter,
         clearAllFilters,
-        matchesFilters
+        matchesFilters,
+        syncFromURL
     };
 })();
 

@@ -16,17 +16,27 @@
                 "home": "홈",
                 "favorites": "즐겨찾기",
                 "compare": "비교함",
-                "about": "소개"
+                "about": "소개",
+                "menu": "메뉴",
+                "language": "언어 변경"
             },
             "search": {
                 "placeholder": "제품명, 기체명, 형식번호로 검색...",
                 "noResults": "검색 결과가 없습니다",
+                "tryAgain": "다른 검색어나 필터 조건을 시도해보세요.",
                 "resultsCount": "개의 결과",
-                "searchIn": "검색 범위"
+                "searchIn": "검색 범위",
+                "button": "검색",
+                "typeProduct": "제품",
+                "typeSeries": "시리즈",
+                "typeModel": "형식",
+                "removeHistory": "검색 기록 삭제"
             },
             "filter": {
                 "title": "필터",
                 "reset": "필터 초기화",
+                "quickReset": "↺ 초기화",
+                "close": "필터 닫기",
                 "apply": "적용",
                 "activeFilters": "활성 필터",
                 "selected": "개 선택됨",
@@ -34,16 +44,24 @@
                 "showMore": "더 보기",
                 "showLess": "접기",
                 "selectAll": "전체 선택",
-                "deselectAll": "전체 해제"
+                "deselectAll": "전체 해제",
+                "rangeMin": "최소",
+                "rangeMax": "최대",
+                "removeTag": "필터 제거"
             },
             "sort": {
                 "title": "정렬",
+                "order": "정렬 순서 변경",
                 "releaseDate": "발매일순",
                 "name": "이름순",
                 "popularity": "인기순",
                 "price": "가격순",
                 "difficulty": "난이도순",
                 "partCount": "파츠수순"
+            },
+            "view": {
+                "grid": "그리드 보기",
+                "list": "리스트 보기"
             },
             "product": {
                 "details": "상세 정보",
@@ -62,7 +80,27 @@
                 "partCount": "파츠 수",
                 "runnerCount": "러너 수",
                 "height": "높이",
-                "modelNumber": "형식번호"
+                "modelNumber": "형식번호",
+                "difficulty": "난이도",
+                "mobility": "가동성",
+                "manual": "반다이 매뉴얼",
+                "manualSearchHint": "공식 설명서 검색 결과로 이동합니다",
+                "weaponsAccessories": "무장 & 부속품",
+                "buildingTips": "조립 팁",
+                "sameModelVariants": "같은 기체의 다른 버전",
+                "otherGrades": "다른 등급으로 보기",
+                "detailsUnavailable": "상세 정보 미등록",
+                "notFound": "제품을 찾을 수 없습니다",
+                "notFoundHint": "주소가 올바른지 확인하거나 홈에서 다시 찾아보세요.",
+                "backHome": "홈으로 돌아가기"
+            },
+            "gallery": {
+                "prev": "이전 이미지",
+                "next": "다음 이미지"
+            },
+            "recent": {
+                "title": "최근 본 제품",
+                "clear": "최근 본 제품 기록 삭제"
             },
             "recommendation": {
                 "title": "추천 이유",
@@ -86,6 +124,7 @@
             },
             "common": {
                 "loading": "로딩 중...",
+                "loadMore": "더 보기",
                 "error": "오류가 발생했습니다",
                 "retry": "다시 시도",
                 "yes": "예",
@@ -99,6 +138,35 @@
                 "cancel": "취소",
                 "confirm": "확인"
             },
+            "theme": {
+                "title": "테마",
+                "change": "테마 변경",
+                "groupBasic": "기본",
+                "groupGundam": "건담 에디션",
+                "groupSpecial": "특별 에디션",
+                "groupCustom": "커스텀",
+                "dark": "다크",
+                "light": "라이트",
+                "trueblack": "트루 블랙",
+                "rx78": "RX-78",
+                "char": "샤아 전용",
+                "zeon": "지온",
+                "unicorn": "유니콘",
+                "eva": "에반게리온",
+                "custom": "커스텀",
+                "colorPrimary": "포인트",
+                "colorAccent": "강조",
+                "colorBg": "배경",
+                "colorSurface": "카드",
+                "colorText": "텍스트"
+            },
+            "news": {
+                "title": "📰 신제품 소식",
+                "bandai": "Bandai Hobby 공식 뉴스",
+                "gundamInfo": "Gundam.info 뉴스",
+                "pbandai": "P-Bandai 신규 예약",
+                "rss": "💡 RSS 구독:"
+            },
             "footer": {
                 "copyright": "© 2026 건프라 가이드. 건프라는 반다이 남코의 등록상표입니다.",
                 "disclaimer": "본 사이트는 팬 제작 비공식 사이트입니다.",
@@ -109,6 +177,8 @@
             },
             "compare": {
                 "title": "제품 비교",
+                "submit": "비교하기",
+                "empty": "비교함이 비어있습니다",
                 "addMore": "비교할 제품 추가",
                 "maxItems": "최대 4개까지 비교 가능합니다",
                 "clearAll": "모두 지우기",
@@ -116,7 +186,12 @@
             },
             "notif": {
                 "title": "신제품 · 소식",
-                "empty": "불러올 소식이 없습니다."
+                "toggle": "신제품 알림",
+                "refresh": "새로고침",
+                "loading": "소식을 불러오는 중…",
+                "empty": "불러올 소식이 없습니다.",
+                "fetchFailed": "소식을 불러오지 못했습니다. 잠시 후 새로고침해 보세요.",
+                "notConfigured": "소식 API가 설정되지 않아 목록을 불러오지 않습니다. 아래 공식 사이트에서 최신 소식을 확인하세요."
             },
             "favorites": {
                 "title": "즐겨찾기",
@@ -138,17 +213,27 @@
                 "home": "Home",
                 "favorites": "Favorites",
                 "compare": "Compare",
-                "about": "About"
+                "about": "About",
+                "menu": "Menu",
+                "language": "Change language"
             },
             "search": {
                 "placeholder": "Search by product name, model number...",
                 "noResults": "No results found",
+                "tryAgain": "Try a different keyword or filter.",
                 "resultsCount": " results",
-                "searchIn": "Search in"
+                "searchIn": "Search in",
+                "button": "Search",
+                "typeProduct": "Kit",
+                "typeSeries": "Series",
+                "typeModel": "Model",
+                "removeHistory": "Remove from search history"
             },
             "filter": {
                 "title": "Filters",
                 "reset": "Reset Filters",
+                "quickReset": "↺ Reset",
+                "close": "Close filters",
                 "apply": "Apply",
                 "activeFilters": "Active Filters",
                 "selected": " selected",
@@ -156,16 +241,24 @@
                 "showMore": "Show More",
                 "showLess": "Show Less",
                 "selectAll": "Select All",
-                "deselectAll": "Deselect All"
+                "deselectAll": "Deselect All",
+                "rangeMin": "Min",
+                "rangeMax": "Max",
+                "removeTag": "Remove filter"
             },
             "sort": {
                 "title": "Sort",
+                "order": "Toggle sort order",
                 "releaseDate": "Release Date",
                 "name": "Name",
                 "popularity": "Popularity",
                 "price": "Price",
                 "difficulty": "Difficulty",
                 "partCount": "Part Count"
+            },
+            "view": {
+                "grid": "Grid view",
+                "list": "List view"
             },
             "product": {
                 "details": "Details",
@@ -184,7 +277,27 @@
                 "partCount": "Parts",
                 "runnerCount": "Runners",
                 "height": "Height",
-                "modelNumber": "Model Number"
+                "modelNumber": "Model Number",
+                "difficulty": "Difficulty",
+                "mobility": "Mobility",
+                "manual": "Bandai Manual",
+                "manualSearchHint": "Opens the official manual search results",
+                "weaponsAccessories": "Weapons & Accessories",
+                "buildingTips": "Building Tips",
+                "sameModelVariants": "Other versions of this model",
+                "otherGrades": "View in other grades",
+                "detailsUnavailable": "Details not available",
+                "notFound": "Product not found",
+                "notFoundHint": "Check the address, or search again from the home page.",
+                "backHome": "Back to Home"
+            },
+            "gallery": {
+                "prev": "Previous image",
+                "next": "Next image"
+            },
+            "recent": {
+                "title": "Recently viewed",
+                "clear": "Clear recently viewed"
             },
             "recommendation": {
                 "title": "Why Recommended",
@@ -208,6 +321,7 @@
             },
             "common": {
                 "loading": "Loading...",
+                "loadMore": "Load more",
                 "error": "An error occurred",
                 "retry": "Retry",
                 "yes": "Yes",
@@ -221,6 +335,35 @@
                 "cancel": "Cancel",
                 "confirm": "Confirm"
             },
+            "theme": {
+                "title": "Theme",
+                "change": "Change theme",
+                "groupBasic": "Basic",
+                "groupGundam": "Gundam Edition",
+                "groupSpecial": "Special Edition",
+                "groupCustom": "Custom",
+                "dark": "Dark",
+                "light": "Light",
+                "trueblack": "True Black",
+                "rx78": "RX-78",
+                "char": "Char's Custom",
+                "zeon": "Zeon",
+                "unicorn": "Unicorn",
+                "eva": "Evangelion",
+                "custom": "Custom",
+                "colorPrimary": "Primary",
+                "colorAccent": "Accent",
+                "colorBg": "Background",
+                "colorSurface": "Surface",
+                "colorText": "Text"
+            },
+            "news": {
+                "title": "📰 New Releases",
+                "bandai": "Bandai Hobby Official News",
+                "gundamInfo": "Gundam.info News",
+                "pbandai": "P-Bandai New Pre-orders",
+                "rss": "💡 RSS feed:"
+            },
             "footer": {
                 "copyright": "© 2026 Gunpla Guide. Gunpla is a registered trademark of Bandai Namco.",
                 "disclaimer": "This is an unofficial fan-made website.",
@@ -231,6 +374,8 @@
             },
             "compare": {
                 "title": "Compare Products",
+                "submit": "Compare",
+                "empty": "Compare list is empty",
                 "addMore": "Add more products",
                 "maxItems": "You can compare up to 4 items",
                 "clearAll": "Clear All",
@@ -238,7 +383,12 @@
             },
             "notif": {
                 "title": "New Products · News",
-                "empty": "No news available."
+                "toggle": "News",
+                "refresh": "Refresh",
+                "loading": "Loading news…",
+                "empty": "No news available.",
+                "fetchFailed": "Couldn't load news. Try refreshing later.",
+                "notConfigured": "The news API isn't configured, so no list is loaded. Check the official sites below for the latest news."
             },
             "favorites": {
                 "title": "Favorites",

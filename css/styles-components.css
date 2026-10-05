@@ -28,12 +28,12 @@
 }
 
 .filter-category-header:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-white);
+    background: var(--theme-hover);
+    color: var(--theme-heading);
 }
 
 .filter-category.active .filter-category-header {
-    color: var(--color-white);
+    color: var(--theme-heading);
     border-bottom: 1px solid var(--color-dark-border);
 }
 
@@ -97,12 +97,15 @@
     gap: var(--space-2);
 }
 
+/* Rendered as <button role="checkbox"> so options are keyboard operable */
 .filter-option {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    width: 100%;
     padding: var(--space-2);
     font-size: var(--text-sm);
+    text-align: left;
     color: var(--color-gray-400);
     border-radius: var(--radius-sm);
     cursor: pointer;
@@ -110,7 +113,7 @@
 }
 
 .filter-option:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--theme-hover);
     color: var(--color-gray-200);
 }
 
@@ -149,19 +152,24 @@
 
 .filter-range-inputs {
     display: flex;
+    align-items: center;
     gap: var(--space-2);
-    margin-bottom: var(--space-3);
 }
 
 .filter-range-inputs input {
     flex: 1;
+    min-width: 0;
     padding: var(--space-2);
     background: var(--color-dark-bg);
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-sm);
-    color: var(--color-white);
+    color: var(--theme-heading);
     text-align: center;
     font-size: var(--text-sm);
+}
+
+.filter-range-inputs input:invalid {
+    border-color: var(--color-error);
 }
 
 .filter-range-slider {
@@ -271,9 +279,19 @@
     transition: var(--transition-base);
 }
 
-.product-card:hover .product-card-actions {
+/* Also reveal for keyboard focus, and always on touch screens (no hover) —
+   otherwise the buttons are invisible yet still tappable */
+.product-card:hover .product-card-actions,
+.product-card:focus-within .product-card-actions {
     opacity: 1;
     transform: translateX(0);
+}
+
+@media (hover: none) {
+    .product-card-actions {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .action-btn {
@@ -378,7 +396,7 @@
 .product-card-name {
     font-size: var(--text-base);
     font-weight: 600;
-    color: var(--color-white);
+    color: var(--theme-heading);
     margin-bottom: var(--space-1);
     line-height: 1.3;
     display: -webkit-box;
@@ -421,7 +439,7 @@
     padding: 2px 6px;
     font-size: 10px;
     color: var(--color-gray-400);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--theme-hover);
     border-radius: var(--radius-sm);
 }
 
@@ -470,6 +488,9 @@
 }
 
 .stat-bar-fill {
+    /* It is a <span>: without block display its inline width is ignored and
+       the bar always renders empty */
+    display: block;
     height: 100%;
     background: var(--color-primary);
     border-radius: 2px;
@@ -531,7 +552,7 @@
 
 .recommendation-header h3 {
     font-size: var(--text-lg);
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .recommendation-content {
@@ -545,7 +566,7 @@
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-2) var(--space-3);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--theme-hover);
     border-radius: var(--radius-md);
 }
 
@@ -570,12 +591,15 @@
     border-top: 1px solid var(--color-dark-border);
     padding: var(--space-4) var(--space-6);
     transform: translateY(100%);
+    /* hidden while closed so Tab can't reach the off-screen buttons */
+    visibility: hidden;
     transition: var(--transition-base);
     z-index: var(--z-modal);
 }
 
 .compare-drawer.active {
     transform: translateY(0);
+    visibility: visible;
 }
 
 .compare-drawer-header {
@@ -587,7 +611,7 @@
 
 .compare-drawer-header h3 {
     font-size: var(--text-lg);
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .compare-drawer-close {
@@ -597,7 +621,7 @@
 }
 
 .compare-drawer-close:hover {
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .compare-items {
@@ -654,6 +678,35 @@
     display: flex;
     justify-content: flex-end;
     gap: var(--space-3);
+}
+
+/* Compact drawer on small screens so it doesn't bury the page
+   (thumbnails only; names are in each image's alt/title) */
+@media (max-width: 768px) {
+    .compare-drawer {
+        padding: var(--space-2) var(--space-4) var(--space-3);
+    }
+
+    .compare-drawer-header {
+        margin-bottom: var(--space-1);
+    }
+
+    .compare-items {
+        gap: var(--space-2);
+        padding-bottom: var(--space-2);
+    }
+
+    .compare-item {
+        width: 56px;
+    }
+
+    .compare-item-image {
+        margin-bottom: 0;
+    }
+
+    .compare-item-name {
+        display: none;
+    }
 }
 
 .compare-clear-btn {
@@ -733,7 +786,7 @@
 }
 
 .modal-close:hover {
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .quick-view-modal {
@@ -760,6 +813,7 @@
     margin-bottom: var(--space-6);
     font-size: var(--text-sm);
     color: var(--color-gray-500);
+    min-width: 0;
 }
 
 .breadcrumb a:hover {
@@ -770,8 +824,17 @@
     color: var(--color-gray-600);
 }
 
+/* Long kit names must not push the page wider than a phone screen */
 .breadcrumb-current {
     color: var(--color-gray-300);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.detail-not-found .load-more-btn {
+    margin-top: var(--space-6);
 }
 
 /* Detail Container */
@@ -878,7 +941,7 @@
 .detail-name {
     font-size: var(--text-3xl);
     font-weight: 700;
-    color: var(--color-white);
+    color: var(--theme-heading);
     margin-bottom: var(--space-2);
 }
 
@@ -963,7 +1026,7 @@
 .meta-value {
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .meta-value.price {
@@ -1095,7 +1158,7 @@
 .spec-value {
     font-size: var(--text-sm);
     font-weight: 500;
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 /* Pros/Cons */
@@ -1244,7 +1307,7 @@
 .section-heading {
     font-size: var(--text-xl);
     font-weight: 600;
-    color: var(--color-white);
+    color: var(--theme-heading);
     margin-bottom: var(--space-6);
 }
 

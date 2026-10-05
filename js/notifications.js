@@ -4,13 +4,16 @@
  * Fetching happens on page load (when the cached copy is older than TTL) and
  * on manual refresh only — there is NO continuous polling and NO push.
  *
- * Two-tier fetch strategy (backend-ish work lives in a separate serverless layer):
+ * Sources (backend-ish work lives in a separate serverless layer):
  *   1) Self-hosted serverless API (serverless/worker.js) when API_BASE is set —
  *      feeds are fetched, parsed, merged and edge-cached server-side.
- *   2) Zero-config fallback for pure static hosting: public CORS proxies with
- *      client-side XML parsing.
- * Results are cached in localStorage either way; if every source fails, the
- * cached items (or an empty state) are shown.
+ *   2) Optional, opt-in fallback: public CORS proxies with client-side XML
+ *      parsing (window.GUNPLA_NEWS_CORS_PROXY = true). Off by default — the
+ *      public proxies are unreliable (rate limits / auth walls) and every
+ *      failed request shows up as a console error.
+ * With neither configured, no request is made and the panel says so, linking
+ * to the official news sites. Results are cached in localStorage; if every
+ * source fails, the cached items (or an explanatory empty state) are shown.
  */
 
 const Notifications = (function () {
@@ -26,7 +29,7 @@ const Notifications = (function () {
     ];
 
     // Public CORS proxies, tried in order until one returns usable content
-    // (fallback path only — prefer deploying the serverless API below)
+    // (opt-in fallback only — prefer deploying the serverless API below)
     const PROXIES = [
         u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
         u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`
@@ -35,10 +38,12 @@ const Notifications = (function () {
     // Self-hosted serverless API base URL (recommended; see serverless/README.md),
     // e.g. 'https://gunpla-guide-api.YOUR-SUBDOMAIN.workers.dev'.
     // Can also be provided without editing this file via window.GUNPLA_API_BASE.
-    // Leave empty to go straight to the public CORS proxy fallback.
     const API_BASE = (typeof window !== 'undefined' && window.GUNPLA_API_BASE) || '';
+    const USE_CORS_PROXY = typeof window !== 'undefined' && window.GUNPLA_NEWS_CORS_PROXY === true;
+    const HAS_SOURCE = Boolean(API_BASE) || USE_CORS_PROXY;
 
     let items = [];
+    let status = 'idle'; // 'idle' | 'loading' | 'failed' | 'unconfigured'
 
     // ---- helpers ----
     const lang = () => (window.I18n && I18n.getLang ? I18n.getLang() : 'ko');
@@ -61,6 +66,22 @@ const Notifications = (function () {
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    // Only http(s) links may become hrefs — feed content (and anything that
+    // came back through a third-party proxy) is untrusted
+    const isHttpUrl = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
+
+    function sanitizeItem(i) {
+        if (!i || !i.title || !isHttpUrl(i.link)) return null;
+        return {
+            title: String(i.title),
+            link: i.link,
+            ts: Number(i.ts) || 0,
+            source: String(i.source || ''),
+            icon: typeof i.icon === 'string' ? i.icon : '📰',
+            img: isHttpUrl(i.img) ? i.img : ''
+        };
+    }
+
     function relTime(ts) {
         if (!ts) return '';
         const diff = Date.now() - ts;
@@ -81,7 +102,7 @@ const Notifications = (function () {
     /**
      * Fetch merged news from the self-hosted serverless API.
      * Returns a validated items array, or null (API unset / unreachable /
-     * invalid payload) so the caller can fall back to the CORS-proxy path.
+     * invalid payload) so the caller can try the next source.
      */
     async function fetchFromApi() {
         if (!API_BASE) return null;
@@ -92,16 +113,7 @@ const Notifications = (function () {
             const data = await res.json();
             if (!data || data.ok !== true || !Array.isArray(data.items)) return null;
 
-            const valid = data.items
-                .filter(i => i && i.title && typeof i.link === 'string' && /^https?:\/\//i.test(i.link))
-                .map(i => ({
-                    title: String(i.title),
-                    link: i.link,
-                    ts: Number(i.ts) || 0,
-                    source: String(i.source || ''),
-                    icon: i.icon || '📰',
-                    img: typeof i.img === 'string' ? i.img : ''
-                }));
+            const valid = data.items.map(sanitizeItem).filter(Boolean);
             return valid.length ? valid : null;
         } catch (e) {
             return null;
@@ -159,16 +171,15 @@ const Notifications = (function () {
                     if (m) img = m[1];
                 }
 
-                if (title && link) {
-                    out.push({
-                        title: decodeHtml(title),
-                        link,
-                        ts,
-                        source: feed.name,
-                        icon: feed.icon,
-                        img
-                    });
-                }
+                const item = sanitizeItem({
+                    title: decodeHtml(title),
+                    link,
+                    ts,
+                    source: feed.name,
+                    icon: feed.icon,
+                    img
+                });
+                if (item) out.push(item);
             });
         } catch (e) {
             /* ignore malformed feed */
@@ -181,7 +192,7 @@ const Notifications = (function () {
         try {
             const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
             if (c && Array.isArray(c.items)) {
-                items = c.items;
+                items = c.items.map(sanitizeItem).filter(Boolean);
                 return c;
             }
         } catch (e) { /* ignore */ }
@@ -195,7 +206,11 @@ const Notifications = (function () {
     }
 
     function getSeen() {
-        return Number(localStorage.getItem(SEEN_KEY) || 0);
+        try {
+            return Number(localStorage.getItem(SEEN_KEY) || 0) || 0;
+        } catch (e) {
+            return 0;
+        }
     }
 
     function setSeen(ts) {
@@ -218,19 +233,30 @@ const Notifications = (function () {
         });
     }
 
+    function emptyMessage() {
+        if (status === 'loading') return I18n.t('notif.loading');
+        if (status === 'unconfigured') return I18n.t('notif.notConfigured');
+        if (status === 'failed') return I18n.t('notif.fetchFailed');
+        return I18n.t('notif.empty');
+    }
+
     function renderList() {
         const list = document.getElementById('notifList');
         if (!list) return;
 
+        // Without a source, refreshing can't do anything — don't offer it
+        const refreshBtn = document.getElementById('notifRefresh');
+        if (refreshBtn) refreshBtn.hidden = !HAS_SOURCE;
+
         if (!items.length) {
-            list.innerHTML = `<div class="notif-empty">${isKo() ? '불러올 소식이 없습니다. 새로고침을 눌러보세요.' : 'No news available. Try refreshing.'}</div>`;
+            list.innerHTML = `<div class="notif-empty">${escapeHtml(emptyMessage())}</div>`;
             return;
         }
 
         const seen = getSeen();
         list.innerHTML = items.slice(0, MAX_ITEMS).map(i => `
             <a class="notif-item${i.ts > seen ? ' unread' : ''}" href="${escapeHtml(i.link)}" target="_blank" rel="noopener">
-                <span class="notif-item-icon">${i.icon || '📰'}</span>
+                <span class="notif-item-icon" aria-hidden="true">${escapeHtml(i.icon || '📰')}</span>
                 <span class="notif-item-body">
                     <span class="notif-item-title">${escapeHtml(i.title)}</span>
                     <span class="notif-item-meta">${escapeHtml(i.source)}${i.ts ? ' · ' + relTime(i.ts) : ''}</span>
@@ -239,11 +265,11 @@ const Notifications = (function () {
     }
 
     function setLoading(on) {
-        const list = document.getElementById('notifList');
         const refreshBtn = document.getElementById('notifRefresh');
         if (refreshBtn) refreshBtn.classList.toggle('spinning', on);
-        if (on && list && !items.length) {
-            list.innerHTML = `<div class="notif-empty">${isKo() ? '소식을 불러오는 중…' : 'Loading news…'}</div>`;
+        if (on) {
+            status = 'loading';
+            if (!items.length) renderList();
         }
     }
 
@@ -252,32 +278,42 @@ const Notifications = (function () {
         const cache = loadCache();
         const stale = !cache || (Date.now() - cache.ts > TTL);
 
+        if (!HAS_SOURCE) {
+            status = 'unconfigured';
+            renderList();
+            updateBadge();
+            return;
+        }
+
         renderList();
         updateBadge();
 
         if (!force && !stale) return;
 
         setLoading(true);
+        let fetched = false;
         try {
-            // Prefer the serverless API; fall back to public CORS proxies
+            // Prefer the serverless API; fall back to public CORS proxies (opt-in)
             let merged = await fetchFromApi();
-            if (!merged) {
+            if (!merged && USE_CORS_PROXY) {
                 const results = await Promise.all(FEEDS.map(fetchFeed));
                 merged = [].concat(...results);
             }
 
-            if (merged.length) {
+            if (merged && merged.length) {
                 merged.sort((a, b) => b.ts - a.ts);
                 // de-duplicate by link
                 const seenLinks = new Set();
                 merged = merged.filter(i => (seenLinks.has(i.link) ? false : seenLinks.add(i.link)));
                 items = merged.slice(0, MAX_ITEMS);
                 saveCache();
+                fetched = true;
             }
         } catch (e) {
             /* keep cached items */
         } finally {
             setLoading(false);
+            status = fetched ? 'idle' : 'failed';
             renderList();
             updateBadge();
         }
@@ -296,16 +332,38 @@ const Notifications = (function () {
         const dropdown = toggle?.closest('.notif-dropdown');
 
         if (toggle && dropdown) {
+            const setOpen = (open) => {
+                dropdown.classList.toggle('active', open);
+                toggle.setAttribute('aria-expanded', String(open));
+            };
+
             toggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const willOpen = !dropdown.classList.contains('active');
-                dropdown.classList.toggle('active');
-                if (willOpen) markSeen();
+                setOpen(willOpen);
+                if (willOpen) {
+                    // Re-render: language and relative times may have changed
+                    // since the list was built
+                    renderList();
+                    markSeen();
+                    // Only one header popup at a time (the theme menu closes itself)
+                    document.dispatchEvent(new CustomEvent('dropdownOpen', { detail: { id: 'notif' } }));
+                }
             });
 
-            // Close on outside click; keep open when interacting with the panel
-            document.addEventListener('click', () => dropdown.classList.remove('active'));
+            document.addEventListener('dropdownOpen', (e) => {
+                if (e.detail?.id !== 'notif') setOpen(false);
+            });
+
+            // Close on outside click / Escape; keep open when interacting with the panel
+            document.addEventListener('click', () => setOpen(false));
             dropdown.querySelector('.notif-panel')?.addEventListener('click', e => e.stopPropagation());
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && dropdown.classList.contains('active')) {
+                    setOpen(false);
+                    toggle.focus();
+                }
+            });
         }
 
         const refreshBtn = document.getElementById('notifRefresh');
@@ -316,8 +374,18 @@ const Notifications = (function () {
             });
         }
 
-        // Re-render on language change (relative times / labels)
+        // Re-render once translations load, and on language change (relative times / labels)
+        document.addEventListener('i18nReady', renderList);
         document.addEventListener('langChange', renderList);
+
+        // Another tab fetched news or marked it as seen — mirror it here
+        window.addEventListener('storage', (e) => {
+            if (e.key === CACHE_KEY || e.key === SEEN_KEY || e.key === null) {
+                loadCache();
+                renderList();
+                updateBadge();
+            }
+        });
 
         loadCache();
         renderList();

@@ -447,6 +447,12 @@
     color: #1E293B;
 }
 
+/* The yellow accent used for prices is unreadable on white */
+[data-theme="light"] .product-price,
+[data-theme="light"] .meta-value.price {
+    color: #B45309;
+}
+
 /* =============================================
    TRUE BLACK - Extra Clean OLED
    ============================================= */

@@ -118,6 +118,15 @@
     --theme-text-muted: var(--color-gray-400);
     --theme-hover: rgba(255, 255, 255, 0.05);
     --theme-card-bg: var(--color-dark-surface);
+    /* Strong text (titles, names, values) on theme surfaces. Use this instead of
+       --color-white so light/custom themes stay readable; --color-white is only
+       for text sitting on a colored (primary/accent) background. */
+    --theme-heading: var(--color-white);
+    --color-dark-hover: rgba(255, 255, 255, 0.06);
+
+    /* Height of the open compare drawer (set by app.js) so fixed elements and
+       the page bottom can stay clear of it */
+    --compare-drawer-offset: 0px;
 }
 
 /* ===== Theme: Light ===== */
@@ -129,11 +138,17 @@
     --theme-text-muted: #64748B;
     --theme-hover: rgba(0, 0, 0, 0.05);
     --theme-card-bg: #FFFFFF;
+    --theme-heading: #0F172A;
     --color-dark-bg: #F8FAFC;
     --color-dark-surface: #FFFFFF;
     --color-dark-border: #E2E8F0;
     --color-dark-text: #1E293B;
     --color-dark-hover: rgba(0, 0, 0, 0.05);
+    /* The light-gray text tokens are tuned for dark surfaces; darken them so
+       secondary text keeps its contrast on white */
+    --color-gray-200: #1E293B;
+    --color-gray-300: #334155;
+    --color-gray-400: #64748B;
 }
 
 /* ===== Theme: RX-78 Edition (Blue accent) ===== */
@@ -251,6 +266,11 @@
     padding: 0;
 }
 
+/* The hidden attribute must win over component display rules (grid/flex) */
+[hidden] {
+    display: none !important;
+}
+
 html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -267,6 +287,8 @@ body {
     display: flex;
     flex-direction: column;
     transition: background-color 0.4s ease, color 0.3s ease;
+    /* Keep the page end (load more, footer) reachable above the compare drawer */
+    padding-bottom: var(--compare-drawer-offset);
 }
 
 a {
@@ -331,7 +353,7 @@ textarea {
     padding: 0 var(--space-6);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-4);
     position: relative;
 }
 
@@ -369,7 +391,7 @@ textarea {
     font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 700;
-    color: var(--color-white);
+    color: var(--theme-heading);
     letter-spacing: 0.05em;
 }
 
@@ -377,17 +399,13 @@ textarea {
     color: var(--color-primary);
 }
 
-/* Search - Absolute Center */
+/* Search — an in-flow flex item: its auto margins center it in the space
+   between the logo and the nav, and it shrinks instead of sliding under them */
 .search-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    /* Reserve enough room on BOTH sides for the wider of logo (~250px) and
-       nav+bell (~455px at 1440), so the centered box can never underlap them.
-       (Proper responsive re-layout is tracked separately — task #30.) */
-    max-width: calc(100% - 920px);
+    position: relative;
+    flex: 0 1 400px;
+    min-width: 0;
+    margin: 0 auto;
     z-index: 1;
 }
 
@@ -404,7 +422,8 @@ textarea {
     background: var(--color-dark-bg);
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-lg);
-    color: var(--color-white);
+    color: var(--theme-heading);
+    text-overflow: ellipsis;
     transition: var(--transition-base);
 }
 
@@ -540,11 +559,15 @@ textarea {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    flex-shrink: 0;
     z-index: 2;
-    /* Keep the nav right-aligned: the header has 3 in-flow children
-       (logo / nav / notif bell) and space-between would center the nav,
-       colliding with the absolutely-centered search box. */
+    /* Right-align the nav on pages without a search box (detail page) */
     margin-left: auto;
+}
+
+/* With a search box, its own auto margins do the spacing */
+.search-container ~ .nav-menu {
+    margin-left: 0;
 }
 
 /* ===== Notification / News Bell ===== */
@@ -552,7 +575,6 @@ textarea {
     position: relative;
     flex-shrink: 0;
     z-index: 3;
-    margin-left: var(--space-2);
 }
 
 .notif-toggle-btn {
@@ -631,7 +653,7 @@ textarea {
 .notif-panel-title {
     font-size: var(--text-sm);
     font-weight: 700;
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .notif-refresh {
@@ -905,8 +927,8 @@ textarea {
 
 .nav-item:hover,
 .nav-item.active {
-    color: var(--color-white);
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--theme-heading);
+    background: var(--theme-hover);
 }
 
 .nav-item.active {
@@ -921,7 +943,7 @@ textarea {
     font-weight: 600;
     line-height: 1;
     text-align: center;
-    color: var(--color-white);
+    color: var(--theme-heading);
     background: transparent;
     border-radius: 0;
 }
@@ -944,7 +966,7 @@ textarea {
 
 .lang-toggle:hover {
     border-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .lang-ko,
@@ -1008,6 +1030,10 @@ textarea {
     visibility: hidden;
     transition: var(--transition-base);
     z-index: var(--z-overlay);
+    /* The menu (search + nav + themes + custom colors) can be taller than a
+       short phone screen — let it scroll instead of being cut off */
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .mobile-menu-overlay.active {
@@ -1037,7 +1063,7 @@ textarea {
     background: var(--color-dark-bg);
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-lg);
-    color: var(--color-white);
+    color: var(--theme-heading);
     font-size: var(--text-lg);
 }
 
@@ -1055,9 +1081,14 @@ textarea {
     transition: var(--transition-fast);
 }
 
-.mobile-nav-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-white);
+.mobile-nav-item:hover,
+.mobile-nav-item.active {
+    background: var(--theme-hover);
+    color: var(--theme-heading);
+}
+
+.mobile-nav-item.active {
+    color: var(--color-primary);
 }
 
 .mobile-lang-toggle {
@@ -1161,9 +1192,37 @@ textarea {
 }
 
 .filter-header h2 {
+    margin-right: auto;
     font-size: var(--text-lg);
     font-weight: 600;
-    color: var(--color-white);
+    color: var(--theme-heading);
+}
+
+/* Close button for the off-canvas filter panel (shown ≤1024px) */
+.filter-close-btn {
+    display: none;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--space-2);
+    font-size: var(--text-2xl);
+    line-height: 1;
+    color: var(--color-gray-400);
+    border-radius: var(--radius-md);
+}
+
+.filter-close-btn:hover {
+    color: var(--theme-heading);
+    background: var(--theme-hover);
+}
+
+/* Stacks above the compare drawer (z-modal); the open panel sits above it */
+.filter-backdrop {
+    position: fixed;
+    inset: var(--header-height) 0 0 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-modal) + 1);
 }
 
 .filter-reset-btn {
@@ -1338,7 +1397,7 @@ textarea {
 .news-link:hover {
     background: var(--color-dark-surface);
     border-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .news-link:hover .news-arrow {
@@ -1476,7 +1535,7 @@ textarea {
 .compare-table-header h3 {
     margin: 0;
     font-size: var(--text-lg);
-    color: var(--color-white);
+    color: var(--theme-heading);
 }
 
 .compare-table-wrapper {
@@ -1564,7 +1623,7 @@ textarea {
 .compare-table .product-header .product-name {
     display: block;
     font-weight: 600;
-    color: var(--color-white);
+    color: var(--theme-heading);
     font-size: var(--text-sm);
     max-width: 150px;
     overflow: hidden;
@@ -1647,7 +1706,7 @@ textarea {
 .mobile-filter-btn {
     display: none;
     position: fixed;
-    bottom: var(--space-6);
+    bottom: calc(var(--space-6) + var(--compare-drawer-offset));
     right: var(--space-6);
     padding: var(--space-4) var(--space-6);
     font-size: var(--text-base);
@@ -1708,7 +1767,7 @@ textarea {
     background: var(--color-dark-surface);
     border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-md);
-    color: var(--color-white);
+    color: var(--theme-heading);
     cursor: pointer;
 }
 
@@ -1728,7 +1787,7 @@ textarea {
 
 .sort-order-btn:hover {
     background: var(--color-dark-hover);
-    color: var(--color-white);
+    color: var(--theme-heading);
     border-color: var(--color-primary);
 }
 
@@ -1898,27 +1957,64 @@ textarea {
 }
 
 /* ===== Responsive ===== */
+@media (min-width: 769px) {
+
+    /* The header search box is visible here, so the menu doesn't repeat it */
+    .mobile-search {
+        display: none;
+    }
+}
+
 @media (max-width: 1024px) {
     .filter-sidebar {
         position: fixed;
         left: 0;
         top: var(--header-height);
         bottom: 0;
+        max-width: 85vw;
         transform: translateX(-100%);
-        transition: var(--transition-base);
-        z-index: var(--z-modal);
+        /* hidden while closed so Tab can't land on off-screen controls */
+        visibility: hidden;
+        transition: transform var(--transition-base), visibility var(--transition-base);
+        z-index: calc(var(--z-modal) + 2);
     }
 
     .filter-sidebar.active {
         transform: translateX(0);
+        visibility: visible;
+    }
+
+    .filter-close-btn {
+        display: flex;
     }
 
     .mobile-filter-btn {
         display: flex;
     }
 
+    /* The floating toggle would sit on top of the open panel; the panel has
+       its own close button and backdrop instead */
+    body.filter-open .mobile-filter-btn {
+        display: none;
+    }
+
     .product-area {
         width: 100%;
+    }
+
+    /* Nav links + theme + language move into the hamburger menu so the
+       header search keeps a usable width on tablets */
+    .nav-menu {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    /* Detail page (logo is directly followed by the nav): push the bell right */
+    .logo + .nav-menu + .notif-dropdown {
+        margin-left: auto;
     }
 }
 
@@ -1931,12 +2027,8 @@ textarea {
         display: none;
     }
 
-    .nav-menu {
-        display: none;
-    }
-
-    .mobile-menu-btn {
-        display: flex;
+    .notif-dropdown {
+        margin-left: auto;
     }
 
     .product-area {
@@ -1956,10 +2048,23 @@ textarea {
 @media (max-width: 480px) {
     .header-container {
         padding: 0 var(--space-4);
+        gap: var(--space-3);
     }
 
     .logo-text {
         font-size: var(--text-lg);
+    }
+
+    /* Anchored to the bell, the 340px panel would run off the left edge;
+       span the header width instead (the header's backdrop-filter makes it
+       the containing block for this fixed panel) */
+    .notif-panel {
+        position: fixed;
+        top: calc(var(--header-height) - var(--space-1));
+        left: var(--space-4);
+        right: var(--space-4);
+        width: auto;
+        max-width: none;
     }
 
     .footer {

@@ -52,7 +52,7 @@
                             '--theme-bg': c.bg, '--color-dark-bg': c.bg,
                             '--theme-surface': c.surface, '--color-dark-surface': c.surface, '--theme-card-bg': c.surface,
                             '--theme-border': shade(c.surface, 0.12), '--color-dark-border': shade(c.surface, 0.12),
-                            '--theme-text': c.text, '--color-dark-text': c.text
+                            '--theme-text': c.text, '--color-dark-text': c.text, '--theme-heading': c.text
                         };
                         for (var k in m) { if (m[k]) s.setProperty(k, m[k]); }
                     }
@@ -76,65 +76,69 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="제품명, 기체명, 형식번호로 검색..."
-                        data-i18n-placeholder="search.placeholder" autocomplete="off">
-                    <button class="search-btn" id="searchBtn" aria-label="Search">
+                        data-i18n-placeholder="search.placeholder" data-i18n-aria-label="search.placeholder"
+                        autocomplete="off" role="combobox" aria-autocomplete="list"
+                        aria-controls="searchAutocomplete" aria-expanded="false">
+                    <button class="search-btn" id="searchBtn" aria-label="검색" data-i18n-aria-label="search.button">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
                     </button>
-                    <div class="search-autocomplete" id="searchAutocomplete">
+                    <div class="search-autocomplete" id="searchAutocomplete" role="listbox">
                         <!-- Autocomplete suggestions will be inserted here -->
                     </div>
                 </div>
             </div>
 
             <nav class="nav-menu">
-                <a href="#" class="nav-item active" data-page="home">
+                <a href="index.html" class="nav-item active" data-page="home" aria-current="page">
                     <span data-i18n="nav.home">홈</span>
                 </a>
-                <a href="#" class="nav-item" data-page="favorites" id="favoritesNav">
+                <a href="index.html?view=favorites" class="nav-item" data-page="favorites" id="favoritesNav">
                     <span data-i18n="nav.favorites">즐겨찾기</span>
                     <span class="badge" id="favoritesBadge"></span>
                 </a>
-                <a href="#" class="nav-item" data-page="compare" id="compareNav">
+                <a href="index.html?view=compare" class="nav-item" data-page="compare" id="compareNav">
                     <span data-i18n="nav.compare">비교함</span>
                     <span class="badge" id="compareBadge"></span>
                 </a>
                 <div class="theme-dropdown">
-                    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Change Theme" title="테마 변경">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="테마 변경" title="테마 변경"
+                        data-i18n-aria-label="theme.change" data-i18n-title="theme.change"
+                        aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                            stroke-width="2" aria-hidden="true">
                             <circle cx="12" cy="12" r="4" />
                             <path
                                 d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
                         </svg>
                     </button>
                     <div class="theme-dropdown-menu" id="themeMenu">
-                        <div class="theme-divider">기본</div>
-                        <button class="theme-option" data-theme="dark">🌙 다크</button>
-                        <button class="theme-option" data-theme="light">☀️ 라이트</button>
-                        <button class="theme-option" data-theme="trueblack">⚫ 트루 블랙</button>
-                        <div class="theme-divider">건담 에디션</div>
-                        <button class="theme-option" data-theme="rx78">🔵 RX-78</button>
-                        <button class="theme-option" data-theme="char">🔴 샤아 전용</button>
-                        <button class="theme-option" data-theme="zeon">🟢 지온</button>
-                        <button class="theme-option" data-theme="unicorn">🦄 유니콘</button>
-                        <div class="theme-divider">특별 에디션</div>
-                        <button class="theme-option" data-theme="eva">💜 에반게리온</button>
-                        <div class="theme-divider">커스텀</div>
-                        <button class="theme-option" data-theme="custom">🎨 커스텀</button>
+                        <div class="theme-divider" data-i18n="theme.groupBasic">기본</div>
+                        <button class="theme-option" data-theme="dark">🌙 <span data-i18n="theme.dark">다크</span></button>
+                        <button class="theme-option" data-theme="light">☀️ <span data-i18n="theme.light">라이트</span></button>
+                        <button class="theme-option" data-theme="trueblack">⚫ <span data-i18n="theme.trueblack">트루 블랙</span></button>
+                        <div class="theme-divider" data-i18n="theme.groupGundam">건담 에디션</div>
+                        <button class="theme-option" data-theme="rx78">🔵 <span data-i18n="theme.rx78">RX-78</span></button>
+                        <button class="theme-option" data-theme="char">🔴 <span data-i18n="theme.char">샤아 전용</span></button>
+                        <button class="theme-option" data-theme="zeon">🟢 <span data-i18n="theme.zeon">지온</span></button>
+                        <button class="theme-option" data-theme="unicorn">🦄 <span data-i18n="theme.unicorn">유니콘</span></button>
+                        <div class="theme-divider" data-i18n="theme.groupSpecial">특별 에디션</div>
+                        <button class="theme-option" data-theme="eva">💜 <span data-i18n="theme.eva">에반게리온</span></button>
+                        <div class="theme-divider" data-i18n="theme.groupCustom">커스텀</div>
+                        <button class="theme-option" data-theme="custom">🎨 <span data-i18n="theme.custom">커스텀</span></button>
                         <div class="theme-customizer" id="themeCustomizer">
-                            <label class="tc-row"><span>포인트</span><input type="color" data-custom="primary"></label>
-                            <label class="tc-row"><span>강조</span><input type="color" data-custom="accent"></label>
-                            <label class="tc-row"><span>배경</span><input type="color" data-custom="bg"></label>
-                            <label class="tc-row"><span>카드</span><input type="color" data-custom="surface"></label>
-                            <label class="tc-row"><span>텍스트</span><input type="color" data-custom="text"></label>
+                            <label class="tc-row"><span data-i18n="theme.colorPrimary">포인트</span><input type="color" data-custom="primary"></label>
+                            <label class="tc-row"><span data-i18n="theme.colorAccent">강조</span><input type="color" data-custom="accent"></label>
+                            <label class="tc-row"><span data-i18n="theme.colorBg">배경</span><input type="color" data-custom="bg"></label>
+                            <label class="tc-row"><span data-i18n="theme.colorSurface">카드</span><input type="color" data-custom="surface"></label>
+                            <label class="tc-row"><span data-i18n="theme.colorText">텍스트</span><input type="color" data-custom="text"></label>
                         </div>
                     </div>
                 </div>
-                <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
+                <button class="lang-toggle" id="langToggle" aria-label="언어 변경" data-i18n-aria-label="nav.language">
                     <span class="lang-ko">KO</span>
                     <span class="lang-divider">/</span>
                     <span class="lang-en">EN</span>
@@ -143,8 +147,10 @@
 
             <!-- Notification / News Bell -->
             <div class="notif-dropdown">
-                <button class="notif-toggle-btn" id="notifToggleBtn" aria-label="News" title="신제품 알림">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button class="notif-toggle-btn" id="notifToggleBtn" aria-label="신제품 알림" title="신제품 알림"
+                    data-i18n-aria-label="notif.toggle" data-i18n-title="notif.toggle"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="notifPanel">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                         <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                     </svg>
@@ -153,7 +159,8 @@
                 <div class="notif-panel" id="notifPanel">
                     <div class="notif-panel-header">
                         <span class="notif-panel-title">📰 <span data-i18n="notif.title">신제품 · 소식</span></span>
-                        <button class="notif-refresh" id="notifRefresh" title="새로고침" aria-label="Refresh">↻</button>
+                        <button class="notif-refresh" id="notifRefresh" title="새로고침" aria-label="새로고침"
+                            data-i18n-title="notif.refresh" data-i18n-aria-label="notif.refresh">↻</button>
                     </div>
                     <div class="notif-list" id="notifList"></div>
                     <div class="notif-panel-footer">
@@ -163,7 +170,8 @@
                 </div>
             </div>
 
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="메뉴" data-i18n-aria-label="nav.menu"
+                aria-expanded="false" aria-controls="mobileMenuOverlay">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -176,32 +184,33 @@
         <div class="mobile-menu">
             <div class="mobile-search">
                 <input type="text" id="mobileSearchInput" placeholder="검색..."
-                    data-i18n-placeholder="search.placeholder">
+                    data-i18n-placeholder="search.placeholder" data-i18n-aria-label="search.placeholder"
+                    autocomplete="off">
             </div>
             <nav class="mobile-nav">
-                <a href="#" class="mobile-nav-item" data-page="home" data-i18n="nav.home">홈</a>
-                <a href="#" class="mobile-nav-item" data-page="favorites" data-i18n="nav.favorites">즐겨찾기</a>
-                <a href="#" class="mobile-nav-item" data-page="compare" data-i18n="nav.compare">비교함</a>
+                <a href="index.html" class="mobile-nav-item" data-page="home" data-i18n="nav.home">홈</a>
+                <a href="index.html?view=favorites" class="mobile-nav-item" data-page="favorites" data-i18n="nav.favorites">즐겨찾기</a>
+                <a href="index.html?view=compare" class="mobile-nav-item" data-page="compare" data-i18n="nav.compare">비교함</a>
             </nav>
             <div class="mobile-theme-section">
-                <span class="mobile-section-label">테마</span>
+                <span class="mobile-section-label" data-i18n="theme.title">테마</span>
                 <div class="mobile-theme-grid" id="mobileThemeGrid">
-                    <button class="mobile-theme-btn" data-theme="dark" title="다크">🌙</button>
-                    <button class="mobile-theme-btn" data-theme="light" title="라이트">☀️</button>
-                    <button class="mobile-theme-btn" data-theme="trueblack" title="트루 블랙">⚫</button>
-                    <button class="mobile-theme-btn" data-theme="rx78" title="RX-78">🔵</button>
-                    <button class="mobile-theme-btn" data-theme="char" title="샤아 전용">🔴</button>
-                    <button class="mobile-theme-btn" data-theme="zeon" title="지온">🟢</button>
-                    <button class="mobile-theme-btn" data-theme="unicorn" title="유니콘">🦄</button>
-                    <button class="mobile-theme-btn" data-theme="eva" title="에반게리온">💜</button>
-                    <button class="mobile-theme-btn" data-theme="custom" title="커스텀">🎨</button>
+                    <button class="mobile-theme-btn" data-theme="dark" title="다크" aria-label="다크" data-i18n-title="theme.dark" data-i18n-aria-label="theme.dark">🌙</button>
+                    <button class="mobile-theme-btn" data-theme="light" title="라이트" aria-label="라이트" data-i18n-title="theme.light" data-i18n-aria-label="theme.light">☀️</button>
+                    <button class="mobile-theme-btn" data-theme="trueblack" title="트루 블랙" aria-label="트루 블랙" data-i18n-title="theme.trueblack" data-i18n-aria-label="theme.trueblack">⚫</button>
+                    <button class="mobile-theme-btn" data-theme="rx78" title="RX-78" aria-label="RX-78" data-i18n-title="theme.rx78" data-i18n-aria-label="theme.rx78">🔵</button>
+                    <button class="mobile-theme-btn" data-theme="char" title="샤아 전용" aria-label="샤아 전용" data-i18n-title="theme.char" data-i18n-aria-label="theme.char">🔴</button>
+                    <button class="mobile-theme-btn" data-theme="zeon" title="지온" aria-label="지온" data-i18n-title="theme.zeon" data-i18n-aria-label="theme.zeon">🟢</button>
+                    <button class="mobile-theme-btn" data-theme="unicorn" title="유니콘" aria-label="유니콘" data-i18n-title="theme.unicorn" data-i18n-aria-label="theme.unicorn">🦄</button>
+                    <button class="mobile-theme-btn" data-theme="eva" title="에반게리온" aria-label="에반게리온" data-i18n-title="theme.eva" data-i18n-aria-label="theme.eva">💜</button>
+                    <button class="mobile-theme-btn" data-theme="custom" title="커스텀" aria-label="커스텀" data-i18n-title="theme.custom" data-i18n-aria-label="theme.custom">🎨</button>
                 </div>
                 <div class="theme-customizer" id="mobileThemeCustomizer">
-                    <label class="tc-row"><span>포인트</span><input type="color" data-custom="primary"></label>
-                    <label class="tc-row"><span>강조</span><input type="color" data-custom="accent"></label>
-                    <label class="tc-row"><span>배경</span><input type="color" data-custom="bg"></label>
-                    <label class="tc-row"><span>카드</span><input type="color" data-custom="surface"></label>
-                    <label class="tc-row"><span>텍스트</span><input type="color" data-custom="text"></label>
+                    <label class="tc-row"><span data-i18n="theme.colorPrimary">포인트</span><input type="color" data-custom="primary"></label>
+                    <label class="tc-row"><span data-i18n="theme.colorAccent">강조</span><input type="color" data-custom="accent"></label>
+                    <label class="tc-row"><span data-i18n="theme.colorBg">배경</span><input type="color" data-custom="bg"></label>
+                    <label class="tc-row"><span data-i18n="theme.colorSurface">카드</span><input type="color" data-custom="surface"></label>
+                    <label class="tc-row"><span data-i18n="theme.colorText">텍스트</span><input type="color" data-custom="text"></label>
                 </div>
             </div>
             <button class="mobile-lang-toggle" id="mobileLangToggle">
@@ -213,14 +222,18 @@
     <!-- Main Content -->
     <main class="main-content">
         <!-- Filter Sidebar -->
-        <aside class="filter-sidebar" id="filterSidebar">
+        <aside class="filter-sidebar" id="filterSidebar" aria-labelledby="filterTitle">
             <div class="filter-header">
-                <h2 data-i18n="filter.title">필터</h2>
+                <h2 id="filterTitle" data-i18n="filter.title">필터</h2>
                 <button class="filter-reset-btn" id="filterResetBtn" data-i18n="filter.reset">필터 초기화</button>
+                <!-- Visible only when the sidebar is an off-canvas panel (≤1024px) -->
+                <button class="filter-close-btn" id="filterCloseBtn" aria-label="필터 닫기"
+                    data-i18n-aria-label="filter.close">×</button>
             </div>
 
             <div class="active-filters-wrapper" id="activeFiltersWrapper" style="display: none;">
-                <button class="active-filters-summary" id="activeFiltersSummary">
+                <button class="active-filters-summary" id="activeFiltersSummary" aria-expanded="false"
+                    aria-controls="activeFiltersDetails">
                     <span class="active-filters-count" id="activeFiltersCount">0</span>
                     <span data-i18n="filter.selected">개 선택됨</span>
                     <svg class="active-filters-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -242,35 +255,38 @@
             <!-- New Releases Section -->
             <div class="news-section">
                 <div class="news-header">
-                    <h3>📰 신제품 소식</h3>
+                    <h3 data-i18n="news.title">📰 신제품 소식</h3>
                 </div>
                 <div class="news-links">
                     <a href="https://bandai-hobby.net/en/news/" target="_blank" rel="noopener" class="news-link">
-                        <span class="news-icon">🆕</span>
-                        <span class="news-text">Bandai Hobby 공식 뉴스</span>
-                        <span class="news-arrow">→</span>
+                        <span class="news-icon" aria-hidden="true">🆕</span>
+                        <span class="news-text" data-i18n="news.bandai">Bandai Hobby 공식 뉴스</span>
+                        <span class="news-arrow" aria-hidden="true">→</span>
                     </a>
                     <a href="https://en.gundam.info/news/" target="_blank" rel="noopener" class="news-link">
-                        <span class="news-icon">📡</span>
-                        <span class="news-text">Gundam.info 뉴스</span>
-                        <span class="news-arrow">→</span>
+                        <span class="news-icon" aria-hidden="true">📡</span>
+                        <span class="news-text" data-i18n="news.gundamInfo">Gundam.info 뉴스</span>
+                        <span class="news-arrow" aria-hidden="true">→</span>
                     </a>
                     <a href="https://p-bandai.com/us/search?sellType=1" target="_blank" rel="noopener"
                         class="news-link">
-                        <span class="news-icon">🎯</span>
-                        <span class="news-text">P-Bandai 신규 예약</span>
-                        <span class="news-arrow">→</span>
+                        <span class="news-icon" aria-hidden="true">🎯</span>
+                        <span class="news-text" data-i18n="news.pbandai">P-Bandai 신규 예약</span>
+                        <span class="news-arrow" aria-hidden="true">→</span>
                     </a>
                 </div>
                 <div class="news-rss-info">
-                    <small>💡 RSS 구독: <a href="https://en.gundam.info/rss" target="_blank">gundam.info/rss</a></small>
+                    <small><span data-i18n="news.rss">💡 RSS 구독:</span> <a href="https://en.gundam.info/rss" target="_blank" rel="noopener">gundam.info/rss</a></small>
                 </div>
             </div>
         </aside>
 
+        <!-- Backdrop behind the off-canvas filter panel (≤1024px) -->
+        <div class="filter-backdrop" id="filterBackdrop" hidden></div>
+
         <!-- Mobile Filter Toggle -->
-        <button class="mobile-filter-btn" id="mobileFilterBtn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="mobile-filter-btn" id="mobileFilterBtn" aria-expanded="false" aria-controls="filterSidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
             </svg>
             <span data-i18n="filter.title">필터</span>
@@ -280,12 +296,11 @@
         <section class="product-area">
             <!-- Sort & View Controls -->
             <div class="product-controls">
-                <div class="result-info">
+                <div class="result-info" aria-live="polite">
                     <span id="resultCount">0</span>
                     <span data-i18n="search.resultsCount">개의 결과</span>
-                    <button class="quick-reset-btn" id="quickResetBtn" title="필터 초기화" style="display: none;">
-                        ↺ 초기화
-                    </button>
+                    <button class="quick-reset-btn" id="quickResetBtn" title="필터 초기화" style="display: none;"
+                        data-i18n="filter.quickReset" data-i18n-title="filter.reset">↺ 초기화</button>
                 </div>
 
                 <div class="control-group">
@@ -298,18 +313,20 @@
                             <option value="difficulty" data-i18n="sort.difficulty">난이도순</option>
                             <option value="partCount" data-i18n="sort.partCount">파츠수순</option>
                         </select>
-                        <button id="sortOrderToggle" class="sort-order-btn" title="정렬 순서 변경">
+                        <button id="sortOrderToggle" class="sort-order-btn" title="정렬 순서 변경" aria-label="정렬 순서 변경"
+                            data-i18n-title="sort.order" data-i18n-aria-label="sort.order">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M12 5v14M5 12l7-7 7 7" class="arrow-up" />
                                 <path d="M12 19V5M5 12l7 7 7-7" class="arrow-down" style="display:none" />
                             </svg>
-                            <span class="sort-order-label">↓</span>
+                            <span class="sort-order-label" aria-hidden="true">↓</span>
                         </button>
                     </div>
 
                     <div class="view-toggle">
-                        <button class="view-btn active" data-view="grid" aria-label="Grid View">
+                        <button class="view-btn active" data-view="grid" aria-label="그리드 보기"
+                            data-i18n-aria-label="view.grid" aria-pressed="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
@@ -317,7 +334,8 @@
                                 <rect x="14" y="14" width="7" height="7"></rect>
                             </svg>
                         </button>
-                        <button class="view-btn" data-view="list" aria-label="List View">
+                        <button class="view-btn" data-view="list" aria-label="리스트 보기"
+                            data-i18n-aria-label="view.list" aria-pressed="false">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                 <rect x="3" y="4" width="18" height="4"></rect>
                                 <rect x="3" y="10" width="18" height="4"></rect>
@@ -330,12 +348,14 @@
 
 
             <!-- Recently Viewed Products (thumbnails only, no text) -->
-            <div class="recent-products-section" id="recentProductsSection" style="display: none;">
-                <span class="recent-products-icon" title="최근 본 제품">🕒</span>
+            <div class="recent-products-section" id="recentProductsSection" style="display: none;"
+                role="region" aria-label="최근 본 제품" data-i18n-aria-label="recent.title">
+                <span class="recent-products-icon" title="최근 본 제품" data-i18n-title="recent.title" aria-hidden="true">🕒</span>
                 <div class="recent-products-list" id="recentProductsList">
                     <!-- Recent product thumbnails will be inserted here -->
                 </div>
-                <button class="recent-products-clear" id="clearRecentBtn" title="기록 삭제">×</button>
+                <button class="recent-products-clear" id="clearRecentBtn" title="최근 본 제품 기록 삭제"
+                    aria-label="최근 본 제품 기록 삭제" data-i18n-title="recent.clear" data-i18n-aria-label="recent.clear">×</button>
             </div>
 
             <!-- Product Grid -->
@@ -371,29 +391,31 @@
                         <path d="M8 8l6 6M14 8l-6 6"></path>
                     </svg>
                 </div>
-                <h3 data-i18n="search.noResults">검색 결과가 없습니다</h3>
-                <p>다른 검색어나 필터 조건을 시도해보세요.</p>
+                <!-- Text is set per view (search / favorites / compare) by app.js -->
+                <h3 id="noResultsTitle">검색 결과가 없습니다</h3>
+                <p id="noResultsHint">다른 검색어나 필터 조건을 시도해보세요.</p>
             </div>
 
             <!-- Load More Button -->
             <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                <button class="load-more-btn" id="loadMoreBtn">더 보기</button>
+                <button class="load-more-btn" id="loadMoreBtn" data-i18n="common.loadMore">더 보기</button>
             </div>
         </section>
     </main>
 
     <!-- Compare Drawer -->
-    <div class="compare-drawer" id="compareDrawer">
+    <div class="compare-drawer" id="compareDrawer" role="region" aria-labelledby="compareDrawerTitle">
         <div class="compare-drawer-header">
-            <h3 data-i18n="compare.title">제품 비교</h3>
-            <button class="compare-drawer-close" id="compareDrawerClose">×</button>
+            <h3 id="compareDrawerTitle" data-i18n="compare.title">제품 비교</h3>
+            <button class="compare-drawer-close" id="compareDrawerClose" aria-label="닫기"
+                data-i18n-aria-label="common.close">×</button>
         </div>
         <div class="compare-items" id="compareItems">
             <!-- Compare items will be inserted here -->
         </div>
         <div class="compare-actions">
             <button class="compare-clear-btn" id="compareClearBtn" data-i18n="compare.clearAll">모두 지우기</button>
-            <button class="compare-submit-btn" id="compareSubmitBtn">비교하기</button>
+            <button class="compare-submit-btn" id="compareSubmitBtn" data-i18n="compare.submit">비교하기</button>
         </div>
     </div>
 
@@ -428,17 +450,17 @@
                     <!-- Badges like NEW, P-Bandai will be inserted -->
                 </div>
                 <div class="product-card-actions">
-                    <button class="action-btn favorite-btn" aria-label="Add to favorites">
+                    <button class="action-btn favorite-btn" aria-pressed="false">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                            stroke-width="2" aria-hidden="true">
                             <path
                                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                             </path>
                         </svg>
                     </button>
-                    <button class="action-btn compare-btn" aria-label="Add to compare">
+                    <button class="action-btn compare-btn" aria-pressed="false">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                            stroke-width="2" aria-hidden="true">
                             <line x1="18" y1="20" x2="18" y2="10"></line>
                             <line x1="12" y1="20" x2="12" y2="4"></line>
                             <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -475,11 +497,11 @@
     <!-- Filter Category Template -->
     <template id="filterCategoryTemplate">
         <div class="filter-category" data-category="">
-            <button class="filter-category-header">
+            <button type="button" class="filter-category-header" aria-expanded="false">
                 <span class="filter-category-title"></span>
                 <span class="filter-category-count"></span>
                 <svg class="filter-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2">
+                    stroke-width="2" aria-hidden="true">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
             </button>
