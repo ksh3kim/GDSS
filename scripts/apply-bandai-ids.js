@@ -7,8 +7,13 @@
  * 
  * 이 스크립트는:
  * - CSV에서 매핑을 읽어옵니다
- * - gunpla-index.json의 thumbnail URL을 업데이트합니다
- * - 각 detail JSON 파일의 images.boxart URL을 업데이트합니다
+ * - gunpla-index.json의 각 제품에 bandaiManualId 필드를 기록합니다
+ * - 각 detail JSON 파일에 같은 bandaiManualId 필드를 기록합니다
+ *
+ * 주의: 반다이 매뉴얼 ID와 gunpla.fyi 박스아트 이미지 ID는 서로 다른 번호 체계입니다.
+ * 이 스크립트는 이미지 URL(thumbnail / images.boxart)을 건드리지 않습니다.
+ * 상세 페이지는 bandaiManualId가 있으면 manual.bandai-hobby.net/menus/detail/{id}로
+ * 바로 연결합니다. 자동 탐색은 resolve-manual-ids.mjs를 사용하세요.
  */
 
 const fs = require('fs');
@@ -21,8 +26,19 @@ const CSV_PATH = path.join(SCRIPT_DIR, 'bandai-id-mapping.csv');
 const INDEX_PATH = path.join(DATA_DIR, 'gunpla-index.json');
 const DETAILS_DIR = path.join(DATA_DIR, 'gunpla-details');
 
-// 이미지 URL 기본 형식
-const IMAGE_URL_BASE = 'https://gunpla.fyi/images/boxarts/';
+/**
+ * bandaiManualId를 modelNumber 바로 뒤에 넣어 키 순서를 유지
+ */
+function withManualId(obj, manualId) {
+    const out = {};
+    for (const [k, v] of Object.entries(obj)) {
+        if (k === 'bandaiManualId') continue;
+        out[k] = v;
+        if (k === 'modelNumber') out.bandaiManualId = manualId;
+    }
+    if (!('bandaiManualId' in out)) out.bandaiManualId = manualId;
+    return out;
+}
 
 /**
  * CSV 파일 파싱
@@ -70,9 +86,13 @@ function main() {
 
     console.log(`📋 총 ${mappings.length}개 제품 중 ${validMappings.length}개의 매핑 발견\n`);
 
-    // ID별 매핑 테이블 생성
+    // ID별 매핑 테이블 생성 (매뉴얼 ID는 숫자만 허용)
     const idToManualId = {};
     validMappings.forEach(m => {
+        if (!/^\d+$/.test(m.bandai_manual_id)) {
+            console.log(`   ⚠️  ${m.id}: bandai_manual_id "${m.bandai_manual_id}"는 숫자가 아니라 건너뜁니다`);
+            return;
+        }
         idToManualId[m.id] = m.bandai_manual_id;
     });
 
@@ -82,18 +102,15 @@ function main() {
     const indexData = JSON.parse(indexContent);
 
     let indexUpdated = 0;
-    indexData.products.forEach(product => {
-        if (idToManualId[product.id]) {
-            const newUrl = IMAGE_URL_BASE + idToManualId[product.id];
-            if (product.thumbnail !== newUrl) {
-                product.thumbnail = newUrl;
-                indexUpdated++;
-                console.log(`   ✅ ${product.id}: ${newUrl}`);
-            }
-        }
+    indexData.products = indexData.products.map(product => {
+        const manualId = idToManualId[product.id];
+        if (!manualId || product.bandaiManualId === manualId) return product;
+        indexUpdated++;
+        console.log(`   ✅ ${product.id}: bandaiManualId=${manualId}`);
+        return withManualId(product, manualId);
     });
 
-    fs.writeFileSync(INDEX_PATH, JSON.stringify(indexData, null, 4), 'utf-8');
+    fs.writeFileSync(INDEX_PATH, JSON.stringify(indexData, null, 4) + '\n', 'utf-8');
     console.log(`   → ${indexUpdated}개 제품 업데이트 완료\n`);
 
     // 2. detail JSON 파일들 업데이트
@@ -107,11 +124,8 @@ function main() {
             const detailContent = fs.readFileSync(detailPath, 'utf-8');
             const detailData = JSON.parse(detailContent);
 
-            const newUrl = IMAGE_URL_BASE + manualId;
-
-            if (detailData.images && detailData.images.boxart !== newUrl) {
-                detailData.images.boxart = newUrl;
-                fs.writeFileSync(detailPath, JSON.stringify(detailData, null, 4), 'utf-8');
+            if (detailData.bandaiManualId !== manualId) {
+                fs.writeFileSync(detailPath, JSON.stringify(withManualId(detailData, manualId), null, 4) + '\n', 'utf-8');
                 detailUpdated++;
                 console.log(`   ✅ ${id}.json 업데이트`);
             }

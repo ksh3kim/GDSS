@@ -1360,26 +1360,29 @@ const GunplaApp = (function () {
             detailActionsWired = true;
         }
 
-        // Bandai official manual link.
+        // Bandai official manual link, best source first:
+        //   1) bandaiManualId in the data (scripts/resolve-manual-ids.mjs or the
+        //      CSV workflow) → the kit's manual page
+        //   2) serverless /api/manual (when configured) → the kit's manual page
+        //   3) the official site's search, filtered by grade
         // NOTE: the boxart/thumbnail number is a gunpla.fyi image id, NOT a Bandai
-        // manual id, so it must NOT be used for /menus/detail/{id}. A real manual id
-        // is only used when explicitly present in the data; otherwise we link to the
-        // official manual KEYWORD SEARCH, which always resolves to a valid page.
+        // manual id, so it must never be used for /menus/detail/{id}.
         if (manualBtn) {
             const manualId = product.bandaiManualId || product.manualId;
 
             if (manualId) {
-                // Direct manual page (only when a verified Bandai manual id exists)
-                manualBtn.href = `https://manual.bandai-hobby.net/menus/detail/${encodeURIComponent(manualId)}`;
-                manualBtn.removeAttribute('title');
+                manualBtn.href = GunplaApi.manualDetailUrl(manualId);
+                manualBtn.title = I18n.t('product.manualDirectHint');
             } else {
-                // Search the official manual site by grade + model number / name
-                const keyword = [product.grade, product.modelNumber || I18n.getName(product.name)]
-                    .filter(Boolean)
-                    .map(s => encodeURIComponent(String(s).trim()))
-                    .join('+');
-                manualBtn.href = `https://manual.bandai-hobby.net/menus?keyword=${keyword}`;
+                manualBtn.href = GunplaApi.manualSearchUrl(product);
                 manualBtn.title = I18n.t('product.manualSearchHint');
+
+                GunplaApi.findManual(product).then(url => {
+                    // Ignore late answers for a product the page no longer shows
+                    if (!url || currentProduct?.id !== product.id) return;
+                    manualBtn.href = url;
+                    manualBtn.title = I18n.t('product.manualDirectHint');
+                });
             }
 
             manualBtn.style.display = 'flex';

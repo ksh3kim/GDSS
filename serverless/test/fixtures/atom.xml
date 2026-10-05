@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <title>GUNDAM.INFO</title>
+  <entry>
+    <title type="html">New &lt;b&gt;MG&lt;/b&gt; announced</title>
+    <link rel="self" href="https://en.gundam.info/api/entry/1" />
+    <link rel="alternate" href="https://en.gundam.info/news/mg/" />
+    <published>2026-10-03T12:00:00Z</published>
+    <media:thumbnail url="https://en.gundam.info/img/mg.png" />
+  </entry>
+  <entry>
+    <title>Shared story</title>
+    <link href="https://en.gundam.info/news/shared/" />
+    <updated>2026-10-04T00:00:00Z</updated>
+  </entry>
+</feed>

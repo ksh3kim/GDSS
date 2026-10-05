@@ -742,6 +742,23 @@ textarea {
     color: var(--color-gray-500);
 }
 
+/* "New kit" / "Pre-order" label from the API's item kind */
+.notif-item-kind {
+    display: inline-block;
+    margin-right: var(--space-1);
+    padding: 0 5px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--color-white);
+    background: var(--color-primary);
+}
+
+.notif-item-kind.-shop {
+    color: var(--color-gray-900);
+    background: var(--color-accent);
+}
+
 .notif-empty {
     padding: var(--space-6) var(--space-4);
     text-align: center;
@@ -1416,24 +1433,6 @@ textarea {
 .news-arrow {
     color: var(--color-gray-500);
     transition: all 0.2s ease;
-}
-
-.news-rss-info {
-    margin-top: var(--space-3);
-    padding: var(--space-2);
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: var(--radius-sm);
-    text-align: center;
-}
-
-.news-rss-info small {
-    font-size: var(--text-xs);
-    color: var(--color-gray-400);
-}
-
-.news-rss-info a {
-    color: var(--color-secondary-light);
-    text-decoration: underline;
 }
 
 /* Recently Viewed Products */

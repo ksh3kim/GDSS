@@ -1,0 +1,11 @@
+{
+    "name": "gunpla-guide-api",
+    "private": true,
+    "type": "module",
+    "description": "Serverless backend layer for Gunpla Guide (Cloudflare Worker)",
+    "scripts": {
+        "dev": "npx wrangler dev",
+        "deploy": "npx wrangler deploy",
+        "test": "node --test \"test/*.test.js\""
+    }
+}

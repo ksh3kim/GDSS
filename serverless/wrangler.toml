@@ -2,3 +2,16 @@ name = "gunpla-guide-api"
 main = "worker.js"
 compatibility_date = "2026-01-01"
 workers_dev = true
+
+# Scheduled news refresh (writes a snapshot to the NEWS_CACHE KV namespace).
+# Without the KV binding below the scheduled run is a no-op.
+[triggers]
+crons = ["*/15 * * * *"]
+
+# Optional: KV namespace for the news snapshot. Create it once, then
+# uncomment and paste the id that wrangler prints:
+#   npx wrangler kv namespace create NEWS_CACHE
+#
+# [[kv_namespaces]]
+# binding = "NEWS_CACHE"
+# id = "<namespace id>"

@@ -85,6 +85,7 @@
                 "mobility": "가동성",
                 "manual": "반다이 매뉴얼",
                 "manualSearchHint": "공식 설명서 검색 결과로 이동합니다",
+                "manualDirectHint": "반다이 공식 설명서 페이지로 이동합니다",
                 "weaponsAccessories": "무장 & 부속품",
                 "buildingTips": "조립 팁",
                 "sameModelVariants": "같은 기체의 다른 버전",
@@ -163,9 +164,8 @@
             "news": {
                 "title": "📰 신제품 소식",
                 "bandai": "Bandai Hobby 공식 뉴스",
-                "gundamInfo": "Gundam.info 뉴스",
-                "pbandai": "P-Bandai 신규 예약",
-                "rss": "💡 RSS 구독:"
+                "gundamOfficial": "GUNDAM OFFICIAL 뉴스",
+                "pbandai": "P-Bandai 신규 예약"
             },
             "footer": {
                 "copyright": "© 2026 건프라 가이드. 건프라는 반다이 남코의 등록상표입니다.",
@@ -188,6 +188,8 @@
                 "title": "신제품 · 소식",
                 "toggle": "신제품 알림",
                 "refresh": "새로고침",
+                "kindProduct": "신제품",
+                "kindShop": "예약",
                 "loading": "소식을 불러오는 중…",
                 "empty": "불러올 소식이 없습니다.",
                 "fetchFailed": "소식을 불러오지 못했습니다. 잠시 후 새로고침해 보세요.",
@@ -282,6 +284,7 @@
                 "mobility": "Mobility",
                 "manual": "Bandai Manual",
                 "manualSearchHint": "Opens the official manual search results",
+                "manualDirectHint": "Opens the official Bandai manual page",
                 "weaponsAccessories": "Weapons & Accessories",
                 "buildingTips": "Building Tips",
                 "sameModelVariants": "Other versions of this model",
@@ -360,9 +363,8 @@
             "news": {
                 "title": "📰 New Releases",
                 "bandai": "Bandai Hobby Official News",
-                "gundamInfo": "Gundam.info News",
-                "pbandai": "P-Bandai New Pre-orders",
-                "rss": "💡 RSS feed:"
+                "gundamOfficial": "GUNDAM OFFICIAL News",
+                "pbandai": "P-Bandai New Pre-orders"
             },
             "footer": {
                 "copyright": "© 2026 Gunpla Guide. Gunpla is a registered trademark of Bandai Namco.",
@@ -385,6 +387,8 @@
                 "title": "New Products · News",
                 "toggle": "News",
                 "refresh": "Refresh",
+                "kindProduct": "New kit",
+                "kindShop": "Pre-order",
                 "loading": "Loading news…",
                 "empty": "No news available.",
                 "fetchFailed": "Couldn't load news. Try refreshing later.",

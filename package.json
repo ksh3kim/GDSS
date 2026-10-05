@@ -1,0 +1,14 @@
+{
+    "name": "gunpla-guide",
+    "private": true,
+    "description": "Gunpla Guide static web app + backend tooling (no runtime dependencies)",
+    "scripts": {
+        "validate": "node scripts/validate-data.mjs",
+        "manual:resolve": "node scripts/resolve-manual-ids.mjs",
+        "test:api": "npm --prefix serverless test",
+        "test": "npm run validate && npm run test:api"
+    },
+    "engines": {
+        "node": ">=20"
+    }
+}

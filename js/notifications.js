@@ -1,46 +1,29 @@
 /**
  * Gunpla Guide - Notifications Module
- * Fetches Bandai Hobby / Gundam.info RSS feeds for new product & news items.
- * Fetching happens on page load (when the cached copy is older than TTL) and
- * on manual refresh only — there is NO continuous polling and NO push.
+ * Shows Bandai Hobby / GUNDAM OFFICIAL news (new kits, pre-orders, topics)
+ * in the header bell panel.
  *
- * Sources (backend-ish work lives in a separate serverless layer):
- *   1) Self-hosted serverless API (serverless/worker.js) when API_BASE is set —
- *      feeds are fetched, parsed, merged and edge-cached server-side.
- *   2) Optional, opt-in fallback: public CORS proxies with client-side XML
- *      parsing (window.GUNPLA_NEWS_CORS_PROXY = true). Off by default — the
- *      public proxies are unreliable (rate limits / auth walls) and every
- *      failed request shows up as a console error.
- * With neither configured, no request is made and the panel says so, linking
- * to the official news sites. Results are cached in localStorage; if every
- * source fails, the cached items (or an explanatory empty state) are shown.
+ * Collecting the news is backend work and lives entirely in the serverless
+ * layer (serverless/worker.js → GET /api/news, configured in js/api.js): the
+ * official sites publish no RSS any more and can't be read from the browser
+ * (CORS), so the Worker reads their news pages, merges them and keeps them
+ * cached (refreshed on a schedule when its KV cache is bound).
+ *
+ * This module only asks the API — on page load when the local copy is older
+ * than TTL, and on manual refresh. There is NO continuous polling and NO push.
+ * Without a configured API no request is made and the panel says so, linking
+ * to the official news pages. Results are cached in localStorage; if the API
+ * fails, the cached items (or an explanatory empty state) are shown.
  */
 
 const Notifications = (function () {
     const CACHE_KEY = 'gunpla-news-cache';   // { ts, items }
     const SEEN_KEY = 'gunpla-news-seen';     // timestamp (ms) of newest item the user has seen
-    const TTL = 30 * 60 * 1000;              // re-fetch feeds at most every 30 min
+    const TTL = 30 * 60 * 1000;              // ask the API at most every 30 min
     const MAX_ITEMS = 20;
+    const KINDS = ['product', 'shop', 'news'];
 
-    // RSS/Atom feeds to monitor (priority order)
-    const FEEDS = [
-        { name: 'Bandai Hobby', url: 'https://bandai-hobby.net/feed/', icon: '🆕' },
-        { name: 'GUNDAM.INFO', url: 'https://en.gundam.info/rss', icon: '📡' }
-    ];
-
-    // Public CORS proxies, tried in order until one returns usable content
-    // (opt-in fallback only — prefer deploying the serverless API below)
-    const PROXIES = [
-        u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-        u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`
-    ];
-
-    // Self-hosted serverless API base URL (recommended; see serverless/README.md),
-    // e.g. 'https://gunpla-guide-api.YOUR-SUBDOMAIN.workers.dev'.
-    // Can also be provided without editing this file via window.GUNPLA_API_BASE.
-    const API_BASE = (typeof window !== 'undefined' && window.GUNPLA_API_BASE) || '';
-    const USE_CORS_PROXY = typeof window !== 'undefined' && window.GUNPLA_NEWS_CORS_PROXY === true;
-    const HAS_SOURCE = Boolean(API_BASE) || USE_CORS_PROXY;
+    const HAS_API = Boolean(window.GunplaApi && GunplaApi.isConfigured());
 
     let items = [];
     let status = 'idle'; // 'idle' | 'loading' | 'failed' | 'unconfigured'
@@ -49,25 +32,14 @@ const Notifications = (function () {
     const lang = () => (window.I18n && I18n.getLang ? I18n.getLang() : 'ko');
     const isKo = () => lang() === 'ko';
 
-    function nodeText(node, sel) {
-        const el = node.querySelector(sel);
-        return el ? el.textContent.trim() : '';
-    }
-
-    function decodeHtml(s) {
-        const t = document.createElement('textarea');
-        t.innerHTML = s;
-        return t.value;
-    }
-
     function escapeHtml(s) {
         return String(s)
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Only http(s) links may become hrefs — feed content (and anything that
-    // came back through a third-party proxy) is untrusted
+    // Only http(s) links may become hrefs — API and cached data are still
+    // treated as untrusted
     const isHttpUrl = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
 
     function sanitizeItem(i) {
@@ -78,7 +50,8 @@ const Notifications = (function () {
             ts: Number(i.ts) || 0,
             source: String(i.source || ''),
             icon: typeof i.icon === 'string' ? i.icon : '📰',
-            img: isHttpUrl(i.img) ? i.img : ''
+            img: isHttpUrl(i.img) ? i.img : '',
+            kind: KINDS.includes(i.kind) ? i.kind : 'news'
         };
     }
 
@@ -97,94 +70,15 @@ const Notifications = (function () {
         return ko ? `${mon}개월 전` : `${mon}mo ago`;
     }
 
-    // ---- feed fetching / parsing ----
-
     /**
-     * Fetch merged news from the self-hosted serverless API.
-     * Returns a validated items array, or null (API unset / unreachable /
-     * invalid payload) so the caller can try the next source.
+     * News from the serverless API, validated; null when unavailable
      */
     async function fetchFromApi() {
-        if (!API_BASE) return null;
-        try {
-            const base = API_BASE.replace(/\/+$/, '');
-            const res = await fetch(`${base}/api/news?limit=${MAX_ITEMS}`, { cache: 'no-store' });
-            if (!res.ok) return null;
-            const data = await res.json();
-            if (!data || data.ok !== true || !Array.isArray(data.items)) return null;
-
-            const valid = data.items.map(sanitizeItem).filter(Boolean);
-            return valid.length ? valid : null;
-        } catch (e) {
-            return null;
-        }
-    }
-
-    async function fetchFeed(feed) {
-        for (const proxy of PROXIES) {
-            try {
-                const res = await fetch(proxy(feed.url), { cache: 'no-store' });
-                if (!res.ok) continue;
-                const text = await res.text();
-                const parsed = parseFeed(text, feed);
-                if (parsed.length) return parsed;
-            } catch (e) {
-                /* try next proxy */
-            }
-        }
-        return [];
-    }
-
-    function parseFeed(xmlText, feed) {
-        const out = [];
-        try {
-            const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-            if (doc.querySelector('parsererror')) return out;
-
-            // RSS <item> or Atom <entry>
-            let nodes = Array.from(doc.querySelectorAll('item'));
-            if (nodes.length === 0) nodes = Array.from(doc.querySelectorAll('entry'));
-
-            nodes.forEach(n => {
-                const title = nodeText(n, 'title');
-
-                // Link: RSS uses a text node; Atom uses <link href="...">
-                let link = nodeText(n, 'link');
-                if (!link) {
-                    const linkEl = n.querySelector('link');
-                    link = linkEl?.getAttribute('href') || '';
-                }
-
-                const dateStr = nodeText(n, 'pubDate') || nodeText(n, 'published') ||
-                    nodeText(n, 'updated') || nodeText(n, 'date');
-                let ts = dateStr ? Date.parse(dateStr) : 0;
-                if (isNaN(ts)) ts = 0;
-
-                // Thumbnail (best-effort)
-                let img = '';
-                const enclosure = n.querySelector('enclosure');
-                if (enclosure?.getAttribute('url')) {
-                    img = enclosure.getAttribute('url');
-                } else {
-                    const desc = nodeText(n, 'description') || nodeText(n, 'summary') || '';
-                    const m = desc.match(/<img[^>]+src=["']([^"']+)["']/i);
-                    if (m) img = m[1];
-                }
-
-                const item = sanitizeItem({
-                    title: decodeHtml(title),
-                    link,
-                    ts,
-                    source: feed.name,
-                    icon: feed.icon,
-                    img
-                });
-                if (item) out.push(item);
-            });
-        } catch (e) {
-            /* ignore malformed feed */
-        }
-        return out;
+        if (!HAS_API) return null;
+        const raw = await GunplaApi.getNews(MAX_ITEMS);
+        if (!raw) return null;
+        const valid = raw.map(sanitizeItem).filter(Boolean);
+        return valid.length ? valid : null;
     }
 
     // ---- cache / seen state ----
@@ -240,13 +134,19 @@ const Notifications = (function () {
         return I18n.t('notif.empty');
     }
 
+    function kindLabel(kind) {
+        if (kind === 'product') return I18n.t('notif.kindProduct');
+        if (kind === 'shop') return I18n.t('notif.kindShop');
+        return '';
+    }
+
     function renderList() {
         const list = document.getElementById('notifList');
         if (!list) return;
 
-        // Without a source, refreshing can't do anything — don't offer it
+        // Without the API, refreshing can't do anything — don't offer it
         const refreshBtn = document.getElementById('notifRefresh');
-        if (refreshBtn) refreshBtn.hidden = !HAS_SOURCE;
+        if (refreshBtn) refreshBtn.hidden = !HAS_API;
 
         if (!items.length) {
             list.innerHTML = `<div class="notif-empty">${escapeHtml(emptyMessage())}</div>`;
@@ -254,14 +154,17 @@ const Notifications = (function () {
         }
 
         const seen = getSeen();
-        list.innerHTML = items.slice(0, MAX_ITEMS).map(i => `
+        list.innerHTML = items.slice(0, MAX_ITEMS).map(i => {
+            const label = kindLabel(i.kind);
+            return `
             <a class="notif-item${i.ts > seen ? ' unread' : ''}" href="${escapeHtml(i.link)}" target="_blank" rel="noopener">
                 <span class="notif-item-icon" aria-hidden="true">${escapeHtml(i.icon || '📰')}</span>
                 <span class="notif-item-body">
                     <span class="notif-item-title">${escapeHtml(i.title)}</span>
-                    <span class="notif-item-meta">${escapeHtml(i.source)}${i.ts ? ' · ' + relTime(i.ts) : ''}</span>
+                    <span class="notif-item-meta">${label ? `<span class="notif-item-kind -${i.kind}">${escapeHtml(label)}</span>` : ''}${escapeHtml(i.source)}${i.ts ? ' · ' + relTime(i.ts) : ''}</span>
                 </span>
-            </a>`).join('');
+            </a>`;
+        }).join('');
     }
 
     function setLoading(on) {
@@ -278,7 +181,7 @@ const Notifications = (function () {
         const cache = loadCache();
         const stale = !cache || (Date.now() - cache.ts > TTL);
 
-        if (!HAS_SOURCE) {
+        if (!HAS_API) {
             status = 'unconfigured';
             renderList();
             updateBadge();
@@ -293,19 +196,12 @@ const Notifications = (function () {
         setLoading(true);
         let fetched = false;
         try {
-            // Prefer the serverless API; fall back to public CORS proxies (opt-in)
-            let merged = await fetchFromApi();
-            if (!merged && USE_CORS_PROXY) {
-                const results = await Promise.all(FEEDS.map(fetchFeed));
-                merged = [].concat(...results);
-            }
-
-            if (merged && merged.length) {
-                merged.sort((a, b) => b.ts - a.ts);
-                // de-duplicate by link
+            const fresh = await fetchFromApi();
+            if (fresh) {
+                // The API already sorts and de-duplicates; keep the client defensive anyway
+                fresh.sort((a, b) => b.ts - a.ts);
                 const seenLinks = new Set();
-                merged = merged.filter(i => (seenLinks.has(i.link) ? false : seenLinks.add(i.link)));
-                items = merged.slice(0, MAX_ITEMS);
+                items = fresh.filter(i => (seenLinks.has(i.link) ? false : seenLinks.add(i.link))).slice(0, MAX_ITEMS);
                 saveCache();
                 fetched = true;
             }
@@ -390,7 +286,7 @@ const Notifications = (function () {
         loadCache();
         renderList();
         updateBadge();
-        refresh(false); // fetch fresh in the background if cache is stale
+        refresh(false); // ask the API in the background if the local copy is stale
     }
 
     return { init, refresh };

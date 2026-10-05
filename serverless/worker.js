@@ -1,33 +1,46 @@
 /**
  * Gunpla Guide — Serverless API (Cloudflare Worker)
  *
- * Runtime backend layer separated out of the static web app. Moves backend-ish
- * work off the client and away from unreliable public CORS proxies:
+ * Runtime backend layer separated out of the static web app:
  *
- *   GET /api/news?limit=20   Aggregated Bandai Hobby / GUNDAM.INFO news:
- *                            server-side fetch + parse + merge + edge cache
- *   GET /api/health          Liveness probe
+ *   GET /api/news?limit=20         Aggregated Bandai Hobby / GUNDAM OFFICIAL news
+ *                                  (server-side fetch + parse + merge + cache)
+ *   GET /api/manual?grade=&model=&name=&year=
+ *                                  Finds the kit's page on the official Bandai
+ *                                  manual site (server-side search + ranking)
+ *   GET /api/health                Liveness + news cache status
+ *
+ * Cache refresh:
+ *   - Cron Trigger (wrangler.toml [triggers]) re-aggregates the news on a
+ *     schedule and stores a snapshot in Workers KV (binding NEWS_CACHE).
+ *     /api/news then answers from that snapshot without touching upstream.
+ *   - Without the KV binding the cron run is a no-op and /api/news falls back
+ *     to on-demand aggregation behind the edge cache (s-maxage).
  *
  * Layer boundaries (for maintainers):
- *   - RSS aggregation + cache refresh → this Worker (runtime)
- *   - Data validation / ID mapping    → scripts/ (build time, run by maintainer)
- *   - Bandai manual search            → plain outbound link (no server needed)
+ *   - News collection, scheduled cache refresh, manual lookup → this Worker
+ *   - Data validation, manual-id backfill                     → scripts/ (build time)
  *
  * Deploy:  cd serverless && npx wrangler deploy
  * Local:   npx wrangler dev   →  http://127.0.0.1:8787/api/news
+ * Tests:   cd serverless && node --test test/
  */
 
-const FEEDS = [
-    { name: 'Bandai Hobby', url: 'https://bandai-hobby.net/feed/', icon: '🆕' },
-    { name: 'GUNDAM.INFO', url: 'https://en.gundam.info/rss', icon: '📡' }
-];
+import { aggregateNews } from './lib/news.js';
+import { searchManual, buildSearchUrl, categoriesFor, queryCandidates } from './lib/manual.js';
 
-const FETCH_TIMEOUT_MS = 8000;
-const FETCH_ATTEMPTS = 2;              // per-feed retry
-const EDGE_CACHE_SECONDS = 900;        // CDN cache = server-side refresh policy (15 min)
-const BROWSER_CACHE_SECONDS = 300;
 const DEFAULT_LIMIT = 20;
 const MAX_LIMIT = 50;
+
+// News cache policy
+const NEWS_KV_KEY = 'news:v1';
+const NEWS_SNAPSHOT_MAX_AGE_MS = 60 * 60 * 1000; // older than this → refresh on demand
+const NEWS_EDGE_SECONDS = 900;                    // 15 min (edge cache, no-KV path)
+const NEWS_BROWSER_SECONDS = 300;
+
+// Manual lookup cache policy (kit pages essentially never move)
+const MANUAL_EDGE_SECONDS = 7 * 24 * 60 * 60;
+const MANUAL_BROWSER_SECONDS = 24 * 60 * 60;
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -36,7 +49,7 @@ const CORS_HEADERS = {
 };
 
 export default {
-    async fetch(request, env, ctx) {
+    async fetch(request, env = {}, ctx = { waitUntil() {} }) {
         if (request.method === 'OPTIONS') {
             return new Response(null, { status: 204, headers: CORS_HEADERS });
         }
@@ -45,13 +58,25 @@ export default {
         }
 
         const url = new URL(request.url);
-        if (url.pathname === '/api/health') {
-            return json({ ok: true, now: Date.now() });
-        }
-        if (url.pathname === '/api/news') {
-            return handleNews(request, ctx);
+        try {
+            if (url.pathname === '/api/health') return await handleHealth(env);
+            if (url.pathname === '/api/news') return await handleNews(request, env, ctx);
+            if (url.pathname === '/api/manual') return await handleManual(request, ctx);
+        } catch (e) {
+            console.error('unhandled', url.pathname, e);
+            return json({ ok: false, error: 'internal_error' }, 500);
         }
         return json({ ok: false, error: 'not_found' }, 404);
+    },
+
+    // Cron Trigger: refresh the news snapshot ahead of requests
+    async scheduled(event, env = {}, ctx = { waitUntil() {} }) {
+        if (!env.NEWS_CACHE) {
+            console.log('scheduled: NEWS_CACHE KV binding not configured — skipping refresh');
+            return;
+        }
+        const snapshot = await refreshNewsSnapshot(env);
+        console.log('scheduled: news refreshed', snapshot ? snapshot.items.length : 0, 'items');
     }
 };
 
@@ -66,177 +91,170 @@ function json(body, status = 200, extraHeaders = {}) {
     });
 }
 
-async function handleNews(request, ctx) {
-    // Serve from the edge cache while fresh — this IS the cache-refresh policy:
-    // at most one upstream aggregation per EDGE_CACHE_SECONDS per URL.
-    const cache = caches.default;
-    const cacheKey = new Request(new URL(request.url).toString(), { method: 'GET' });
-    const cached = await cache.match(cacheKey);
-    if (cached) return cached;
+function edgeCache() {
+    // caches.default exists on Workers; absent in Node tests / other runtimes
+    return typeof caches !== 'undefined' && caches.default ? caches.default : null;
+}
 
-    const url = new URL(request.url);
+// ---- /api/health ----
+
+async function handleHealth(env) {
+    const body = { ok: true, now: Date.now(), newsCache: env.NEWS_CACHE ? 'kv' : 'edge' };
+    if (env.NEWS_CACHE) {
+        const snapshot = await readSnapshot(env);
+        body.newsSnapshot = snapshot
+            ? { fetchedAt: snapshot.fetchedAt, items: snapshot.items.length, sources: snapshot.sources }
+            : null;
+    }
+    return json(body, 200, { 'Cache-Control': 'no-store' });
+}
+
+// ---- /api/news ----
+
+function parseLimit(url) {
     let limit = parseInt(url.searchParams.get('limit'), 10);
     if (isNaN(limit)) limit = DEFAULT_LIMIT;
-    limit = Math.max(1, Math.min(MAX_LIMIT, limit));
+    return Math.max(1, Math.min(MAX_LIMIT, limit));
+}
 
-    const results = await Promise.allSettled(FEEDS.map(fetchAndParseFeed));
+async function readSnapshot(env) {
+    try {
+        const raw = await env.NEWS_CACHE.get(NEWS_KV_KEY);
+        const snapshot = raw ? JSON.parse(raw) : null;
+        return snapshot && Array.isArray(snapshot.items) ? snapshot : null;
+    } catch (e) {
+        console.error('readSnapshot', e);
+        return null;
+    }
+}
 
-    const sources = [];
-    let items = [];
-    results.forEach((r, i) => {
-        if (r.status === 'fulfilled') {
-            sources.push({ name: FEEDS[i].name, ok: true, count: r.value.length });
-            items = items.concat(r.value);
-        } else {
-            sources.push({ name: FEEDS[i].name, ok: false, count: 0 });
+/**
+ * Aggregate upstream feeds and, when anything came back, store the result
+ * in KV. Returns the snapshot, or null when every feed failed (the previous
+ * snapshot is kept in that case).
+ */
+async function refreshNewsSnapshot(env) {
+    const snapshot = await aggregateNews({ limit: MAX_LIMIT });
+    if (!snapshot.items.length) return null;
+    if (env.NEWS_CACHE) {
+        await env.NEWS_CACHE.put(NEWS_KV_KEY, JSON.stringify(snapshot));
+    }
+    return snapshot;
+}
+
+function newsResponse(snapshot, limit, cacheSource) {
+    return json(
+        {
+            ok: true,
+            fetchedAt: snapshot.fetchedAt,
+            cache: cacheSource,
+            sources: snapshot.sources,
+            items: snapshot.items.slice(0, limit)
+        },
+        200,
+        { 'Cache-Control': `public, max-age=${NEWS_BROWSER_SECONDS}, s-maxage=${NEWS_EDGE_SECONDS}` }
+    );
+}
+
+async function handleNews(request, env, ctx) {
+    const url = new URL(request.url);
+    const limit = parseLimit(url);
+
+    // 1) KV snapshot kept fresh by the cron trigger
+    if (env.NEWS_CACHE) {
+        const snapshot = await readSnapshot(env);
+        if (snapshot && Date.now() - snapshot.fetchedAt < NEWS_SNAPSHOT_MAX_AGE_MS) {
+            return newsResponse(snapshot, limit, 'kv');
         }
-    });
-
-    if (items.length === 0) {
-        // Nothing usable — never cache failures
-        return json({ ok: false, error: 'all_feeds_failed', sources }, 502);
+        // Missing/stale (cron not running yet) → refresh now
+        const fresh = await refreshNewsSnapshot(env);
+        if (fresh) return newsResponse(fresh, limit, 'live');
+        if (snapshot) return newsResponse(snapshot, limit, 'kv-stale'); // upstream down: serve old data
+        return json({ ok: false, error: 'all_feeds_failed' }, 502);
     }
 
-    items.sort((a, b) => b.ts - a.ts);
-    const seen = new Set();
-    items = items.filter(i => (seen.has(i.link) ? false : seen.add(i.link)));
-    items = items.slice(0, limit);
+    // 2) No KV: on-demand aggregation behind the edge cache — at most one
+    //    upstream aggregation per NEWS_EDGE_SECONDS per URL
+    const cache = edgeCache();
+    const cacheKey = new Request(url.toString(), { method: 'GET' });
+    if (cache) {
+        const cached = await cache.match(cacheKey);
+        if (cached) return cached;
+    }
 
-    const response = json(
-        { ok: true, fetchedAt: Date.now(), sources, items },
-        200,
-        { 'Cache-Control': `public, max-age=${BROWSER_CACHE_SECONDS}, s-maxage=${EDGE_CACHE_SECONDS}` }
-    );
-    ctx.waitUntil(cache.put(cacheKey, response.clone()));
+    const snapshot = await aggregateNews({ limit });
+    if (!snapshot.items.length) {
+        // Nothing usable — never cache failures
+        return json({ ok: false, error: 'all_feeds_failed', sources: snapshot.sources }, 502);
+    }
+    const response = newsResponse(snapshot, limit, 'live');
+    if (cache) ctx.waitUntil(cache.put(cacheKey, response.clone()));
     return response;
 }
 
-async function fetchAndParseFeed(feed) {
-    let lastError;
-    for (let attempt = 1; attempt <= FETCH_ATTEMPTS; attempt++) {
-        try {
-            const res = await fetchWithTimeout(feed.url, FETCH_TIMEOUT_MS);
-            if (!res.ok) throw new Error(`upstream_${res.status}`);
-            const text = await res.text();
-            const items = parseFeed(text, feed);
-            if (items.length) return items;
-            throw new Error('no_items_parsed');
-        } catch (e) {
-            lastError = e;
-        }
-    }
-    throw lastError;
+// ---- /api/manual ----
+
+function cleanParam(url, name, max) {
+    return String(url.searchParams.get(name) || '').trim().slice(0, max);
 }
 
-async function fetchWithTimeout(url, ms) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), ms);
+async function handleManual(request, ctx) {
+    const url = new URL(request.url);
+    const product = {
+        grade: cleanParam(url, 'grade', 12).toUpperCase(),
+        modelNumber: cleanParam(url, 'model', 40),
+        nameEn: cleanParam(url, 'name', 120),
+        releaseYear: parseInt(url.searchParams.get('year'), 10) || null
+    };
+    if (!product.nameEn && !product.modelNumber) {
+        return json({ ok: false, error: 'missing_query', hint: 'pass name and/or model' }, 400);
+    }
+
+    // Normalized cache key: the same kit always maps to the same entry
+    const keyUrl = new URL('/api/manual', url.origin);
+    keyUrl.searchParams.set('grade', product.grade);
+    keyUrl.searchParams.set('model', product.modelNumber.toUpperCase());
+    keyUrl.searchParams.set('name', product.nameEn.toUpperCase());
+    if (product.releaseYear) keyUrl.searchParams.set('year', String(product.releaseYear));
+    const cacheKey = new Request(keyUrl.toString(), { method: 'GET' });
+
+    const cache = edgeCache();
+    if (cache) {
+        const cached = await cache.match(cacheKey);
+        if (cached) return cached;
+    }
+
+    const fallbackSearchUrl = buildSearchUrl({
+        freeword: queryCandidates(product)[0] || product.nameEn,
+        categories: categoriesFor(product.grade)
+    });
+
+    let result;
     try {
-        return await fetch(url, {
-            signal: controller.signal,
-            headers: {
-                'User-Agent': 'GunplaGuideBot/1.0 (news aggregator)',
-                'Accept': 'application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.5'
-            }
-        });
-    } finally {
-        clearTimeout(timer);
+        result = await searchManual(product);
+    } catch (e) {
+        // Site unreachable — tell the client where to send the user instead
+        return json({ ok: false, error: 'upstream_failed', searchUrl: fallbackSearchUrl }, 502);
     }
-}
 
-/* ---- XML parsing ----
-   Workers have no DOMParser, so this is a tolerant tag-level extractor that
-   handles RSS 2.0 <item> and Atom <entry>, CDATA, HTML entities and
-   namespaced date tags. Output item shape matches the frontend exactly. */
-
-function parseFeed(xml, feed) {
-    const out = [];
-    const blocks = matchBlocks(xml, 'item').concat(matchBlocks(xml, 'entry'));
-
-    for (const block of blocks) {
-        const title = cleanText(pickTag(block, ['title']));
-        const link = pickLink(block);
-        const dateStr = cleanText(pickTag(block, ['pubDate', 'published', 'updated', 'dc:date']));
-        let ts = dateStr ? Date.parse(dateStr) : 0;
-        if (isNaN(ts)) ts = 0;
-
-        // http(s) links only — anything else is dropped server-side
-        if (!title || !/^https?:\/\//i.test(link)) continue;
-
-        out.push({
-            title,
-            link,
-            ts,
-            source: feed.name,
-            icon: feed.icon,
-            img: pickImage(block)
-        });
-    }
-    return out;
-}
-
-function matchBlocks(xml, tag) {
-    const re = new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, 'gi');
-    const blocks = [];
-    let m;
-    while ((m = re.exec(xml)) !== null) blocks.push(m[1]);
-    return blocks;
-}
-
-function pickTag(block, tags) {
-    for (const tag of tags) {
-        const re = new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, 'i');
-        const m = re.exec(block);
-        if (m && m[1]) return m[1];
-    }
-    return '';
-}
-
-function pickLink(block) {
-    // RSS: <link>https://…</link>
-    const text = cleanText(pickTag(block, ['link']));
-    if (/^https?:\/\//i.test(text)) return text;
-
-    // Atom: <link rel="alternate" href="…"/> — prefer alternate, else first href
-    const tags = block.match(/<link\b[^>]*>/gi) || [];
-    let fallback = '';
-    for (const tag of tags) {
-        const hrefMatch = /href=["']([^"']+)["']/i.exec(tag);
-        if (!hrefMatch) continue;
-        const relMatch = /rel=["']([^"']+)["']/i.exec(tag);
-        const rel = relMatch ? relMatch[1] : '';
-        if (rel === '' || rel === 'alternate') return hrefMatch[1];
-        if (!fallback) fallback = hrefMatch[1];
-    }
-    return fallback;
-}
-
-function pickImage(block) {
-    const enclosure = /<enclosure\b[^>]*url=["']([^"']+)["']/i.exec(block);
-    if (enclosure) return enclosure[1];
-    const media = /<media:(?:thumbnail|content)\b[^>]*url=["']([^"']+)["']/i.exec(block);
-    if (media) return media[1];
-    const desc = stripCdata(pickTag(block, ['description', 'summary', 'content:encoded', 'content']));
-    const img = /<img\b[^>]*src=["']([^"']+)["']/i.exec(desc);
-    return img ? img[1] : '';
-}
-
-function stripCdata(s) {
-    return String(s || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
-}
-
-function cleanText(s) {
-    return decodeEntities(stripCdata(s).replace(/<[^>]+>/g, '')).trim();
-}
-
-function decodeEntities(s) {
-    return String(s || '')
-        .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-        .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/&apos;/g, "'")
-        .replace(/&nbsp;/g, ' ')
-        .replace(/&amp;/g, '&');
+    const pick = r => r && {
+        id: r.id,
+        url: r.url,
+        nameEn: r.nameEn,
+        nameJa: r.nameJa,
+        releaseYear: r.releaseYear,
+        score: r.score
+    };
+    const response = json(
+        {
+            ok: true,
+            match: pick(result.match),
+            candidates: result.candidates.map(pick),
+            searchUrl: result.searchUrl || fallbackSearchUrl
+        },
+        200,
+        { 'Cache-Control': `public, max-age=${MANUAL_BROWSER_SECONDS}, s-maxage=${MANUAL_EDGE_SECONDS}` }
+    );
+    if (cache) ctx.waitUntil(cache.put(cacheKey, response.clone()));
+    return response;
 }
