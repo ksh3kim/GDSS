@@ -321,18 +321,6 @@ textarea {
     font-size: inherit;
 }
 
-/* ===== Utility Classes ===== */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
 /* ===== Header ===== */
 .header {
     position: fixed;
@@ -923,13 +911,9 @@ textarea {
     border-radius: 2px;
 }
 
-/* Mobile customizer inherits the same rows but wider swatches */
+/* Mobile customizer: same rows, aligned with the menu's own padding */
 .mobile-theme-section .theme-customizer {
     padding: var(--space-3) 0 0;
-}
-
-.mobile-theme-section .theme-customizer.active {
-    display: flex;
 }
 
 .nav-item {
@@ -1793,10 +1777,6 @@ textarea {
 .sort-order-btn.asc {
     color: var(--color-primary);
     border-color: var(--color-primary);
-}
-
-.sort-order-btn svg {
-    display: none;
 }
 
 .sort-order-label {

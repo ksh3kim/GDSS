@@ -1,6 +1,6 @@
 /* =============================================
    GUNPLA GUIDE - Component Styles
-   Cards, Filters, Detail Page, Modals, Animations
+   Filters, Cards, Recommendation Panel, Compare Drawer, Modal, Detail Page
    ============================================= */
 
 /* ===== Filter Accordion ===== */
@@ -172,24 +172,6 @@
     border-color: var(--color-error);
 }
 
-.filter-range-slider {
-    width: 100%;
-    height: 4px;
-    background: var(--color-dark-border);
-    border-radius: 2px;
-    appearance: none;
-    cursor: pointer;
-}
-
-.filter-range-slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background: var(--color-primary);
-    border-radius: 50%;
-    cursor: pointer;
-}
-
 /* ===== Product Grid ===== */
 .product-grid {
     display: grid;
@@ -337,15 +319,13 @@
     margin-bottom: var(--space-2);
 }
 
-/* Grade specific colors */
-.product-card-grade.EG,
-.product-card-grade.eg {
+/* Grade specific colors (class = the grade value from the data, e.g. "HGCE") */
+.product-card-grade.EG {
     background: var(--grade-eg);
     color: white;
 }
 
 .product-card-grade.HG,
-.product-card-grade.hg,
 .product-card-grade.HGUC,
 .product-card-grade.HGCE,
 .product-card-grade.HGAC,
@@ -355,28 +335,24 @@
     color: white;
 }
 
-.product-card-grade.RG,
-.product-card-grade.rg {
+.product-card-grade.RG {
     background: var(--grade-rg);
     color: white;
 }
 
 .product-card-grade.MG,
-.product-card-grade.mg,
 .product-card-grade.MGEX {
     background: var(--grade-mg);
     color: var(--color-gray-900);
 }
 
 .product-card-grade.PG,
-.product-card-grade.pg,
 .product-card-grade.PGU {
     background: var(--grade-pg);
     color: white;
 }
 
 .product-card-grade.SD,
-.product-card-grade.sd,
 .product-card-grade.SDCS,
 .product-card-grade.SDEX {
     background: var(--grade-sd);
@@ -660,18 +636,6 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-}
-
-.compare-item-remove {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 24px;
-    height: 24px;
-    background: var(--color-error);
-    border-radius: 50%;
-    font-size: 12px;
-    color: var(--color-white);
 }
 
 .compare-actions {
@@ -1033,65 +997,6 @@
     color: var(--color-accent);
 }
 
-/* Detail Recommendation */
-.detail-recommendation {
-    display: flex;
-    gap: var(--space-6);
-    padding: var(--space-5);
-    background: linear-gradient(135deg, rgba(227, 24, 55, 0.1) 0%, rgba(30, 64, 175, 0.1) 100%);
-    border: 1px solid rgba(227, 24, 55, 0.2);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-6);
-}
-
-.recommendation-score {
-    text-align: center;
-}
-
-.score-label {
-    display: block;
-    font-size: var(--text-xs);
-    color: var(--color-gray-400);
-    margin-bottom: var(--space-2);
-}
-
-.score-circle {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    border-radius: 50%;
-}
-
-.score-value {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-white);
-}
-
-.score-percent {
-    font-size: var(--text-sm);
-    color: var(--color-white);
-}
-
-.recommendation-reason {
-    flex: 1;
-}
-
-.recommendation-reason h4 {
-    font-size: var(--text-sm);
-    color: var(--color-gray-400);
-    margin-bottom: var(--space-2);
-}
-
-.recommendation-reason p {
-    font-size: var(--text-base);
-    color: var(--color-gray-200);
-    line-height: 1.6;
-}
-
 /* Detail Tabs */
 .detail-tabs {
     display: flex;
@@ -1161,53 +1066,13 @@
     color: var(--theme-heading);
 }
 
-/* Pros/Cons */
-.pros-cons-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
-}
-
+/* Section titles (weapons, recommended for, building tips) */
 .section-title {
     font-size: var(--text-base);
     font-weight: 600;
     margin-bottom: var(--space-4);
     padding-bottom: var(--space-2);
     border-bottom: 2px solid;
-}
-
-.section-title.pros {
-    color: var(--color-success);
-    border-color: var(--color-success);
-}
-
-.section-title.cons {
-    color: var(--color-error);
-    border-color: var(--color-error);
-}
-
-.pros-list li,
-.cons-list li {
-    position: relative;
-    padding: var(--space-2) 0 var(--space-2) var(--space-6);
-    font-size: var(--text-sm);
-    color: var(--color-gray-300);
-}
-
-.pros-list li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--color-success);
-    font-weight: bold;
-}
-
-.cons-list li::before {
-    content: '✗';
-    position: absolute;
-    left: 0;
-    color: var(--color-error);
-    font-weight: bold;
 }
 
 /* Variants */
@@ -1299,72 +1164,6 @@
     color: var(--color-gray-300);
 }
 
-/* Related Products */
-.related-products {
-    margin-bottom: var(--space-12);
-}
-
-.section-heading {
-    font-size: var(--text-xl);
-    font-weight: 600;
-    color: var(--theme-heading);
-    margin-bottom: var(--space-6);
-}
-
-.related-products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--space-4);
-}
-
-.related-product-card {
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-dark-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: var(--transition-fast);
-}
-
-.related-product-card:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
-}
-
-.related-product-image {
-    aspect-ratio: 1;
-    background: var(--color-dark-bg);
-}
-
-.related-product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: var(--space-3);
-}
-
-.related-product-info {
-    padding: var(--space-3);
-}
-
-.related-product-grade {
-    font-size: var(--text-xs);
-    color: var(--color-primary);
-    font-weight: 600;
-}
-
-.related-product-name {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--color-gray-300);
-    margin: var(--space-1) 0;
-}
-
-.related-product-price {
-    font-size: var(--text-sm);
-    color: var(--color-accent);
-    font-weight: 500;
-}
-
 /* Load More */
 .load-more-container {
     display: flex;
@@ -1417,16 +1216,7 @@
         gap: var(--space-3);
     }
 
-    .detail-recommendation {
-        flex-direction: column;
-        text-align: center;
-    }
-
     .specs-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .pros-cons-container {
         grid-template-columns: 1fr;
     }
 
@@ -1456,11 +1246,8 @@
     .variants-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .related-products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
+
 /* Variant/related-grade entries without a detail page (rendered as non-links) */
 .variant-card.unavailable,
 .related-grade-item.unavailable {
@@ -1470,6 +1257,5 @@
 
 .variant-card.unavailable:hover,
 .related-grade-item.unavailable:hover {
-    transform: none;
     border-color: var(--color-dark-border);
 }

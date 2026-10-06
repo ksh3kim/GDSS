@@ -340,9 +340,6 @@ const I18n = (function () {
             opt.classList.toggle('active', isActive);
             opt.setAttribute('aria-pressed', String(isActive));
         });
-
-        // Dispatch theme change event for cross-page sync
-        document.dispatchEvent(new CustomEvent('themeChange', { detail: { theme } }));
     }
 
     /**

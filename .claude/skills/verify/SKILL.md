@@ -23,8 +23,9 @@ Grep the dumped `<pre>` for results. Console errors: add
 Delete `__verify__.html` afterwards.
 
 Harness gotchas:
-- Seed `localStorage['gunpla-news-cache'] = {ts: Date.now(), items:[...]}` first
-  so notifications skip external CORS-proxy fetches (deterministic, offline-safe).
+- The news panel makes no requests unless an API is configured (`window.GUNPLA_API_BASE`
+  / `js/api.js`). To test the list rendering offline, seed
+  `localStorage['gunpla-news-cache'] = {ts: Date.now(), items:[...]}` first.
 - Override `iframe.contentWindow.confirm = () => true` before clicking the
   footer reset buttons.
 - Dispatch inputs with the iframe realm's Event: `new (ifr.contentWindow.Event)('input', {bubbles:true})`.

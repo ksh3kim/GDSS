@@ -1046,20 +1046,8 @@ const GunplaApp = (function () {
         document.getElementById('detailReleaseDate').textContent = I18n.formatDate(product.releaseYear, product.releaseMonth);
         document.getElementById('detailHeight').textContent = product.height || '-';
 
-        // Recommendation (optional elements - may have been removed)
-        const matchScore = product.recommendation?.matchScore || 85;
-        const matchScoreEl = document.getElementById('matchScoreValue');
-        if (matchScoreEl) matchScoreEl.textContent = matchScore;
-        const reasonEl = document.getElementById('recommendationReason');
-        if (reasonEl) {
-            reasonEl.textContent = I18n.getName(product.recommendation?.reasoning) || I18n.t('recommendation.basedOnFilters');
-        }
-
         // Specs
         renderSpecs(product);
-
-        // Pros/Cons
-        renderProsCons(product);
 
         // Variants
         renderVariants(product);
@@ -1213,24 +1201,6 @@ const GunplaApp = (function () {
     }
 
     /**
-     * Render pros and cons
-     */
-    function renderProsCons(product) {
-        const prosList = document.getElementById('prosList');
-        const consList = document.getElementById('consList');
-
-        if (prosList && product.pros) {
-            const pros = I18n.getLang() === 'ko' ? product.pros.ko : product.pros.en;
-            prosList.innerHTML = pros?.map(p => `<li>${p}</li>`).join('') || '';
-        }
-
-        if (consList && product.cons) {
-            const cons = I18n.getLang() === 'ko' ? product.cons.ko : product.cons.en;
-            consList.innerHTML = cons?.map(c => `<li>${c}</li>`).join('') || '';
-        }
-    }
-
-    /**
      * Render variants
      */
     function renderVariants(product) {
@@ -1240,8 +1210,7 @@ const GunplaApp = (function () {
         const variants = product.variants || [];
         const related = product.relatedGrades || [];
 
-        // Color/Config variants — resolve the real thumbnail from the product
-        // index (the previous random gunpla.fyi id showed unrelated boxarts).
+        // Color/Config variants — the thumbnail comes from the product index.
         // Items whose id is not in the index have no detail page, so they are
         // rendered as non-clickable cards instead of broken links.
         if (variantsGrid) {
@@ -1368,7 +1337,7 @@ const GunplaApp = (function () {
         // NOTE: the boxart/thumbnail number is a gunpla.fyi image id, NOT a Bandai
         // manual id, so it must never be used for /menus/detail/{id}.
         if (manualBtn) {
-            const manualId = product.bandaiManualId || product.manualId;
+            const manualId = product.bandaiManualId;
 
             if (manualId) {
                 manualBtn.href = GunplaApi.manualDetailUrl(manualId);
@@ -1830,24 +1799,11 @@ const GunplaApp = (function () {
         setupMobileMenu();
     }
 
-    // Public API
+    // Public API (page bootstraps + the product list for Filter's autocomplete)
     return {
         init,
         initDetail,
-        loadProductDetail,
-        toggleFavorite,
-        toggleCompare,
-        setupDetailTabs,
-        getProducts: () => products,
-        addToRecent,
-        loadProducts,
-        renderRecentProducts,
-        clearRecentProducts,
-        clearAllFavorites,
-        clearAllCompare,
-        setupResetButtons,
-        setupStorageSync,
-        updateBadges
+        getProducts: () => products
     };
 })();
 

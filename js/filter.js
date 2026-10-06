@@ -108,13 +108,6 @@ const Filter = (function () {
     }
 
     /**
-     * Get taxonomy data
-     */
-    function getTaxonomy() {
-        return taxonomy;
-    }
-
-    /**
      * Get a taxonomy category by id (O(1) via the prebuilt map)
      */
     function getCategory(id) {
@@ -179,17 +172,6 @@ const Filter = (function () {
             localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
         } catch (e) {
             console.warn('Failed to update search history:', e);
-        }
-    }
-
-    /**
-     * Clear all search history
-     */
-    function clearSearchHistory() {
-        try {
-            localStorage.removeItem(SEARCH_HISTORY_KEY);
-        } catch (e) {
-            console.warn('Failed to clear search history:', e);
         }
     }
 
@@ -739,8 +721,6 @@ const Filter = (function () {
             });
         }
 
-        // Note: deduplication moved to finalSuggestions below after adding history
-
         // Add search history items (at top or when query is short)
         const history = getSearchHistory();
         if (history.length > 0 && lowerQuery.length <= 1) {
@@ -1082,7 +1062,6 @@ const Filter = (function () {
     // Public API
     return {
         init,
-        getTaxonomy,
         getCategory,
         getActiveFilters,
         setSearchQuery,
