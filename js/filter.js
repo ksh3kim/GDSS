@@ -265,6 +265,21 @@ const Filter = (function () {
     }
 
     /**
+     * Apply a series picked from the autocomplete. The typed text only served
+     * to find the suggestion, so it is cleared and the series becomes a filter
+     * (chip + sidebar checkbox) — exactly that series' kits.
+     */
+    function selectSeries(value) {
+        searchQuery = '';
+        ['searchInput', 'mobileSearchInput'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        setFilter('series', value, true); // updates URL + chips, dispatches filterChange
+        syncCategoryUI('series');
+    }
+
+    /**
      * Set range filter
      */
     function setRangeFilter(categoryId, min, max) {
@@ -323,6 +338,16 @@ const Filter = (function () {
     }
 
     /**
+     * Korean + English display names of a series value ("seed" → "건담 SEED",
+     * "Gundam SEED"). The autocomplete inserts these names, so search must
+     * match them — not only the internal value.
+     */
+    function seriesLabels(value) {
+        const label = getCategory('series')?.options?.find(o => o.value === value)?.label;
+        return label ? [label.ko || '', label.en || ''] : [];
+    }
+
+    /**
      * Check if a product matches current filters
      */
     function matchesFilters(product) {
@@ -337,7 +362,8 @@ const Filter = (function () {
                 product.id,
                 product.modelNumber || '',
                 product.grade,
-                product.series
+                product.series,
+                ...seriesLabels(product.series)
             ];
 
             // Check regular text match
@@ -708,7 +734,7 @@ const Filter = (function () {
                 const labelKo = opt.label?.ko || '';
                 const labelEn = opt.label?.en || '';
                 if (labelKo.toLowerCase().includes(lowerQuery) || labelEn.toLowerCase().includes(lowerQuery)) {
-                    suggestions.push({ type: 'series', text: I18n.getName(opt.label), value: I18n.getName(opt.label), match: lowerQuery });
+                    suggestions.push({ type: 'series', text: I18n.getName(opt.label), value: I18n.getName(opt.label), series: opt.value, match: lowerQuery });
                 }
             });
         }
@@ -756,7 +782,7 @@ const Filter = (function () {
 
         // Render suggestions (escape: history entries are raw user input)
         container.innerHTML = finalSuggestions.map((s, i) => `
-            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" id="ac-option-${i}" role="option" aria-selected="false" data-value="${escapeHtml(s.value)}" data-type="${s.type}">
+            <div class="autocomplete-item ${s.type === 'history' ? 'history-item' : ''}" id="ac-option-${i}" role="option" aria-selected="false" data-value="${escapeHtml(s.value)}" data-type="${s.type}"${s.series ? ` data-series="${escapeHtml(s.series)}"` : ''}>
                 <span class="autocomplete-item-type ${s.type}">${escapeHtml(typeLabel[s.type])}</span>
                 <span class="autocomplete-item-text">${s.match ? highlightMatch(s.text, s.match) : escapeHtml(s.text)}</span>
                 ${s.type === 'history' ? '<button class="history-delete-btn" data-query="' + escapeHtml(s.value) + '" aria-label="' + removeHistoryLabel + '">×</button>' : ''}
@@ -772,6 +798,16 @@ const Filter = (function () {
                 const value = item.getAttribute('data-value');
                 const input = document.getElementById('searchInput');
                 cancelPendingSearch();
+
+                // A series suggestion selects that exact series as a filter —
+                // as text, "건담 SEED" would also match "건담 SEED DESTINY" etc.
+                const series = item.getAttribute('data-series');
+                if (series) {
+                    selectSeries(series);
+                    setAutocompleteOpen(container, false);
+                    return;
+                }
+
                 if (input) input.value = value;
                 setSearchQuery(value, { commit: true, source: input });
                 setAutocompleteOpen(container, false);

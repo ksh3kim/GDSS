@@ -1,7 +1,7 @@
 /**
  * Outbound HTTP helpers shared by the Worker and the Node build scripts.
  * Only standard fetch/AbortController are used, so this runs unchanged on
- * Cloudflare Workers and Node 18+.
+ * Cloudflare Workers and Node (the project requires Node 22+, see package.json "engines").
  */
 
 // Identifies the bot honestly; the "Mozilla/5.0 (compatible; …)" form is the

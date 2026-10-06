@@ -9,6 +9,6 @@
         "test": "npm run validate && npm run test:api"
     },
     "engines": {
-        "node": ">=20"
+        "node": ">=22"
     }
 }
